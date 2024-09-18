@@ -41,7 +41,7 @@ const getRestaurant = (restaurant, lang) => {
 const formatMenu = (menu) => {
     return menu[0].menuTypes.map(type => {
         return {
-            name: type.menuTypeName,
+            name: type.menuTypeName.replace('lounas', '').trim(), // Remove "lounas" from the name
             days: type.menus[0].days.map(day => {
                 // Date is in format "YYYYMMDD"
                 let d = day.date.toString();
@@ -88,9 +88,11 @@ const updateRestaurants = async () => {
     });
 }
 
-//updateRestaurants();
+//updateRestaurants().then(() => console.log('Jamix menus updated'));
 
 
 //getAllMenus().then(menus => console.log(JSON.stringify(menus, null, 2)));
 
 //getMenu(restaurants[2]).then(m => console.log(JSON.stringify(m, null, 2)));
+
+module.exports= { updateRestaurants };
