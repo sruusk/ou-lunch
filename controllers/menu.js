@@ -6,7 +6,7 @@ const { getMenus } = require("../models/restaurants");
  * @returns {Object} Hello World!
  */
 const getMenu = async (request, response) => {
-    const menu = getMenus();
+    const menu = await getMenus();
     return sendJson(response, menu);
 }
 
