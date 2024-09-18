@@ -1,7 +1,7 @@
 const responseUtils = require('./utils/responseUtils');
 const {renderPublic} = require('./utils/render');
 const requestUtils = require('./utils/requestUtils');
-const helloWorldController = require('./controllers/helloWorld');
+const menuController = require('./controllers/menu');
 
 /**
  * Known API routes and their allowed methods
@@ -10,7 +10,7 @@ const helloWorldController = require('./controllers/helloWorld');
  * in response to an OPTIONS request by sendOptions() (Access-Control-Allow-Methods)
  */
 const allowedMethods = {
-    '/api/hello': ['GET']
+    '/api/menu': ['GET']
 };
 
 /**
@@ -138,10 +138,10 @@ const handleRequest = async (request, response) => {
 
     const meth = method.toUpperCase();
     switch (filePath) {
-        case '/api/hello':
+        case '/api/menu':
             switch (meth) {
                 case 'GET':
-                    return helloWorldController.getHello(request, response);
+                    return menuController.getMenu(request, response);
                 default:
                     return responseUtils.methodNotAllowed(response);
             }
