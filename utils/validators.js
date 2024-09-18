@@ -25,44 +25,10 @@ module.exports = {
                             en: {
                                 bsonType: 'array',
                                 description: 'Menu items in English',
-                                items: {
-                                    bsonType: 'object',
-                                    required: ['name'],
-                                    properties: {
-                                        name: {
-                                            bsonType: 'string',
-                                            description: 'Name of the item',
-                                        },
-                                        allergens: {
-                                            bsonType: 'array',
-                                            description: 'Allergens',
-                                            items: {
-                                                bsonType: 'string',
-                                            },
-                                        },
-                                    },
-                                },
                             },
                             fi: {
                                 bsonType: 'array',
                                 description: 'Menu items in Finnish',
-                                items: {
-                                    bsonType: 'object',
-                                    required: ['name'],
-                                    properties: {
-                                        name: {
-                                            bsonType: 'string',
-                                            description: 'Name of the item',
-                                        },
-                                        allergens: {
-                                            bsonType: 'array',
-                                            description: 'Allergens',
-                                            items: {
-                                                bsonType: 'string',
-                                            },
-                                        },
-                                    },
-                                },
                             },
                         },
                     },
