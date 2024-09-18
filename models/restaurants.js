@@ -21,9 +21,9 @@ const getMenus = async () => {
         const today = new Date();
         today.setHours(0, 0, 0, 0);
         const restaurants = await (await getDb()).collection('restaurants').find({}).toArray();
-        return restaurants.map(({ name, menu }) => {
-            const menuItems = Object.entries(menu).map(([date, items]) => ({ date, items }));
-            return { name, menu: menuItems };
+        return restaurants.map(restaurant => {
+            const menu = restaurant.menu.filter(menu => menu.date >= today);
+            return { name: restaurant.name, menu };
         });
     } catch(err) {
         console.error(err);
@@ -50,25 +50,41 @@ const getRestaurant = async (name) => {
  * @returns {Promise<void>}
  */
 const addRestaurant = async (name) => {
-    await (await getDb()).collection('restaurants').insertOne({ name, menu: [] });
+    if(!name) throw new Error('Name is required');
+    try {
+        await (await getDb()).collection('restaurants').insertOne({ name, menu: [] });
+    } catch(err) {
+        console.error(JSON.stringify(err, null, 2));
+    }
+}
+
+/**
+ * Restaurant exists
+ * @param {string} name - Name of the restaurant to check.
+ * @returns {Promise<boolean>} True if restaurant exists.
+ */
+const restaurantExists = async (name) => {
+    return await (await getDb()).collection('restaurants').findOne({ name }) !== null;
 }
 
 /**
  * Update menu of a restaurant for a specific date.
  * @param {string} name - Name of the restaurant to update.
  * @param {Date} date - Date of the menu.
- * @param {{en: {name: string, allergens: string[]}, fi: {name: string, allergens: string[]}}} menu - Menu items.
+ * @param {{en: Object, fi: Object}} menu - Menu items.
  * @returns {Promise<void>}
  */
 const updateMenu = async (name, date, menu) => {
     try {
-        date.setHours(0, 0, 0, 0);
-        await (await getDb()).collection('restaurants')
-            .updateOne({ name }, { $set: { [`menu.${date.toISOString()}`]: menu } });
+        date.setUTCHours(0, 0, 0, 0);
+        // Check if menu for the date already exists and update it, otherwise add a new menu.
+        const restaurant = await (await getDb()).collection('restaurants').findOne({ name, 'menu.date': date });
+        if(restaurant) await (await getDb()).collection('restaurants').updateOne({ name, 'menu.date': date }, { $set: { 'menu.$': { date, ...menu } } });
+        else await (await getDb()).collection('restaurants').updateOne({ name }, { $push: { menu: { date, ...menu } } });
     } catch(err) {
         console.error(err);
     }
 }
 
 
-module.exports = { getRestaurants, getMenus, getRestaurant, addRestaurant, updateMenu };
+module.exports = { getRestaurants, getMenus, getRestaurant, addRestaurant, restaurantExists, updateMenu };
