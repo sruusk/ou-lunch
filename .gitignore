@@ -1,0 +1,44 @@
+# macOS
+.DS_Store
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# dotenv environment variables file
+.env
+
+# IDE related
+*.swp
+.idea
+*.iws
+*.ipr
+.project
+.settings
+.vscode/
+.history/
+http-requests-log.http
+
+# Node related
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+.lock-wscript
+build/Release
+node_modules/
+jspm_packages/
+.npm
+*.tgz
+
+# JSON
+package-lock.json
+
+# Optional eslint cache
+.eslintcache
+
+# Numerous always-ignore extensions
+*.min.*
+
+# OS or Editor folders
+*.code-workspace
+Thumbs.db
+out

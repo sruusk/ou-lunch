@@ -1,0 +1,24 @@
+{
+  "name": "nodejs-template",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "nodemon": "nodemon --ignore public/ index.js"
+  },
+  "keywords": [],
+  "license": "MIT",
+  "devDependencies": {
+    "jsdoc": "^3.6.11",
+    "nodemon": "^2.0.22"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "etag": "^1.8.1",
+    "jsonwebtoken": "^9.0.2"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
