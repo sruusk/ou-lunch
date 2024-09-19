@@ -1,5 +1,4 @@
 const responseUtils = require('./utils/responseUtils');
-const {renderPublic} = require('./utils/render');
 const requestUtils = require('./utils/requestUtils');
 const menuController = require('./controllers/menu');
 
@@ -70,6 +69,20 @@ const CSP = {
     ]
 };
 
+/**
+ * Security headers
+ * @type {{"Referrer-Policy": string, "Strict-Transport-Security": string, "Access-Control-Expose-Headers": string, "X-Content-Type-Options": string, "Content-Security-Policy": string, Vary: string, "X-XSS-Protection": string}}
+ */
+const securityHeaders = {
+    'Content-Security-Policy': Object.keys(CSP).map(key => `${key} ${CSP[key].join(' ')}`).join('; '),
+    'Strict-Transport-Security': 'max-age=63072000; includeSubDomains; preload',
+    'X-Content-Type-Options': 'nosniff',
+    'X-XSS-Protection': '1; mode=block',
+    'Referrer-Policy': 'no-referrer',
+    'Vary': 'Origin',
+    'Access-Control-Expose-Headers': 'Content-Type,Accept,Etag'
+};
+
 
 
 const handleRequest = async (request, response) => {
@@ -77,45 +90,10 @@ const handleRequest = async (request, response) => {
     const { pathname: filePath, searchParams: query } = new URL(url, `http://${ headers.host }`);
 
     // Set security headers
-    response.setHeader('Content-Security-Policy', Object.keys(CSP).map(key => `${ key } ${ CSP[key].join(' ') }`).join('; '));
-    response.setHeader('Strict-Transport-Security', 'max-age=63072000; includeSubDomains; preload');
-    response.setHeader('X-Content-Type-Options', 'nosniff');
-    response.setHeader('X-XSS-Protection', '1; mode=block');
-    response.setHeader('Referrer-Policy', 'no-referrer');
-    response.setHeader('Vary', 'Origin');
-    response.setHeader('Access-Control-Expose-Headers', 'Content-Type,Accept,Etag');
+    Object.entries(securityHeaders).forEach(([key, value]) => response.setHeader(key, value));
+
     if(allowedOrigins.includes(headers.origin))
         response.setHeader('Access-Control-Allow-Origin', request.headers.origin);
-
-    // serve static files from public/ and return immediately
-    if (method.toUpperCase() === 'GET' && !filePath.startsWith('/api')) {
-        try{
-            switch(request.headers['sec-fetch-dest']) {
-                case 'document':
-                    response.setHeader("Cache-Control", `public, max-age=${ 0 }`); // 0 seconds for html
-                    break;
-                case 'image':
-                    response.setHeader("Cache-Control", `public, max-age=${ 28 * 24 * 60 * 60 }`); // 4 weeks for images
-                    break;
-                default:
-                    response.setHeader("Cache-Control", `public, max-age=${ 7 * 24 * 60 * 60 }`); // 1 week for everything else
-                    break;
-            }
-            // Copy If-None-Match header from request to response so that it can be used in render.js -> renderFile()
-            // This is a stupid way to do it... but it works for now
-            if(Object.keys(request.headers).includes('if-none-match'))
-                response.setHeader("If-None-Match", request.headers['if-none-match']);
-        }catch (e) {
-            console.log(e);
-        }
-        // If the file path is empty, assume index.html
-        let fileName = filePath === '/' || filePath === '' ? 'index.html' : filePath;
-        // If the file does not have an extension, assume it is a directory and serve index.html
-        if(!fileName.includes('.')) fileName = 'index.html';
-
-        // Render the file and set Open Graph image url if steamId is present
-        return renderPublic(fileName, response, method.toUpperCase() === 'HEAD');
-    }
 
     if (method.toUpperCase() === 'POST' && !(filePath in allowedMethods)) {
         response.writeHead(200, {'Content-Type': 'text/html'});
@@ -126,7 +104,6 @@ const handleRequest = async (request, response) => {
         return responseUtils.notFound(response);
     }
 
-    // See: http://restcookbook.com/HTTP%20Methods/options/
     if (method.toUpperCase() === 'OPTIONS') return sendOptions(filePath, response);
 
     // Check for allowable methods
