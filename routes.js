@@ -40,6 +40,7 @@ const sendOptions = (filePath, response) => {
  */
 const allowedOrigins = [
     'http://localhost:5173',
+    'https://ouf.fi',
 ];
 
 /**
