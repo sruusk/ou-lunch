@@ -40,40 +40,40 @@ export default defineComponent({
     };
   },
   async setup() {
-    // const url = import.meta.env.DEV ? "http://localhost:3001/api/menu" : "https://api.ouf.fi/api/menu";
-    const url = "https://api.ouf.fi/api/menu";
-    const response = await useFetch(url).catch((e) => {
-      console.error("Failed to fetch data from the API", e);
+    const url = import.meta.env.DEV ? "http://localhost:3001/api/menu" : "https://api.ouf.fi/api/menu";
+    const response = await useFetch(url, {
+      transform: restaurants => {
+        return restaurants.map(restaurant => {
+          restaurant.menu = restaurant.menu.map(menu => {
+            menu.date = new Date(menu.date);
+            return menu;
+          });
+          return restaurant;
+        });
+      },
     });
-    const restaurants = response.data.value?.map(restaurant => {
-      restaurant.menu = restaurant.menu.map(menu => {
-        menu.date = new Date(menu.date);
-        return menu;
-      });
-      return restaurant;
-    });
-    if(!restaurants) {
-      console.error("Failed to fetch data from the API");
-    }
+
+
+    const restaurants = response.data;
 
     return {
       restaurants
     };
   },
-  // async mounted() {
-  //   const url = import.meta.env.DEV ? "http://localhost:3001/api/menu" : "https://api.ouf.fi/api/menu";
-  //   const response = await fetch(url).catch((e) => {
-  //     console.error("Failed to fetch data from the API", e);
-  //     alert("Could not fetch data from the API. Please try again later.");
-  //   });
-  //   const json = await response.json();
-  //   this.restaurants = json.map(restaurant => {
-  //     restaurant.menu = restaurant.menu.map(menu => {
-  //       menu.date = new Date(menu.date);
-  //       return menu;
-  //     });
-  //     return restaurant;
-  //   });
-  // }
+  beforeMount() {
+    setInterval(() => {
+      this.date = new Date();
+    }, 1000);
+
+    if(!this.restaurants?.length) {
+      alert("Could not fetch data from the server. Please try again later.");
+    }
+  },
 });
 </script>
+
+<style>
+* {
+  transition: background-color 0.5s;
+}
+</style>
