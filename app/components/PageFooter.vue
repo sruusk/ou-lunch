@@ -1,0 +1,33 @@
+<template>
+  <UContainer class="flex justify-between items-center">
+    <div/>
+    <ULink
+      class="text-cool-600 dark:text-cool-400 flex items-center"
+      to="https://github.com/sruusk/ou-lunch"
+      target="_blank"
+    >
+      <UIcon class="w-10 h-10" name="grommet-icons:github"/>
+    </ULink>
+    <UPopover class="w-0">
+      <UButton :label="$t('footer.feedback')" color="primary" variant="soft" class="-translate-x-full"/>
+      <template #panel>
+        <div class="p-8">
+          <UButton
+            :label="$t('footer.joinTelegram')"
+            @click="openTelegram"
+          />
+        </div>
+      </template>
+    </UPopover>
+  </UContainer>
+</template>
+<script>
+export default {
+  name: 'PageFooter',
+  methods: {
+    openTelegram() {
+      window.open('https://t.me/+IL4dgF98VahmY2U0', '_blank');
+    },
+  },
+};
+</script>

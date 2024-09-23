@@ -27,7 +27,6 @@ export default defineNuxtComponent({
     },
     selected: {
       get() {
-        console.log(this.languageOptions, this.locale);
         return this.languageOptions.find((option) => option.code === this.locale)
       },
       set(value) {

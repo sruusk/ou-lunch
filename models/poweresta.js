@@ -20,9 +20,9 @@ const restaurants = [
         display: "Pekuri",
         menu: "ravintolapekuri"
     }, {
-        name: "solisti",
-        display: "H2O Solisti",
-        menu: "h2osolisti"
+        name: "campus",
+        display: "H2O Campus",
+        menu: "h2ocampus"
     }
 ];
 

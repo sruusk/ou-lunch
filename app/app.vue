@@ -5,7 +5,8 @@
       <template #header>
         <PageHeader/>
       </template>
-      <UContainer class="flex flex-wrap justify-center min-w-full">
+      <DateSelect v-model:date="date" :dates="dates"/>
+      <UContainer class="flex flex-wrap justify-center max-w-7xl">
         <RestaurantMenu
           v-for="restaurant in restaurants"
           :key="restaurant.name"
@@ -14,31 +15,27 @@
         />
       </UContainer>
       <template #footer>
-        <UContainer class="flex justify-center">
-          <ULink
-            class="text-cool-600 dark:text-cool-400 flex items-center"
-            to="https://github.com/sruusk/ou-lunch"
-            target="_blank"
-          >
-            <UIcon class="w-10 h-10" name="grommet-icons:github"/>
-          </ULink>
-        </UContainer>
+        <PageFooter/>
       </template>
     </UCard>
   </div>
 </template>
 <script>
-import PageHeader from "~/components/PageHeader.vue";
 
 export default defineNuxtComponent({
   name: "app",
-  components: { PageHeader },
   data() {
     return {
       date: new Date(),
     };
   },
   async setup() {
+    useSeoMeta({
+      title: "Menu",
+      description: "A simple web app to check the daily menus of the restaurants at the University of Oulu.",
+      ogImage: "/logo.png",
+    });
+
     const response = await useFetch('/api/menu', {
       key: "restaurants",
       server: true,
@@ -53,19 +50,33 @@ export default defineNuxtComponent({
       }
     });
 
+    console.log(response.data);
+
     return {
       restaurants: response.data
     };
   },
   beforeMount() {
-    setInterval(() => {
-      this.date = new Date();
-    }, 1000);
-
     if(!this.restaurants?.length) {
       alert("Could not fetch data from the server. Please try again later.");
     }
   },
+  computed: {
+    dates() {
+      if(!this.restaurants?.length) return [];
+      const dates = new Set();
+      this.restaurants.forEach(r => {
+        r.menu.forEach(m => {
+          if(m.fi?.length)
+            dates.add(m.date.toDateString());
+        });
+      });
+      return Array.from(dates)
+        .map(d => new Date(d))
+        .sort((a, b) => a - b)
+        .slice(0, 6);
+    }
+  }
 });
 </script>
 

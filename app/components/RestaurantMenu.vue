@@ -4,7 +4,7 @@
       <ULink
         :external="true"
         :to="link"
-        class="capitalize text-xl"
+        class="capitalize text-xl text-blue-800 font-semibold dark:text-blue-200"
         target="_blank"
       >
         {{ restaurant.name }}
@@ -27,11 +27,11 @@
             {{ item.diets }}
           </p>
         </div>
-        <UPopover mode="click">
+        <UPopover mode="click" v-if="item.ingredients?.length > 10 && item.ingredients !== item.name">
           <UIcon name="material-symbols:info" class="w-5 h-5 inline-block "/>
           <template #panel>
             <div class="p-2 w-96 max-w-[90vw]">
-              <p class="text-cool-800 dark:text-cool-400 text-sm whitespace-break-spaces" v-html="item.ingredients" />
+              <p class="text-cool-800 dark:text-cool-300 text-sm whitespace-break-spaces" v-html="item.ingredients" />
             </div>
           </template>
         </UPopover>
@@ -44,9 +44,8 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
 
-export default defineComponent({
+export default defineNuxtComponent({
   name: "RestaurantMenu",
   props: {
     restaurant: {

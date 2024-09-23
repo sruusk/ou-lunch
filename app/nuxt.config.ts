@@ -22,9 +22,7 @@ export default defineNuxtConfig({
     fallback: 'light',
   },
   site: {
-    name: 'Oulu Uni Lunches',
-    themeColor: '#000000',
-    image: '/logo.png',
+    name: 'Oulu University Food',
     url: 'https://ouf.fi',
   },
   ui: {
@@ -33,4 +31,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     apiUrl: 'http://localhost:3001'
   },
+  ogImage: {
+    enabled: false,
+  }
 })

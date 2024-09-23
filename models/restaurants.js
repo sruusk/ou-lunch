@@ -1,3 +1,4 @@
+const moment = require('moment-timezone');
 const { getDb } = require('../utils/mongodb');
 
 /**
@@ -18,8 +19,7 @@ const getRestaurants = async (restaurant) => {
  */
 const getMenus = async () => {
     try {
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
+        const today = moment.tz('Europe/Helsinki').startOf('day').toDate();
         const restaurants = await (await getDb()).collection('restaurants').find({}).toArray();
         return restaurants.map(restaurant => {
             const menu = restaurant.menu.filter(menu => menu.date >= today);

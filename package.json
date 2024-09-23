@@ -11,7 +11,7 @@
     "generate": "nuxt generate app",
     "preview": "nuxt preview app",
     "postinstall": "nuxt prepare app",
-    "runfront": "node app/.output/server/index.js"
+    "runfront": "node app/.output/server/index.mjs"
   },
   "keywords": [],
   "license": "MIT",
@@ -20,15 +20,16 @@
     "nodemon": "^2.0.22"
   },
   "dependencies": {
-    "dotenv": "^16.4.5",
-    "etag": "^1.8.1",
-    "jsonwebtoken": "^9.0.2",
-    "mongodb": "^6.9.0",
     "@nuxt/ui": "^2.18.5",
     "@nuxtjs/i18n": "^8.5.5",
     "@nuxtjs/seo": "^2.0.0-rc.21",
     "@nuxtjs/sitemap": "^6.1.0",
     "@pinia/nuxt": "^0.5.4",
+    "dotenv": "^16.4.5",
+    "etag": "^1.8.1",
+    "jsonwebtoken": "^9.0.2",
+    "moment-timezone": "^0.5.45",
+    "mongodb": "^6.9.0",
     "nuxt": "^3.13.0",
     "pinia": "^2.2.2",
     "vue": "latest",
