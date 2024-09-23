@@ -17,7 +17,7 @@
         <UContainer class="flex justify-center">
           <ULink
             class="text-cool-600 dark:text-cool-400 flex items-center"
-            href="https://github.com/sruusk/ou-lunch"
+            to="https://github.com/sruusk/ou-lunch"
             target="_blank"
           >
             <UIcon class="w-10 h-10" name="grommet-icons:github"/>
@@ -28,7 +28,7 @@
   </div>
 </template>
 <script>
-import PageHeader from "~/PageHeader.vue";
+import PageHeader from "~/components/PageHeader.vue";
 
 export default defineNuxtComponent({
   name: "app",

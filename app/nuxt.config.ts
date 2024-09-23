@@ -12,10 +12,10 @@ export default defineNuxtConfig({
   i18n: {
     vueI18n: './i18n.config.ts',
     locales: [
-      { code: 'en', language: 'en-US' },
+      { code: 'en', language: 'en-UK' },
       { code: 'fi', language: 'fi-FI' },
     ],
-    defaultLocale: 'fi',
+    defaultLocale: 'en',
   },
   colorMode: {
     preference: 'system',
