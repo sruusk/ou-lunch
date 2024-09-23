@@ -1,7 +1,7 @@
 require('dotenv').config();
 const http = require('http');
 const { handleRequest } = require('./routes');
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 const server = http.createServer(handleRequest);
 require('./utils/lifecycleLoops');
 
