@@ -29,5 +29,8 @@ export default defineNuxtConfig({
   },
   ui: {
     global: true,
-  }
+  },
+  runtimeConfig: {
+    apiUrl: 'http://localhost:3001'
+  },
 })

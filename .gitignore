@@ -29,9 +29,6 @@ jspm_packages/
 .npm
 *.tgz
 
-# JSON
-package-lock.json
-
 # Optional eslint cache
 .eslintcache
 

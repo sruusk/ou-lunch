@@ -28,10 +28,9 @@
   </div>
 </template>
 <script>
-import { defineComponent } from "vue";
 import PageHeader from "~/PageHeader.vue";
 
-export default defineComponent({
+export default defineNuxtComponent({
   name: "app",
   components: { PageHeader },
   data() {
@@ -40,24 +39,22 @@ export default defineComponent({
     };
   },
   async setup() {
-    const url = `${import.meta.env.VITE_API_URL || 'localhost:3001'}/api/menu`;
-    const response = await useFetch(url, {
-      transform: restaurants => {
-        return restaurants.map(restaurant => {
-          restaurant.menu = restaurant.menu.map(menu => {
-            menu.date = new Date(menu.date);
-            return menu;
+    const response = await useFetch('/api/menu', {
+      key: "restaurants",
+      server: true,
+      transform: (data) => {
+        return data.map(r => {
+          r.menu = r.menu.map(m => {
+            m.date = new Date(m.date);
+            return m;
           });
-          return restaurant;
+          return r;
         });
-      },
+      }
     });
 
-
-    const restaurants = response.data;
-
     return {
-      restaurants
+      restaurants: response.data
     };
   },
   beforeMount() {

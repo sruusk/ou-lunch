@@ -10,7 +10,8 @@
     "dev": "nuxt dev app",
     "generate": "nuxt generate app",
     "preview": "nuxt preview app",
-    "postinstall": "nuxt prepare app"
+    "postinstall": "nuxt prepare app",
+    "runfront": "node app/.output/server/index.js"
   },
   "keywords": [],
   "license": "MIT",
