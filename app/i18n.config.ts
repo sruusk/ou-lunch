@@ -12,7 +12,7 @@ export default defineI18nConfig(() => ({
         },
         fi: {
             title: 'OY Lounaat',
-            noMenu: 'Ruokalista ei ole saatavilla valitulle päivälle',
+            noMenu: 'Valitulle päivälle ei ole saatavilla ruokalistaa',
             footer: {
                 feedback: 'Anna palautetta',
                 joinTelegram: 'Liity Telegramiin',
