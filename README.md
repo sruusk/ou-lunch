@@ -1,12 +1,13 @@
-# Oulu University Lunch Menu Backend
+# Oulu University Lunch Menu
 
-This backend application fetches and updates lunch menus from various restaurant APIs on the Oulu University campus. The menus are stored in a MongoDB database and can be accessed via an API endpoint.
+This repository contains both the backend and the NuxtJS frontend for fetching, updating, and displaying lunch menus from various restaurant APIs on the Oulu University campus. The menus are stored in a MongoDB database and can be accessed via an API endpoint.
 
 ## Features
 
 - Fetches lunch menus from multiple restaurant APIs.
 - Periodically updates the menus in the MongoDB database.
 - Provides an API endpoint to retrieve the compiled list of menus.
+- Displays the lunch menus on a NuxtJS frontend.
 
 ## Environment
 
@@ -14,6 +15,7 @@ This backend application fetches and updates lunch menus from various restaurant
 |----------|------------------------|---------------------------|
 | DBURL    | MongoDB connection URL | mongodb://127.0.0.1:27017 |
 | DBNAME   | MongoDB database name  | ou-lunch                  |
+| PORT     | Server port            | 3000                      |
 
 ## API Endpoints
 
@@ -25,7 +27,7 @@ This backend application fetches and updates lunch menus from various restaurant
 
 ## Frontend
 
-The frontend for this project is hosted at [ouf.fi](https://ouf.fi).
+The frontend for this project is built with NuxtJS and is hosted at [ouf.fi](https://ouf.fi).
 
 ## Contributing
 
