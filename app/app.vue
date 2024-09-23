@@ -40,7 +40,7 @@ export default defineComponent({
     };
   },
   async setup() {
-    const url = import.meta.env.DEV ? "http://localhost:3001/api/menu" : "https://api.ouf.fi/api/menu";
+    const url = `${import.meta.env.VITE_API_URL || 'localhost:3001'}/api/menu`;
     const response = await useFetch(url, {
       transform: restaurants => {
         return restaurants.map(restaurant => {

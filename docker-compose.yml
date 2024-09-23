@@ -9,27 +9,35 @@ services:
       - PORT=3000
       - DBURL=mongodb://mongo:27017/ou-lunch
       - DBNAME=ou-lunch
-    ports:
-      - "3001:3000"
     depends_on:
       - mongo
+    networks:
+      - ouf_internal_network
 
   frontend:
     build:
       context: .
       dockerfile: Dockerfile.frontend
+    environment:
+      - VITE_API_URL=http://backend:3000
     ports:
       - "3000:3000"
     depends_on:
       - backend
       - mongo
+    networks:
+      - ouf_internal_network
 
   mongo:
     image: mongo:latest
-    ports:
-      - "27017:27017"
     volumes:
       - mongo-data:/data/db
+    networks:
+        - ouf_internal_network
 
 volumes:
   mongo-data:
+
+networks:
+  ouf_internal_network:
+    driver: bridge
