@@ -5,18 +5,23 @@ const { restaurantExists, addRestaurant, updateMenu } = require("./restaurants")
 const restaurants = [
     {
         name: "preludi",
+        display: "Preludi",
         menu: "ravintolapreludi"
     }, {
         name: "julinia",
+        display: "Julinia",
         menu: "ravintolajulinia"
     }, {
         name: "lipasto",
+        display: "Lipasto",
         menu: "ravintolalipasto"
     },{
         name: "pekuri",
+        display: "Pekuri",
         menu: "ravintolapekuri"
     }, {
         name: "solisti",
+        display: "H2O Solisti",
         menu: "h2osolisti"
     }
 ];
@@ -31,7 +36,7 @@ const getRestaurant = async (restaurant) => {
     }
 
     const res = await fetch(`https://api.fi.poweresta.com/publicmenu/dates/uniresta/${ restaurant.name }/?menu=${ restaurant.menu }&dates=${ dates.join(',') }`).then(res => res.json());
-    return { name: restaurant.name, menu: formatMenu(res) };
+    return { name: restaurant.display, menu: formatMenu(res) };
 }
 
 const formatMenu = (menu) => {
