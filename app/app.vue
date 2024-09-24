@@ -50,8 +50,6 @@ export default defineNuxtComponent({
       }
     });
 
-    console.log(response.data);
-
     return {
       restaurants: response.data
     };
