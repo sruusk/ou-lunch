@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "nodemon": "nodemon --ignore public/ index.js",
+    "nodemon": "nodemon --ignore app/ index.js",
     "build": "nuxt build app",
     "dev": "nuxt dev app",
     "generate": "nuxt generate app",

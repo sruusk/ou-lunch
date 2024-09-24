@@ -13,10 +13,8 @@
     <div v-if="menus?.length"
          v-for="(menu, index) in menus"
          :key="index"
-         class="py-2 border-b-2 last:border-0 first:pt-0"
     >
-      <h2 class="uppercase text-xs">{{ menu.name }}</h2>
-
+      <UDivider :label="menu.name" size="sm" />
       <div v-for="(item, itemIndex) in menu.items"
            :key="itemIndex"
            class="mb-2 last:mb-0 flex flex-nowrap justify-between items-center"
