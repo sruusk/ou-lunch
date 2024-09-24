@@ -5,6 +5,7 @@
       class="text-cool-600 dark:text-cool-400 flex items-center"
       to="https://github.com/sruusk/ou-lunch"
       target="_blank"
+      :aria-label="$t('aria.source')"
     >
       <UIcon class="w-10 h-10" name="grommet-icons:github"/>
     </ULink>

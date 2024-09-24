@@ -8,6 +8,10 @@ export default defineI18nConfig(() => ({
             footer: {
                 feedback: 'Feedback',
                 joinTelegram: 'Join Telegram',
+            },
+            aria: {
+                ingredients: 'Ingredients',
+                source: 'Source code on GitHub',
             }
         },
         fi: {
@@ -16,6 +20,10 @@ export default defineI18nConfig(() => ({
             footer: {
                 feedback: 'Anna palautetta',
                 joinTelegram: 'Liity Telegramiin',
+            },
+            aria: {
+                ingredients: 'Ainesosat',
+                source: 'Lähdekoodi GitHub',
             }
         }
     }

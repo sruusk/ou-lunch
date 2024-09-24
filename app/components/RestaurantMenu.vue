@@ -27,7 +27,7 @@
             {{ item.diets }}
           </p>
         </div>
-        <UPopover mode="click" v-if="item.ingredients?.length > 10 && item.ingredients !== item.name">
+        <UPopover mode="click" v-if="item.ingredients?.length > 10 && item.ingredients !== item.name" :aria-label="$t('aria.ingredients')">
           <UIcon name="material-symbols:info" class="w-5 h-5 inline-block "/>
           <template #panel>
             <div class="p-2 w-96 max-w-[90vw]">
