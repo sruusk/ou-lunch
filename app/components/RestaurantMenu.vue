@@ -3,7 +3,7 @@
     <template #header>
       <ULink
         :external="true"
-        :to="link"
+        :to="restaurant.url"
         class="capitalize text-xl text-blue-800 font-semibold dark:text-blue-200"
         target="_blank"
       >
@@ -62,21 +62,6 @@ export default defineNuxtComponent({
       const lang = this.$i18n.locale === "en" ? "en" : "fi";
       // Find the menu for the current date and return it in the correct language
       return this.restaurant.menu.find(menu => menu.date.toDateString() === this.date.toDateString())?.[lang];
-    },
-    link() {
-      const resolvers = [
-        { r: /mara/gi, l: "https://juvenes.fi/mara/" },
-        { r: /foobar/gi, l: "https://juvenes.fi/foobar/" },
-        { r: /kerttu/gi, l: "https://juvenes.fi/kerttu/" },
-        { r: /voltti/gi, l: "https://juvenes.fi/voltti/" },
-        { r: /preludi/gi, l: "http://www.uniresta.fi/preludi" },
-        { r: /julinia/gi, l: "http://www.uniresta.fi/julinia" },
-        { r: /lipasto/gi, l: "http://www.uniresta.fi/lipasto" },
-        { r: /pekuri/gi, l: "https://ravintolapekuri.fi/" },
-        { r: /makosa/gi, l: "https://www.ravintolamakosa.fi/" },
-        { r: /solisti/gi, l: "https://www.health2organic.fi/" },
-      ];
-      return resolvers.find(({ r }) => r.test(this.restaurant.name))?.l;
     }
   },
 });

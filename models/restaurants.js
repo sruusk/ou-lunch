@@ -24,7 +24,7 @@ const getMenus = async () => {
         return restaurants.map(restaurant => {
             const menu = restaurant.menu.filter(menu => menu.date >= today);
             return { name: restaurant.name, menu };
-        });
+        }).filter(restaurant => restaurant.menu.length > 0);
     } catch(err) {
         console.error(err);
     }
@@ -46,13 +46,17 @@ const getRestaurant = async (name) => {
 
 /**
  * Adds a new restaurant to the database.
- * @param {string} name - Name of the restaurant to add.
+ * @param {string} name - Name of the restaurant to add
+ * @param {string} url - URL of the restaurant
+ * @param {string} campus - Campus of the restaurant
  * @returns {Promise<void>}
  */
-const addRestaurant = async (name) => {
+const addRestaurant = async (name, url, campus) => {
     if(!name) throw new Error('Name is required');
+    if(!url) throw new Error('URL is required');
+    if(!campus) throw new Error('Campus is required');
     try {
-        await (await getDb()).collection('restaurants').insertOne({ name, menu: [] });
+        await (await getDb()).collection('restaurants').insertOne({ name, url, campus, menu: [] });
     } catch(err) {
         console.error(JSON.stringify(err, null, 2));
     }

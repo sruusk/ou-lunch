@@ -5,24 +5,60 @@ const { restaurantExists, addRestaurant, updateMenu } = require("./restaurants")
 const restaurants = [
     {
         name: "preludi",
-        display: "Preludi",
-        menu: "ravintolapreludi"
+        menu: "ravintolapreludi",
+        meta: {
+            name: "Preludi",
+            url: "http://www.uniresta.fi/preludi",
+            campus: "Linnanmaa",
+        }
     }, {
         name: "julinia",
-        display: "Julinia",
-        menu: "ravintolajulinia"
+        menu: "ravintolajulinia",
+        meta: {
+            name: "Julinia",
+            url: "http://www.uniresta.fi/julinia",
+            campus: "Linnanmaa"
+        }
+    }, {
+        name: "garden",
+        menu: "juliniagarden",
+        meta: {
+            name: "Julinia Garden",
+            url: "http://www.uniresta.fi/julinia",
+            campus: "Linnanmaa"
+        }
     }, {
         name: "lipasto",
-        display: "Lipasto",
-        menu: "ravintolalipasto"
-    },{
+        menu: "ravintolalipasto",
+        meta: {
+            name: "Lipasto",
+            url: "http://www.uniresta.fi/lipasto",
+            campus: "Linnanmaa"
+        }
+    }, {
+        name: "kahvilalipasto",
+        menu: "lipastosalaattitori",
+        meta: {
+            name: "Kahvila Lipasto",
+            url: "http://www.uniresta.fi/lipasto",
+            campus: "Linnanmaa"
+        }
+    }, {
         name: "pekuri",
-        display: "Pekuri",
-        menu: "ravintolapekuri"
+        menu: "ravintolapekuri",
+        meta: {
+            name: "Pekuri",
+            url: "https://ravintolapekuri.fi/",
+            campus: "Linnanmaa"
+        }
     }, {
         name: "campus",
-        display: "H2O Campus",
-        menu: "h2ocampus"
+        menu: "h2ocampus",
+        meta: {
+            name: "H2O Campus",
+            url: "https://www.health2organic.fi/",
+            campus: "Linnanmaa"
+        }
     }
 ];
 
@@ -36,7 +72,7 @@ const getRestaurant = async (restaurant) => {
     }
 
     const res = await fetch(`https://api.fi.poweresta.com/publicmenu/dates/uniresta/${ restaurant.name }/?menu=${ restaurant.menu }&dates=${ dates.join(',') }`).then(res => res.json());
-    return { name: restaurant.display, menu: formatMenu(res) };
+    return { ...restaurant.meta, menu: formatMenu(res) };
 }
 
 const formatMenu = (menu) => {
@@ -70,7 +106,7 @@ const getAllMenus = async () => {
 
 const updateRestaurants = async () => {
     const menus = await getAllMenus();
-    for (const m of menus) if (!await restaurantExists(m.name)) await addRestaurant(m.name);
+    for (const m of menus) if (!await restaurantExists(m.name)) await addRestaurant(m.name, m.url, m.campus);
     // Update the menu for each restaurant
     menus.forEach(menu => {
         menu.menu.forEach(day => {

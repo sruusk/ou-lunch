@@ -1,6 +1,33 @@
 const { updateMenu, restaurantExists, addRestaurant } = require('./restaurants');
 
-const restaurants = [ 49, 69, 70 ];
+const restaurants = [49, 69, 70];
+
+const resolvers = [
+    {
+        r: /mara/gi, l: {
+            url: "https://juvenes.fi/mara/",
+            campus: "Linnanmaa"
+        }
+    },
+    {
+        r: /foobar/gi, l: {
+            url: "https://juvenes.fi/foobar/",
+            campus: "Linnanmaa"
+        }
+    },
+    {
+        r: /kerttu/gi, l: {
+            url: "https://juvenes.fi/kerttu/",
+            campus: "Linnanmaa"
+        }
+    },
+    {
+        r: /voltti/gi, l: {
+            url: "https://juvenes.fi/voltti/",
+            campus: "Linnanmaa"
+        }
+    },
+];
 
 /**
  * Get menu for restaurant.
@@ -14,13 +41,13 @@ const getMenu = async (restaurant) => {
         return {
             name: menu.name,
             fin: menu.days
-        }
+        };
     });
     formatMenu(eng).forEach((menu) => {
         menus.find(m => m.name === menu.name).eng = menu.days;
     });
     return menus.flat();
-}
+};
 
 /**
  * Get menu for restaurant.
@@ -31,7 +58,7 @@ const getMenu = async (restaurant) => {
 const getRestaurant = (restaurant, lang) => {
     return fetch(`https://fi.jamix.cloud/apps/menuservice/rest/haku/menu/93077/${ restaurant }?lang=${ lang }`)
         .then(res => res.json());
-}
+};
 
 /**
  * Format menu
@@ -59,24 +86,29 @@ const formatMenu = (menu) => {
                                     name: menuItem.name,
                                     diets: menuItem.diets,
                                     ingredients: menuItem.ingredients
-                                }
+                                };
                             })
-                        }
+                        };
                     })
-                }
+                };
             })
-        }
+        };
     });
-}
+};
 
 const getAllMenus = async () => {
     const menus = await Promise.all(restaurants.map(getMenu));
     return menus.flat();
-}
+};
 
 const updateRestaurants = async () => {
     const menus = await getAllMenus();
-    for (const m of menus) if (!await restaurantExists(m.name)) await addRestaurant(m.name);
+    for(const m of menus) {
+        if(!await restaurantExists(m.name)){
+            const res = resolvers.find(r => r.r.test(m.name));
+            await addRestaurant(m.name, res.l.url, res.l.campus);
+        }
+    }
     menus.forEach(menu => {
         menu.fin.forEach(day => {
             const out = {
@@ -86,13 +118,12 @@ const updateRestaurants = async () => {
             updateMenu(menu.name, day.date, out);
         });
     });
-}
+};
 
 //updateRestaurants().then(() => console.log('Jamix menus updated'));
-
 
 //getAllMenus().then(menus => console.log(JSON.stringify(menus, null, 2)));
 
 //getMenu(restaurants[2]).then(m => console.log(JSON.stringify(m, null, 2)));
 
-module.exports= { updateRestaurants };
+module.exports = { updateRestaurants };
