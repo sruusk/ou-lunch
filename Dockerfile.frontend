@@ -13,8 +13,5 @@ RUN npm install
 # Build the NuxtJS application
 RUN npm run build
 
-# Expose the port the app runs on
-EXPOSE 3000
-
 # Start the NuxtJS server
 CMD ["node", "app/.output/server/index.mjs"]
