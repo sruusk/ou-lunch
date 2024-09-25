@@ -17,7 +17,7 @@
     </div>
     <UPopover mode="click" v-if="item.ingredients?.length > 10 && item.ingredients !== item.name"
               :label="$t('aria.ingredients')">
-      <UButton icon="material-symbols:info" variant="text" size="sm" class="p-0" :aria-label="$t('aria.ingredients')"/>
+      <UButton icon="material-symbols:info" color="white" variant="link" size="sm" class="p-0" :aria-label="$t('aria.ingredients')"/>
       <template #panel>
         <div class="p-2 w-96 max-w-[90vw]">
           <p class="text-cool-800 dark:text-cool-300 text-sm whitespace-break-spaces" v-html="item.ingredients"/>

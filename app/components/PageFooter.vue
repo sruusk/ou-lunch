@@ -12,9 +12,13 @@
     <UPopover class="w-0">
       <UButton :label="$t('footer.feedback')" color="primary" variant="soft" class="-translate-x-full"/>
       <template #panel>
-        <div class="p-8">
+        <div class="p-5 flex flex-col gap-2">
           <UButton
-            :label="$t('footer.joinTelegram')"
+            :label="$t('footer.feedbackGithub')"
+            to="https://github.com/sruusk/ou-lunch/issues/new"
+          />
+          <UButton
+            :label="$t('footer.feedbackTelegram')"
             @click="openTelegram"
           />
         </div>

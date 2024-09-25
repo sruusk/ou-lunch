@@ -7,7 +7,8 @@ export default defineI18nConfig(() => ({
             noMenu: 'No menu available for selected day',
             footer: {
                 feedback: 'Feedback',
-                joinTelegram: 'Join Telegram',
+                feedbackTelegram: 'Give feedback on Telegram',
+                feedbackGithub: 'Give feedback on GitHub',
             },
             aria: {
                 ingredients: 'Ingredients',
@@ -33,7 +34,8 @@ export default defineI18nConfig(() => ({
             noMenu: 'Valitulle päivälle ei ole saatavilla ruokalistaa',
             footer: {
                 feedback: 'Anna palautetta',
-                joinTelegram: 'Liity Telegramiin',
+                feedbackTelegram: 'Anna palautetta Telegramissa',
+                feedbackGithub: 'Anna palautetta GitHubissa',
             },
             aria: {
                 ingredients: 'Ainesosat',
