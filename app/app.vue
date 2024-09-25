@@ -5,13 +5,17 @@
       <template #header>
         <PageHeader/>
       </template>
-      <DateSelect v-model:date="date" :dates="dates"/>
+      <div class="flex justify-center items-center mb-4">
+        <DateSelect v-model:date="date" :dates="dates"/>
+        <OptionsMenu v-model:config="filterConfig"/>
+      </div>
       <UContainer class="flex flex-wrap justify-center max-w-7xl">
         <RestaurantMenu
           v-for="restaurant in restaurants"
           :key="restaurant.name"
           :date="date"
           :restaurant="restaurant"
+          :filters="filterConfig"
         />
       </UContainer>
       <template #footer>
@@ -27,6 +31,17 @@ export default defineNuxtComponent({
   data() {
     return {
       date: new Date(),
+      filterConfig: {
+        filters: {
+          vegan: false,
+          eggFree: false,
+          milkFree: false,
+          glutenFree: false,
+          lactoseFree: false,
+          recommended: false,
+        },
+        method: "highlight",
+      },
     };
   },
   async setup() {

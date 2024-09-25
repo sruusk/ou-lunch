@@ -6,8 +6,7 @@ export default defineNuxtConfig({
     '@nuxtjs/sitemap',
     '@nuxt/ui',
     '@nuxtjs/i18n',
-    '@pinia/nuxt',
-    '@nuxtjs/seo'
+    '@nuxtjs/seo',
   ],
   i18n: {
     vueI18n: './i18n.config.ts',

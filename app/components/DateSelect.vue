@@ -1,7 +1,5 @@
 <template>
-  <div class="flex flex-wrap justify-center items-center gap-2 pb-4">
-    <UTabs :items="items" v-model="selected"/>
-  </div>
+    <UTabs :items="items" v-model="selected" :content="false"/>
 </template>
 
 <script lang="ts">

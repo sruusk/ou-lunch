@@ -23,7 +23,7 @@ const getMenus = async () => {
         const restaurants = await (await getDb()).collection('restaurants').find({}).toArray();
         return restaurants.map(restaurant => {
             const menu = restaurant.menu.filter(menu => menu.date >= today);
-            return { name: restaurant.name, menu };
+            return { ...restaurant, menu };
         }).filter(restaurant => restaurant.menu.length > 0);
     } catch(err) {
         console.error(err);

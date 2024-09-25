@@ -85,7 +85,7 @@ const formatMenu = (menu) => {
                     items: option.rows.map(row => {
                         return {
                             name: row.names.find(name => name.language === lang).name,
-                            diets: row.diets.find(diet => diet.language === lang).dietShorts?.join(', '),
+                            diets: row.diets.find(diet => diet.language === lang).dietShorts?.join(', ').replaceAll('KELA', '*'),
                             ingredients: row.ingredients.find(ingredient => ingredient.language === lang).ingredients
                         }
                     })
