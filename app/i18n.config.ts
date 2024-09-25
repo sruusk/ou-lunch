@@ -12,6 +12,7 @@ export default defineI18nConfig(() => ({
             aria: {
                 ingredients: 'Ingredients',
                 source: 'Source code on GitHub',
+                filterOptions: 'Filter options',
             },
             filters: {
                 filter: 'Filter',
@@ -37,6 +38,7 @@ export default defineI18nConfig(() => ({
             aria: {
                 ingredients: 'Ainesosat',
                 source: 'Lähdekoodi GitHub',
+                filterOptions: 'Suodatusvaihtoehdot',
             },
             filters: {
                 filter: 'Suodata',

@@ -6,6 +6,7 @@
                size="md"
                :ui="{ rounded: 'rounded-full' }"
                icon="fluent:textbox-settings-20-filled"
+               :aria-label="$t('aria.filterOptions')"
       />
     </UChip>
     <template #panel>
