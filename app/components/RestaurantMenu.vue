@@ -15,7 +15,7 @@
          :key="index"
          class="first:-mt-2"
     >
-      <MenuVariant :filters="filters" :menu="menu"/>
+      <MenuVariant :menu="menu"/>
     </div>
     <div v-else class="py-2">
       <p class="text-cool-600 dark:text-cool-400">{{ $t("noMenu") }}</p>
@@ -33,10 +33,6 @@ export default defineNuxtComponent({
     },
     date: {
       type: Date,
-      required: true
-    },
-    filters: {
-      type: Object,
       required: true
     }
   },

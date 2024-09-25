@@ -31,17 +31,24 @@
 <script lang="ts">
 export default defineNuxtComponent({
   name: "OptionsMenu",
-  emits: ["update:config"],
-  props: {
-    config: {
-      type: Object,
-      required: true,
-    },
-  },
-  data() {
-    return {
-      conf: this.config,
-    };
+  setup() {
+    const cookie = useCookie('config', { maxAge: 60 * 60 * 24 * 365 }); // 1 year
+
+    const conf = useState('config', () => {
+      return cookie.value || {
+        filters: {
+          vegan: false,
+          eggFree: false,
+          milkFree: false,
+          glutenFree: false,
+          lactoseFree: false,
+          recommended: false,
+        },
+        method: "highlight",
+      };
+    });
+
+    return { cookie, conf };
   },
   computed: {
     availableMethods() {
@@ -53,18 +60,12 @@ export default defineNuxtComponent({
   },
   watch: {
     conf: {
-      handler() {
-        this.$emit("update:config", this.conf);
-      },
       deep: true,
-    },
-    config: {
       handler() {
-        this.conf = this.config;
-      },
-      deep: true,
-    },
-  },
+        this.cookie = this.conf;
+      }
+    }
+  }
 });
 </script>
 

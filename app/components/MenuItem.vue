@@ -34,10 +34,10 @@ export default {
       type: Object,
       required: true
     },
-    filters: {
-      type: Object,
-      required: true
-    }
+  },
+  setup() {
+    const filters = useState('config');
+    return { filters };
   },
   created() {
     this.$emit('visibility', this.isVisible);

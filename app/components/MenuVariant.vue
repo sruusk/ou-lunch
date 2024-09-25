@@ -4,7 +4,6 @@
       <MenuItem v-for="(item, itemIndex) in menu.items"
                 :key="itemIndex"
                 :item="item"
-                :filters="filters"
                 @visibility="visibleChildren[itemIndex] = $event"
       />
     </div>
@@ -16,10 +15,6 @@ export default defineNuxtComponent({
   name: 'MenuVariant',
   components: { MenuItem },
   props: {
-    filters: {
-      type: Object,
-      required: true
-    },
     menu: {
       type: Object,
       required: true
