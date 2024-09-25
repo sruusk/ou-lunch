@@ -16,6 +16,12 @@ export default defineNuxtConfig({
       { code: 'fi', language: 'fi-FI' },
     ],
     defaultLocale: 'en',
+    pages: {
+      home: {
+        en: '/en',
+        fi: '/fi',
+      },
+    }
   },
   colorMode: {
     preference: 'system',
@@ -34,13 +40,4 @@ export default defineNuxtConfig({
   ogImage: {
     enabled: false,
   },
-  nitro: {
-    prerender: {
-      routes: [
-        '/',
-        '/fi',
-        '/en',
-      ]
-    }
-  }
 })
