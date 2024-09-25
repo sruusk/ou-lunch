@@ -3,7 +3,8 @@ export default defineI18nConfig(() => ({
     locale: 'en',
     messages: {
         en: {
-            title: 'OU Lunches',
+            title: 'Oulu University Food',
+            description: 'Lunch menus of the University of Oulu',
             noMenu: 'No menu available for selected day',
             footer: {
                 feedback: 'Feedback',
@@ -30,7 +31,8 @@ export default defineI18nConfig(() => ({
             }
         },
         fi: {
-            title: 'OY Lounaat',
+            title: 'Oulun Yliopiston Lounaat',
+            description: 'Oulun yliopiston lounasravintoloiden ruokalistat',
             noMenu: 'Valitulle päivälle ei ole saatavilla ruokalistaa',
             footer: {
                 feedback: 'Anna palautetta',

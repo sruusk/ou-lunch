@@ -47,7 +47,7 @@ export default defineNuxtComponent({
   async setup() {
     useSeoMeta({
       title: "Menu",
-      description: "A simple web app to check the daily menus of the restaurants at the University of Oulu.",
+      description: "Oulu University lunch menus",
       ogImage: "/logo.png",
     });
 
@@ -68,6 +68,13 @@ export default defineNuxtComponent({
     return {
       restaurants: response.data
     };
+  },
+  created() {
+    useHead({
+      titleTemplate: (titleChunk) => {
+        return titleChunk ? `${titleChunk} - ${this.$t("title")}` : this.$t("title");
+      },
+    });
   },
   beforeMount() {
     if(!this.restaurants?.length) {

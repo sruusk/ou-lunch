@@ -7,6 +7,7 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     '@nuxtjs/i18n',
     '@nuxtjs/seo',
+    "@nuxtjs/sitemap"
   ],
   i18n: {
     vueI18n: './i18n.config.ts',
@@ -32,5 +33,14 @@ export default defineNuxtConfig({
   },
   ogImage: {
     enabled: false,
+  },
+  nitro: {
+    prerender: {
+      routes: [
+        '/',
+        '/fi',
+        '/en',
+      ]
+    }
   }
 })
