@@ -1,11 +1,13 @@
 <template>
   <UPopover class="ml-5" overlay>
-    <UButton variant="outline"
-             color="primary"
-             size="md"
-             :ui="{ rounded: 'rounded-full' }"
-             icon="fluent:textbox-settings-20-filled"
-    />
+    <UChip inset size="md" :show="isFiltered">
+      <UButton variant="outline"
+               color="primary"
+               size="md"
+               :ui="{ rounded: 'rounded-full' }"
+               icon="fluent:textbox-settings-20-filled"
+      />
+    </UChip>
     <template #panel>
       <div class="p-4">
 
@@ -57,6 +59,9 @@ export default defineNuxtComponent({
         { value: "hide", label: this.$t("filters.hide") },
       ];
     },
+    isFiltered() {
+      return Object.values(this.conf.filters).some(v => v);
+    }
   },
   watch: {
     conf: {
