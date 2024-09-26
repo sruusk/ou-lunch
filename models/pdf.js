@@ -28,7 +28,7 @@ const getMakosaUrl = () => {
     const year = new Date().getFullYear();
     const month = new Date().getMonth() + 1;
     const week = new Date().getWeek();
-    return "https://www.ravintolamakosa.fi/wp-content/uploads/2024/09/Makosa_vko39Valtti.pdf";
+    return `https://www.ravintolamakosa.fi/wp-content/uploads/${year}/${month}/Makosa_vko${week}Valtti.pdf`;
 }
 
 /**

@@ -5,7 +5,7 @@ const { getDb } = require('../utils/mongodb');
  * Get all restaurants
  * @returns {Promise<void>}
  */
-const getRestaurants = async (restaurant) => {
+const getRestaurants = async () => {
     try {
         return (await getDb()).collection('restaurants').find({}).toArray();
     } catch(err) {

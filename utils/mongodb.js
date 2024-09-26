@@ -1,4 +1,4 @@
-const { MongoClient, GridFSBucket, Db } = require('mongodb');
+const { MongoClient, Db } = require('mongodb');
 const database = process.env.DBNAME || 'ou-lunch';
 
 const client = new MongoClient(process.env.DBURL || 'mongodb://127.0.0.1:27017');
