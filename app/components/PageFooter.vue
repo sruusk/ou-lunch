@@ -9,7 +9,7 @@
     >
       <UIcon class="w-10 h-10" name="grommet-icons:github"/>
     </ULink>
-    <UPopover class="w-0" :popper="{ placement: 'top-start' }">
+    <UPopover class="w-0" :popper="{ placement: 'top-end' }">
       <UButton :label="$t('footer.feedback')" color="primary" variant="soft" class="-translate-x-full"/>
       <template #panel>
         <div class="p-5 flex flex-col gap-2">
