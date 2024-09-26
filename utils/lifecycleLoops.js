@@ -1,6 +1,5 @@
 const jamix = require('../models/jamix');
 const poweresta = require('../models/poweresta');
-const { updateMenu } = require("../models/restaurants");
 
 // Update menus on startup and at 10:00 every day
 const updateMenus = async () => {

@@ -86,7 +86,8 @@ const updateMenu = async (name, date, menu) => {
         if(restaurant) await (await getDb()).collection('restaurants').updateOne({ name, 'menu.date': date }, { $set: { 'menu.$': { date, ...menu } } });
         else await (await getDb()).collection('restaurants').updateOne({ name }, { $push: { menu: { date, ...menu } } });
     } catch(err) {
-        console.error(err);
+        if(err.code === 121) console.log(JSON.stringify(menu, null, 2), JSON.stringify(err, null, 2), name); // Validation error
+        else console.error(err);
     }
 }
 

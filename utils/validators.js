@@ -33,10 +33,74 @@ module.exports = {
                             en: {
                                 bsonType: 'array',
                                 description: 'Menu items in English',
+                                items: {
+                                    bsonType: 'object',
+                                    required: ['name', 'items'],
+                                    properties: {
+                                        name: {
+                                            bsonType: 'string',
+                                            description: 'Menu category name',
+                                        },
+                                        items: {
+                                            bsonType: 'array',
+                                            description: 'Menu items',
+                                            items: {
+                                                bsonType: 'object',
+                                                required: ['name'],
+                                                properties: {
+                                                    name: {
+                                                        bsonType: 'string',
+                                                        description: 'Menu item name',
+                                                    },
+                                                    diets: {
+                                                        bsonType: 'string',
+                                                        description: 'Dietary restrictions',
+                                                    },
+                                                    ingredients: {
+                                                        bsonType: 'string',
+                                                        description: 'Ingredients',
+                                                    }
+                                                },
+                                            },
+                                        }
+                                    },
+                                },
                             },
                             fi: {
                                 bsonType: 'array',
                                 description: 'Menu items in Finnish',
+                                items: {
+                                    bsonType: 'object',
+                                    required: ['name', 'items'],
+                                    properties: {
+                                        name: {
+                                            bsonType: 'string',
+                                            description: 'Menu category name',
+                                        },
+                                        items: {
+                                            bsonType: 'array',
+                                            description: 'Menu items',
+                                            items: {
+                                                bsonType: 'object',
+                                                required: ['name'],
+                                                properties: {
+                                                    name: {
+                                                        bsonType: 'string',
+                                                        description: 'Menu item name',
+                                                    },
+                                                    diets: {
+                                                        bsonType: 'string',
+                                                        description: 'Dietary restrictions',
+                                                    },
+                                                    ingredients: {
+                                                        bsonType: 'string',
+                                                        description: 'Ingredients',
+                                                    }
+                                                },
+                                            },
+                                        }
+                                    },
+                                },
                             },
                         },
                     },

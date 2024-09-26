@@ -15,7 +15,8 @@ if(!client.connection) client.connect().then(async () => {
         client.db(database).command({
             collMod: collection,
             validator: schema[collection],
-            validationLevel: 'strict'
+            validationLevel: 'strict',
+            validationAction: 'warn'
         });
     });
 });
