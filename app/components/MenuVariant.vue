@@ -27,6 +27,10 @@ export default defineNuxtComponent({
   },
   computed: {
     isVisible() {
+      // If running in SSR, always show the menu as filtering is done client-side
+      if (process.server) {
+        return true;
+      }
       return Object.values(this.visibleChildren).some(v => v);
     }
   },
