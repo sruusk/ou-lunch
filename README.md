@@ -1,4 +1,23 @@
-# Oulu University Lunch Menu
+<p style="text-align: center; padding: 20px;">
+  <img src="app/assets/ouf-high-resolution-logo-transparent.webp" height="200">
+</p>
+
+![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white)
+![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
+![Nuxtjs](https://img.shields.io/badge/Nuxt-002E3B?style=for-the-badge&logo=nuxtdotjs&logoColor=#00DC82)
+![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)
+![Vue.js](https://img.shields.io/badge/vuejs-%2335495e.svg?style=for-the-badge&logo=vuedotjs&logoColor=%234FC08D)
+![WebStorm](https://img.shields.io/badge/webstorm-143?style=for-the-badge&logo=webstorm&logoColor=white&color=black)
+![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
+![Markdown](https://img.shields.io/badge/markdown-%23000000.svg?style=for-the-badge&logo=markdown&logoColor=white)
+![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
+![Debian](https://img.shields.io/badge/Debian-D70A53?style=for-the-badge&logo=debian&logoColor=white)
+![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
+![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
+![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)
+![Git](https://img.shields.io/badge/git-%23F05032.svg?style=for-the-badge&logo=git&logoColor=white)
+<img src="https://cdn.hetzner.com/assets/Uploads/Hetzner-Logo-slogan_white_space-red.jpg" alt="Hetzner" height="28"/>
 
 This repository contains both the backend and the NuxtJS frontend for fetching, updating, and displaying lunch menus from various restaurant APIs on the Oulu University campus. The menus are stored in a MongoDB database and can be accessed via an API endpoint.
 
@@ -11,11 +30,12 @@ This repository contains both the backend and the NuxtJS frontend for fetching, 
 
 ## Environment
 
-| Variable | Description            | Default                   |
-|----------|------------------------|---------------------------|
-| DBURL    | MongoDB connection URL | mongodb://127.0.0.1:27017 |
-| DBNAME   | MongoDB database name  | ou-lunch                  |
-| PORT     | Server port            | 3000                      |
+| Variable     | Description            | Default                   |
+|--------------|------------------------|---------------------------|
+| DBURL        | MongoDB connection URL | mongodb://127.0.0.1:27017 |
+| DBNAME       | MongoDB database name  | ou-lunch                  |
+| PORT         | Backend server port    | 3001                      |
+| NUXT_API_URL | API Url                | http://localhost:3001     |
 
 ## API Endpoints
 
@@ -35,4 +55,4 @@ Contributions are welcome! Please fork the repository and submit a pull request.
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT Licence. See the [LICENCE](LICENSE) file for details.
