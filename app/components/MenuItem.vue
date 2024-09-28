@@ -49,14 +49,10 @@ export default {
 
       // Should return true if all enabled filters are present in the diets
       const f = [
-        [/^G$/i, this.filters.filters.glutenFree],
-        [/Gluten free/i, this.filters.filters.glutenFree],
-        [/^L$/i, this.filters.filters.lactoseFree],
-        [/Lactose free/i, this.filters.filters.lactoseFree],
-        [/^VEG$/i, this.filters.filters.vegan],
-        [/^Vegan$/i, this.filters.filters.vegan],
-        [/^M$/i, this.filters.filters.milkFree],
-        [/Milk free/i, this.filters.filters.milkFree],
+        [/(^G$)|(Gluten free)/i, this.filters.filters.glutenFree],
+        [/(^L$)|(Lactose free)|(Low lactose)/i, this.filters.filters.lactoseFree],
+        [/(^VEG$)|(Vegan)/i, this.filters.filters.vegan],
+        [/(^M$)|(Milk free)/i, this.filters.filters.milkFree],
         [/^Mu$/i, this.filters.filters.eggFree],
         [/\*/i, this.filters.filters.recommended],
       ];
