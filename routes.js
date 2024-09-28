@@ -38,8 +38,6 @@ const sendOptions = (filePath, response) => {
  * @type {*[]}
  */
 const allowedOrigins = [
-    'http://localhost:5173',
-    'http://localhost:3000',
     'https://ouf.fi',
 ];
 
@@ -93,7 +91,7 @@ const handleRequest = async (request, response) => {
     // Set security headers
     Object.entries(securityHeaders).forEach(([key, value]) => response.setHeader(key, value));
 
-    if(allowedOrigins.includes(headers.origin))
+    if(allowedOrigins.includes(headers.origin) || headers.origin?.startsWith('http://localhost'))
         response.setHeader('Access-Control-Allow-Origin', request.headers.origin);
 
     if (method.toUpperCase() === 'POST' && !(filePath in allowedMethods)) {

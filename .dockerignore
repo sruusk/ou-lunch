@@ -3,8 +3,6 @@
 
 # IntelliJ project files
 .idea
-*.iml
-out
 gen
 ### Node template
 # Logs
@@ -55,14 +53,10 @@ jspm_packages/
 web_modules/
 
 # TypeScript cache
-*.tsbuildinfo
-
 # Optional npm cache directory
 .npm
 
 # Optional eslint cache
-.eslintcache
-
 # Optional stylelint cache
 .stylelintcache
 
@@ -89,7 +83,6 @@ web_modules/
 .env.local
 
 # parcel-bundler cache (https://parceljs.org/)
-.cache
 .parcel-cache
 
 # Next.js build output
@@ -99,7 +92,6 @@ web_modules/
 dist
 
 # Gatsby files
-.cache/
 # Comment in the public line in if your project uses Gatsby and not Next.js
 # https://nextjs.org/blog/next-9-1#public-directory-support
 # public
@@ -141,6 +133,4 @@ dist
 .gen
 
 # Node dependencies
-node_modules
-
 # System files
