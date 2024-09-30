@@ -20,26 +20,10 @@ const restaurants = [
             campus: "Linnanmaa"
         }
     }, {
-        name: "garden",
-        menu: "juliniagarden",
-        meta: {
-            name: "Julinia Garden",
-            url: "http://www.uniresta.fi/julinia",
-            campus: "Linnanmaa"
-        }
-    }, {
         name: "lipasto",
         menu: "ravintolalipasto",
         meta: {
             name: "Lipasto",
-            url: "http://www.uniresta.fi/lipasto",
-            campus: "Linnanmaa"
-        }
-    }, {
-        name: "kahvilalipasto",
-        menu: "lipastosalaattitori",
-        meta: {
-            name: "Kahvila Lipasto",
             url: "http://www.uniresta.fi/lipasto",
             campus: "Linnanmaa"
         }
