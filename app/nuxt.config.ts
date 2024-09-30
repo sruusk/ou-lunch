@@ -18,8 +18,8 @@ export default defineNuxtConfig({
     defaultLocale: 'en',
     pages: {
       home: {
-        en: '/en',
-        fi: '/fi',
+        en: '/',
+        fi: '/',
       },
     }
   },
