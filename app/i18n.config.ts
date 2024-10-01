@@ -27,7 +27,7 @@ export default defineI18nConfig(() => ({
                 apply: 'Apply',
                 method: 'Select filter method',
                 highlight: 'Highlight',
-                hide: 'Hide',
+                hide: 'Hide others',
             }
         },
         fi: {
@@ -55,7 +55,7 @@ export default defineI18nConfig(() => ({
                 apply: 'Tallenna',
                 method: 'Valitse suodatustapa',
                 highlight: 'Korosta',
-                hide: 'Piilota',
+                hide: 'Piilota muut',
             }
         }
     }
