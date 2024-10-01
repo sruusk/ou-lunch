@@ -8,7 +8,7 @@ const restaurants = [
         menu: "ravintolapreludi",
         meta: {
             name: "Preludi",
-            url: "http://www.uniresta.fi/preludi",
+            url: "https://www.uniresta.fi/preludi",
             campus: "Linnanmaa",
         }
     }, {
@@ -16,7 +16,7 @@ const restaurants = [
         menu: "ravintolajulinia",
         meta: {
             name: "Julinia",
-            url: "http://www.uniresta.fi/julinia",
+            url: "https://www.uniresta.fi/julinia",
             campus: "Linnanmaa"
         }
     }, {
@@ -24,7 +24,7 @@ const restaurants = [
         menu: "ravintolalipasto",
         meta: {
             name: "Lipasto",
-            url: "http://www.uniresta.fi/lipasto",
+            url: "https://www.uniresta.fi/lipasto",
             campus: "Linnanmaa"
         }
     }, {

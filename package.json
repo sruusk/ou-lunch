@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "nodemon": "nodemon --ignore app/ index.js",
+    "resetdb": "node scripts/resetdb.js",
     "build": "nuxt build app",
     "dev": "nuxt dev app",
     "generate": "nuxt generate app",
