@@ -5,7 +5,7 @@
       <template #header>
         <PageHeader/>
       </template>
-      <div class="flex justify-center items-center mb-4">
+      <div class="flex justify-center items-center flex-wrap mb-4 gap-5">
         <DateSelect v-model:date="date" :dates="dates"/>
         <OptionsMenu v-model:config="filterConfig"/>
       </div>

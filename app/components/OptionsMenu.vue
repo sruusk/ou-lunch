@@ -1,5 +1,5 @@
 <template>
-  <UPopover class="ml-5" overlay>
+  <UPopover overlay>
     <UChip inset size="md" :show="isFiltered">
       <UButton variant="outline"
                color="primary"

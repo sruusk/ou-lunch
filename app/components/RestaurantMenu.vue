@@ -1,5 +1,5 @@
 <template>
-  <UCard class="my-2 mx-2 min-h-full max-w-80 min-w-80">
+  <UCard class="my-2 mx-2 min-h-full max-w-80 w-full">
     <template #header>
       <ULink
         :external="true"
