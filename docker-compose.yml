@@ -20,6 +20,8 @@ services:
       dockerfile: Dockerfile.frontend
     environment:
       - NUXT_API_URL=http://backend:3000
+      - NUXT_PUBLIC_U_SCRIPT=${U_SCRIPT}
+      - NUXT_PUBLIC_U_ID=${U_ID}
     ports:
       - "3000:3000"
     depends_on:

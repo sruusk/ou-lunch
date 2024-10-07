@@ -35,7 +35,11 @@ export default defineNuxtConfig({
     global: true,
   },
   runtimeConfig: {
-    apiUrl: 'http://localhost:3001'
+    apiUrl: 'http://localhost:3001',
+    public: {
+      uId: undefined,
+      uScript: undefined,
+    }
   },
   ogImage: {
     enabled: false,
