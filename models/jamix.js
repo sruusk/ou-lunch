@@ -5,37 +5,55 @@ const restaurants = [6, 49, 69, 70];
 
 const resolvers = [
     {
-        r: /mara/gi, l: {
+        restaurant: 49,
+        id: "111",
+        meta: {
+            name: "Mara",
             url: "https://juvenes.fi/mara/",
             campus: CAMPUSES.OULU.LINNANMAA
         }
     },
     {
-        r: /foobar/gi, l: {
+        restaurant: 69,
+        id: "84",
+        meta: {
+            name: "Foobar",
             url: "https://juvenes.fi/foobar/",
             campus: CAMPUSES.OULU.LINNANMAA
         }
     },
     {
-        r: /kerttu/gi, l: {
+        restaurant: 70,
+        id: "118",
+        meta: {
+            name: "Kerttu",
             url: "https://juvenes.fi/kerttu/",
             campus: CAMPUSES.OULU.LINNANMAA
         }
     },
     {
-        r: /voltti/gi, l: {
+        restaurant: 70,
+        id: "119",
+        meta: {
+            name: "Voltti",
             url: "https://juvenes.fi/voltti/",
             campus: CAMPUSES.OULU.LINNANMAA
         },
     },
     {
-        r: /konehuone/gi, l: {
+        restaurant: 6,
+        id: "112",
+        meta: {
+            name: "Konehuone",
             url: "https://juvenes.fi/konehuone/",
             campus: CAMPUSES.TAMPERE.HERVANTA
         }
     },
     {
-        r: /newton/gi, l: {
+        restaurant: 6,
+        id: "56",
+        meta: {
+            name: "Newton",
             url: "https://juvenes.fi/newton/",
             campus: CAMPUSES.TAMPERE.HERVANTA
         }
@@ -45,20 +63,26 @@ const resolvers = [
 /**
  * Get menu for restaurant.
  * @param {number} restaurant - ID of the restaurant in the jamix system.
- * @returns {Promise<{name: string, fin: Array, eng: Array}[]>} Menu for the restaurant.
+ * @returns {Promise<{name: string, campus: string, url: string, fin: {date: Date, options: {name: string, items: {name: string, diets: Array, ingredients: Array}}[]}[], eng: {date: Date, options: {name: string, items: {name: string, diets: Array, ingredients: Array}}[]}[]}[]>} Menu for the restaurant.
  */
 const getMenu = async (restaurant) => {
     try {
         const fin = await getRestaurant(restaurant, 'fi');
         const eng = await getRestaurant(restaurant, 'en');
         const menus = formatMenu(fin).map(menu => {
+            const meta = resolvers.find(r => r.restaurant === restaurant && r.id === menu.menuTypeId.toString())?.meta;
+            if(!meta) return;
             return {
-                name: menu.name,
+                name: meta.name,
+                campus: meta.campus,
+                url: meta.url,
+                menuTypeId: menu.menuTypeId,
                 fin: menu.days
             };
-        });
+        }).filter(menu => menu);
         formatMenu(eng).forEach((menu) => {
-            menus.find(m => m.name === menu.name).eng = menu.days;
+            const a = menus.find(m => m.menuTypeId === menu.menuTypeId);
+            if(a) a.eng = menu.days;
         });
         return menus.flat();
     } catch(err) {
@@ -81,12 +105,12 @@ const getRestaurant = (restaurant, lang) => {
 /**
  * Format menu
  * @param menu - Raw menu from Jamix API.
- * @returns {{date: Date, options: {name: string, items: {name: string, diets: Array, ingredients: Array}}[]}[]} Formatted menu.
+ * @returns {any[]} Formatted menu.
  */
 const formatMenu = (menu) => {
     return menu[0].menuTypes.map(type => {
         return {
-            name: type.menuTypeName.replace('lounas', '').trim(), // Remove "lounas" from the name
+            menuTypeId: type.menuTypeId,
             days: type.menus[0].days.map(day => {
                 // Date is in format "YYYYMMDD"
                 let d = day.date.toString();
@@ -123,8 +147,7 @@ const updateRestaurants = async () => {
     const menus = await getAllMenus();
     for(const m of menus) {
         if(!await restaurantExists(m.name)){
-            const res = resolvers.find(r => r.r.test(m.name));
-            await addRestaurant(m.name, res.l.url, res.l.campus);
+            await addRestaurant(m.name, m.url, m.campus);
         }
     }
     menus.forEach(menu => {
