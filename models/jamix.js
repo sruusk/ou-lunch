@@ -1,7 +1,7 @@
 const { updateMenu, restaurantExists, addRestaurant } = require('./restaurants');
 const {CAMPUSES} = require("../utils/static");
 
-const restaurants = [49, 69, 70];
+const restaurants = [6, 49, 69, 70];
 
 const resolvers = [
     {
@@ -34,6 +34,12 @@ const resolvers = [
             campus: CAMPUSES.TAMPERE.HERVANTA
         }
     },
+    {
+        r: /newton/gi, l: {
+            url: "https://juvenes.fi/newton/",
+            campus: CAMPUSES.TAMPERE.HERVANTA
+        }
+    }
 ];
 
 /**
