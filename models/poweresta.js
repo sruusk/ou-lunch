@@ -2,6 +2,7 @@
 //https://api.fi.poweresta.com/publicmenu/dates/uniresta/preludi/?menu=ravintolapreludi&dates=2024-09-19
 
 const { restaurantExists, addRestaurant, updateMenu } = require("./restaurants");
+const {CAMPUSES} = require("../utils/static");
 const restaurants = [
     {
         name: "preludi",
@@ -9,7 +10,7 @@ const restaurants = [
         meta: {
             name: "Preludi",
             url: "https://www.uniresta.fi/preludi",
-            campus: "Linnanmaa",
+            campus: CAMPUSES.OULU.LINNANMAA,
         }
     }, {
         name: "julinia",
@@ -17,7 +18,7 @@ const restaurants = [
         meta: {
             name: "Julinia",
             url: "https://www.uniresta.fi/julinia",
-            campus: "Linnanmaa"
+            campus: CAMPUSES.OULU.LINNANMAA
         }
     }, {
         name: "lipasto",
@@ -25,7 +26,7 @@ const restaurants = [
         meta: {
             name: "Lipasto",
             url: "https://www.uniresta.fi/lipasto",
-            campus: "Linnanmaa"
+            campus: CAMPUSES.OULU.LINNANMAA
         }
     }, {
         name: "pekuri",
@@ -33,7 +34,7 @@ const restaurants = [
         meta: {
             name: "Pekuri",
             url: "https://ravintolapekuri.fi/",
-            campus: "Linnanmaa"
+            campus: CAMPUSES.OULU.LINNANMAA
         }
     }, {
         name: "campus",
@@ -41,7 +42,7 @@ const restaurants = [
         meta: {
             name: "H2O Campus",
             url: "https://www.health2organic.fi/",
-            campus: "Linnanmaa"
+            campus: CAMPUSES.OULU.LINNANMAA
         }
     }
 ];
@@ -55,8 +56,13 @@ const getRestaurant = async (restaurant) => {
         dates.push(date.toISOString().split('T')[0]);
     }
 
-    const res = await fetch(`https://api.fi.poweresta.com/publicmenu/dates/uniresta/${ restaurant.name }/?menu=${ restaurant.menu }&dates=${ dates.join(',') }`).then(res => res.json());
-    return { ...restaurant.meta, menu: formatMenu(res) };
+    try {
+        const res = await fetch(`https://api.fi.poweresta.com/publicmenu/dates/uniresta/${ restaurant.name }/?menu=${ restaurant.menu }&dates=${ dates.join(',') }`).then(res => res.json());
+        return { ...restaurant.meta, menu: formatMenu(res) };
+    } catch(err) {
+        console.error("Error getting menu for", restaurant.meta.name, err);
+        return { ...restaurant.meta, menu: [] };
+    }
 }
 
 const formatMenu = (menu) => {
