@@ -1,4 +1,5 @@
 const { updateMenu, restaurantExists, addRestaurant } = require('./restaurants');
+const {CAMPUSES} = require("../utils/static");
 
 const restaurants = [49, 69, 70];
 
@@ -6,25 +7,31 @@ const resolvers = [
     {
         r: /mara/gi, l: {
             url: "https://juvenes.fi/mara/",
-            campus: "Linnanmaa"
+            campus: CAMPUSES.OULU.LINNANMAA
         }
     },
     {
         r: /foobar/gi, l: {
             url: "https://juvenes.fi/foobar/",
-            campus: "Linnanmaa"
+            campus: CAMPUSES.OULU.LINNANMAA
         }
     },
     {
         r: /kerttu/gi, l: {
             url: "https://juvenes.fi/kerttu/",
-            campus: "Linnanmaa"
+            campus: CAMPUSES.OULU.LINNANMAA
         }
     },
     {
         r: /voltti/gi, l: {
             url: "https://juvenes.fi/voltti/",
-            campus: "Linnanmaa"
+            campus: CAMPUSES.OULU.LINNANMAA
+        },
+    },
+    {
+        r: /konehuone/gi, l: {
+            url: "https://juvenes.fi/konehuone/",
+            campus: CAMPUSES.TAMPERE.HERVANTA
         }
     },
 ];
@@ -35,18 +42,23 @@ const resolvers = [
  * @returns {Promise<{name: string, fin: Array, eng: Array}[]>} Menu for the restaurant.
  */
 const getMenu = async (restaurant) => {
-    const fin = await getRestaurant(restaurant, 'fi');
-    const eng = await getRestaurant(restaurant, 'en');
-    const menus = formatMenu(fin).map(menu => {
-        return {
-            name: menu.name,
-            fin: menu.days
-        };
-    });
-    formatMenu(eng).forEach((menu) => {
-        menus.find(m => m.name === menu.name).eng = menu.days;
-    });
-    return menus.flat();
+    try {
+        const fin = await getRestaurant(restaurant, 'fi');
+        const eng = await getRestaurant(restaurant, 'en');
+        const menus = formatMenu(fin).map(menu => {
+            return {
+                name: menu.name,
+                fin: menu.days
+            };
+        });
+        formatMenu(eng).forEach((menu) => {
+            menus.find(m => m.name === menu.name).eng = menu.days;
+        });
+        return menus.flat();
+    } catch(err) {
+        console.error("Error getting menu for", restaurant, err);
+        return [];
+    }
 };
 
 /**
