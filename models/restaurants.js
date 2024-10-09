@@ -15,12 +15,13 @@ const getRestaurants = async () => {
 
 /**
  * Get menu for all restaurants for today forward.
+ * @param {Object} filter - Filter for restaurants.
  * @returns {Promise<Object[]>} Array of restaurant objects with menu.
  */
-const getMenus = async () => {
+const getMenus = async (filter) => {
     try {
         const today = moment.tz('Europe/Helsinki').startOf('day').toDate();
-        const restaurants = await (await getDb()).collection('restaurants').find({}).toArray();
+        const restaurants = await (await getDb()).collection('restaurants').find(filter).toArray();
         return restaurants.map(restaurant => {
             const menu = restaurant.menu.filter(menu => menu.date >= today);
             return { ...restaurant, menu };

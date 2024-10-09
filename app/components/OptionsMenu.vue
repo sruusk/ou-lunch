@@ -11,8 +11,7 @@
     </UChip>
     <template #panel>
       <div class="p-4">
-
-        <div class="mb-4 flex">
+        <div class="mb-4 flex flex-wrap gap-4">
           <div class="flex flex-wrap gap-2 flex-col">
             <h3 class="text-lg">{{ $t('filters.filter') }}</h3>
             <UCheckbox v-for="filter in Object.keys(conf.filters)"
@@ -25,6 +24,19 @@
             <h3 class="text-lg">{{ $t('filters.method') }}</h3>
             <URadioGroup v-model="conf.method" :options="availableMethods" class="fieldset"/>
           </div>
+          <div class="flex flex-col gap-2">
+            <h3 class="text-lg">{{ $t('filters.order') }}</h3>
+            <Draggable v-if="order?.length" v-model="order">
+              <transition-group type="transition" name="flip-list">
+                <li v-for="r in order" :key="r" class="list-group-item">
+                  <i
+                    aria-hidden="true"
+                  ></i>
+                  {{ r }}
+                </li>
+              </transition-group>
+            </Draggable>
+          </div>
         </div>
       </div>
     </template>
@@ -32,10 +44,16 @@
 </template>
 
 <script lang="ts">
+import { VueDraggableNext } from 'vue-draggable-next'
+
 export default defineNuxtComponent({
   name: "OptionsMenu",
+  components: {
+    Draggable: VueDraggableNext,
+  },
   setup() {
     const cookie = useCookie('config', { maxAge: 60 * 60 * 24 * 365 }); // 1 year
+    const orderCookie = useCookie('order', { maxAge: 60 * 60 * 24 * 365 }); // 1 year
 
     const conf = useState('config', () => {
       return cookie.value || {
@@ -51,7 +69,9 @@ export default defineNuxtComponent({
       };
     });
 
-    return { cookie, conf };
+    const order = useState('order');
+
+    return { cookie, conf, orderCookie, order };
   },
   computed: {
     availableMethods() {
@@ -62,13 +82,19 @@ export default defineNuxtComponent({
     },
     isFiltered() {
       return Object.values(this.conf.filters).some(v => v);
-    }
+    },
   },
   watch: {
     conf: {
       deep: true,
       handler() {
         this.cookie = this.conf;
+      }
+    },
+    order: {
+      deep: true,
+      handler() {
+        this.orderCookie = this.order;
       }
     }
   }
@@ -80,5 +106,16 @@ export default defineNuxtComponent({
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+}
+
+/*noinspection CssUnusedSymbol*/
+.flip-list-move {
+  transition: transform 0.5s;
+}
+.list-group-item {
+  cursor: move;
+}
+.list-group-item i {
+  cursor: pointer;
 }
 </style>

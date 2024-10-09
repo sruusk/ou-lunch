@@ -28,6 +28,7 @@ export default defineI18nConfig(() => ({
                 method: 'Select filter method',
                 highlight: 'Highlight',
                 hide: 'Hide others',
+                order: 'Order (drag and drop)',
             }
         },
         fi: {
@@ -56,6 +57,7 @@ export default defineI18nConfig(() => ({
                 method: 'Valitse suodatustapa',
                 highlight: 'Korosta',
                 hide: 'Piilota muut',
+                order: 'Järjestys (vedä ja pudota)',
             }
         }
     }
