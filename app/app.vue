@@ -92,7 +92,6 @@ export default defineNuxtComponent({
       const r = this.apiRestaurants.map(r => r.name);
       const newItems = r.filter(i => !this.order.includes(i));
       const removedItems = this.order.filter(i => !r.includes(i));
-      console.log(newItems, removedItems);
       if(newItems.length) this.order.push(...newItems);
       if(removedItems.length) this.order = this.order.filter(i => !removedItems.includes(i));
     }
