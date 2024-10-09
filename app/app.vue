@@ -65,8 +65,16 @@ export default defineNuxtComponent({
       }
     });
 
+
+    const orderCookie = useCookie('order', { maxAge: 60 * 60 * 24 * 365 }); // 1 year
+
+    const order = useState('order', () => {
+      return orderCookie.value || response.data.value.map(r => r.name);
+    });
+
     return {
-      restaurants: response.data
+      apiRestaurants: response.data,
+      order,
     };
   },
   created() {
@@ -79,9 +87,24 @@ export default defineNuxtComponent({
   beforeMount() {
     if(!this.restaurants?.length) {
       alert("Could not fetch data from the server. Please try again later.");
+    } else if(Array.isArray(this.order)) {
+      // Check for removed or added restaurants and add new ones to the end of the list
+      const r = this.apiRestaurants.map(r => r.name);
+      const newItems = r.filter(i => !this.order.includes(i));
+      const removedItems = this.order.filter(i => !r.includes(i));
+      console.log(newItems, removedItems);
+      if(newItems.length) this.order.push(...newItems);
+      if(removedItems.length) this.order = this.order.filter(i => !removedItems.includes(i));
     }
   },
   computed: {
+    restaurants() {
+      if(!this.apiRestaurants) return [];
+      if(!this.order) return this.apiRestaurants;
+      return this.apiRestaurants.filter(r => r.menu.length).sort((a, b) => {
+        return this.order.indexOf(a.name) - this.order.indexOf(b.name);
+      });
+    },
     dates() {
       if(!this.restaurants?.length) return [];
       const dates = new Set();
@@ -95,7 +118,7 @@ export default defineNuxtComponent({
         .map(d => new Date(d))
         .sort((a, b) => a - b)
         .slice(0, 6);
-    }
+    },
   }
 });
 </script>
