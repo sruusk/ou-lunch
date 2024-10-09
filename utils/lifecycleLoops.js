@@ -8,7 +8,6 @@ const updateMenus = async () => {
         await Promise.all([
             jamix.updateRestaurants(),
             poweresta.updateRestaurants(),
-            compass.updateRestaurants()
         ]);
     } catch(err) {
         console.error(err);

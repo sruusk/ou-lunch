@@ -2,11 +2,15 @@ const { sendJson } = require("../utils/responseUtils");
 const { getMenus } = require("../models/restaurants");
 
 /**
- * Get Hello World!
- * @returns {Object} Hello World!
+ * Get menu for campus
+ * @param {Object} request - Request object
+ * @param {Object} response - Response object
+ * @param {Object} query - Query object
+ * @returns {Promise<*>}
  */
-const getMenu = async (request, response) => {
-    const menu = await getMenus();
+const getMenu = async (request, response, query) => {
+    const campus = query.get('campus');
+    const menu = await getMenus(campus ? { campus } : {});
     return sendJson(response, menu);
 }
 

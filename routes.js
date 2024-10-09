@@ -118,7 +118,7 @@ const handleRequest = async (request, response) => {
         case '/api/menu':
             switch (meth) {
                 case 'GET':
-                    return menuController.getMenu(request, response);
+                    return menuController.getMenu(request, response, query);
                 default:
                     return responseUtils.methodNotAllowed(response);
             }
