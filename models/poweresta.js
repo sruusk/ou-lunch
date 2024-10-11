@@ -10,7 +10,7 @@ const restaurants = [
         meta: {
             name: "Preludi",
             url: "https://www.uniresta.fi/preludi",
-            campus: CAMPUSES.OULU.LINNANMAA,
+            ...CAMPUSES.OULU.LINNANMAA,
         }
     }, {
         name: "julinia",
@@ -18,7 +18,7 @@ const restaurants = [
         meta: {
             name: "Julinia",
             url: "https://www.uniresta.fi/julinia",
-            campus: CAMPUSES.OULU.LINNANMAA
+            ...CAMPUSES.OULU.LINNANMAA
         }
     }, {
         name: "lipasto",
@@ -26,7 +26,7 @@ const restaurants = [
         meta: {
             name: "Lipasto",
             url: "https://www.uniresta.fi/lipasto",
-            campus: CAMPUSES.OULU.LINNANMAA
+            ...CAMPUSES.OULU.LINNANMAA
         }
     }, {
         name: "pekuri",
@@ -34,7 +34,7 @@ const restaurants = [
         meta: {
             name: "Pekuri",
             url: "https://ravintolapekuri.fi/",
-            campus: CAMPUSES.OULU.LINNANMAA
+            ...CAMPUSES.OULU.LINNANMAA
         }
     }, {
         name: "campus",
@@ -42,7 +42,7 @@ const restaurants = [
         meta: {
             name: "H2O Campus",
             url: "https://www.health2organic.fi/",
-            campus: CAMPUSES.OULU.LINNANMAA
+            ...CAMPUSES.OULU.LINNANMAA
         }
     }
 ];
@@ -67,7 +67,7 @@ const getRestaurant = async (restaurant) => {
 
 const formatMenu = (menu) => {
     return menu.map(day => {
-        out = {};
+        let out = {};
         ["en", "fi"].forEach(lang => {
             out[lang] = day.data.mealOptions.map(option => {
                 return {

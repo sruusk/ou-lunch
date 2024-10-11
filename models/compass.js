@@ -7,7 +7,15 @@ const restaurants = [
         meta: {
             name: "Reaktori",
             url: "https://www.compass-group.fi/ravintolat-ja-ruokalistat/foodco/kaupungit/tampere/reaktori/",
-            campus: CAMPUSES.TAMPERE.HERVANTA
+            ...CAMPUSES.TAMPERE.HERVANTA
+        }
+    },
+    {
+        costCenter: "0351",
+        meta: {
+            name: "Silvia",
+            url: "https://www.compass-group.fi/ravintolat-ja-ruokalistat/foodco/kaupungit/pori/silvia/",
+            ...CAMPUSES.PORI.SAMK
         }
     }
 ];

@@ -11,7 +11,7 @@ const restaurants = [
         meta: {
             name: "Hertsi",
             url: "https://www.sodexo.fi/ravintolat/ravintola-hertsi",
-            campus: CAMPUSES.TAMPERE.HERVANTA
+            ...CAMPUSES.TAMPERE.HERVANTA
         }
     }
 ]

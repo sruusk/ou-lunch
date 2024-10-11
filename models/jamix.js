@@ -10,7 +10,7 @@ const resolvers = [
         meta: {
             name: "Mara",
             url: "https://juvenes.fi/mara/",
-            campus: CAMPUSES.OULU.LINNANMAA
+            ...CAMPUSES.OULU.LINNANMAA
         }
     },
     {
@@ -19,7 +19,7 @@ const resolvers = [
         meta: {
             name: "Foobar",
             url: "https://juvenes.fi/foobar/",
-            campus: CAMPUSES.OULU.LINNANMAA
+            ...CAMPUSES.OULU.LINNANMAA
         }
     },
     {
@@ -28,7 +28,7 @@ const resolvers = [
         meta: {
             name: "Kerttu",
             url: "https://juvenes.fi/kerttu/",
-            campus: CAMPUSES.OULU.LINNANMAA
+            ...CAMPUSES.OULU.LINNANMAA
         }
     },
     {
@@ -37,7 +37,7 @@ const resolvers = [
         meta: {
             name: "Voltti",
             url: "https://juvenes.fi/voltti/",
-            campus: CAMPUSES.OULU.LINNANMAA
+            ...CAMPUSES.OULU.LINNANMAA
         },
     },
     {
@@ -46,7 +46,7 @@ const resolvers = [
         meta: {
             name: "Konehuone",
             url: "https://juvenes.fi/konehuone/",
-            campus: CAMPUSES.TAMPERE.HERVANTA
+            ...CAMPUSES.TAMPERE.HERVANTA
         }
     },
     {
@@ -55,7 +55,7 @@ const resolvers = [
         meta: {
             name: "Newton",
             url: "https://juvenes.fi/newton/",
-            campus: CAMPUSES.TAMPERE.HERVANTA
+            ...CAMPUSES.TAMPERE.HERVANTA
         }
     }
 ];
@@ -63,7 +63,7 @@ const resolvers = [
 /**
  * Get menu for restaurant.
  * @param {number} restaurant - ID of the restaurant in the jamix system.
- * @returns {Promise<{name: string, campus: string, url: string, fin: {date: Date, options: {name: string, items: {name: string, diets: Array, ingredients: Array}}[]}[], eng: {date: Date, options: {name: string, items: {name: string, diets: Array, ingredients: Array}}[]}[]}[]>} Menu for the restaurant.
+ * @returns {Promise<any>} Menu for the restaurant.
  */
 const getMenu = async (restaurant) => {
     try {
@@ -73,9 +73,7 @@ const getMenu = async (restaurant) => {
             const meta = resolvers.find(r => r.restaurant === restaurant && r.id === menu.menuTypeId.toString())?.meta;
             if(!meta) return;
             return {
-                name: meta.name,
-                campus: meta.campus,
-                url: meta.url,
+                ...meta,
                 menuTypeId: menu.menuTypeId,
                 fin: menu.days
             };

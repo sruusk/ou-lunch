@@ -3,7 +3,7 @@ import {defineEventHandler} from "h3";
 
 export default defineEventHandler(async (event) => {
   const runtimeConfig = useRuntimeConfig();
-  const url = `${runtimeConfig.apiUrl}/api/menu?campus=Oulu%20Linnanmaa`;
+  const url = `${runtimeConfig.apiUrl}/api/menu?city=Oulu&campus=Linnanmaa`;
 
   return await $fetch(url);
 });

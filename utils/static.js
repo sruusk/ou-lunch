@@ -1,10 +1,22 @@
 module.exports = {
     CAMPUSES: {
         OULU: {
-            LINNANMAA: 'Oulu Linnanmaa'
+            LINNANMAA: {
+                city: 'Oulu',
+                campus: 'Linnanmaa'
+            }
         },
         TAMPERE: {
-            HERVANTA: 'Tampere Hervanta',
+            HERVANTA: {
+                city: 'Tampere',
+                campus: 'Hervanta'
+            }
         },
+        PORI: {
+            SAMK: {
+                city: 'Pori',
+                campus: 'SAMK'
+            }
+        }
     }
 }
