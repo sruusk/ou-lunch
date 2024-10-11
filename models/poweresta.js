@@ -1,8 +1,7 @@
-
 //https://api.fi.poweresta.com/publicmenu/dates/uniresta/preludi/?menu=ravintolapreludi&dates=2024-09-19
 
 const { restaurantExists, addRestaurant, updateMenu } = require("./restaurants");
-const {CAMPUSES} = require("../utils/static");
+const { CAMPUSES } = require("../utils/static");
 const restaurants = [
     {
         name: "preludi",
@@ -63,7 +62,7 @@ const getRestaurant = async (restaurant) => {
         console.error("Error getting menu for", restaurant.meta.name, err);
         return { ...restaurant.meta, menu: [] };
     }
-}
+};
 
 const formatMenu = (menu) => {
     return menu.map(day => {
@@ -77,38 +76,40 @@ const formatMenu = (menu) => {
                             name: row.names.find(name => name.language === lang).name || '',
                             diets: row.diets.find(diet => diet.language === lang).dietShorts?.join(', ').replaceAll('KELA', '*') || undefined,
                             ingredients: row.ingredients.find(ingredient => ingredient.language === lang).ingredients || undefined
-                        }
+                        };
                         // Remove empty properties
                         Object.keys(out).forEach(key => {
                             if(out[key] === undefined) delete out[key];
                         });
                         return out;
                     })
-                }
+                };
             });
         });
         return {
             date: new Date(day.date),
             ...out
-        }
+        };
     });
-}
+};
 
 const getAllMenus = async () => {
     const menus = await Promise.all(restaurants.map(getRestaurant));
     return menus.flat();
-}
+};
 
 const updateRestaurants = async () => {
     const menus = await getAllMenus();
-    for (const m of menus) if (!await restaurantExists(m.name)) await addRestaurant(m.name, m.url, m.campus);
+    for(const m of menus)
+        if(!await restaurantExists(m.name))
+            await addRestaurant(m.name, m.url, m.campus, m.city);
     // Update the menu for each restaurant
     menus.forEach(menu => {
         menu.menu.forEach(day => {
             updateMenu(menu.name, day.date, { en: day.en, fi: day.fi });
         });
     });
-}
+};
 
 //updateRestaurants().then(() => console.log('Poweresta menus updated'));
 

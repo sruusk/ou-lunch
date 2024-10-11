@@ -109,7 +109,7 @@ const formatMenu = (menu) => {
     return menu[0].menuTypes.map(type => {
         return {
             menuTypeId: type.menuTypeId,
-            days: type.menus[0].days.map(day => {
+            days: type.menus.map(m => m.days.map(day => {
                 // Date is in format "YYYYMMDD"
                 let d = day.date.toString();
                 const date = new Date();
@@ -131,7 +131,7 @@ const formatMenu = (menu) => {
                         };
                     })
                 };
-            })
+            })).flat()
         };
     });
 };
@@ -145,7 +145,7 @@ const updateRestaurants = async () => {
     const menus = await getAllMenus();
     for(const m of menus) {
         if(!await restaurantExists(m.name)){
-            await addRestaurant(m.name, m.url, m.campus);
+            await addRestaurant(m.name, m.url, m.campus, m.city);
         }
     }
     menus.forEach(menu => {

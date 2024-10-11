@@ -86,7 +86,7 @@ const updateRestaurants = async () => {
     const rest = await getAllRestaurants();
     for(const r of rest) {
         if(!await restaurantExists(r.name)) {
-            await addRestaurant(r.name, r.url, r.campus);
+            await addRestaurant(r.name, r.url, r.campus, r.city);
         }
     }
     rest.forEach(r => {

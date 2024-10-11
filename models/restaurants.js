@@ -50,14 +50,16 @@ const getRestaurant = async (name) => {
  * @param {string} name - Name of the restaurant to add
  * @param {string} url - URL of the restaurant
  * @param {string} campus - Campus of the restaurant
+ * @param {string} city - City of the restaurant
  * @returns {Promise<void>}
  */
-const addRestaurant = async (name, url, campus) => {
+const addRestaurant = async (name, url, campus, city) => {
     if(!name) throw new Error('Name is required');
     if(!url) throw new Error('URL is required');
     if(!campus) throw new Error('Campus is required');
+    if(!city) throw new Error('City is required');
     try {
-        await (await getDb()).collection('restaurants').insertOne({ name, url, campus, menu: [] });
+        await (await getDb()).collection('restaurants').insertOne({ name, url, city, campus, menu: [] });
     } catch(err) {
         console.error(JSON.stringify(err, null, 2));
     }
