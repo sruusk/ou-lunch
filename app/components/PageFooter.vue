@@ -9,10 +9,10 @@
     >
       <UIcon class="w-10 h-10" name="grommet-icons:github"/>
     </ULink>
-    <UPopover class="w-0" :popper="{ placement: 'top-end' }">
+    <UPopover class="w-0" :popper="{ placement: 'top-end', strategy: 'absolute', adaptive: true }">
       <UButton :label="$t('footer.feedback')" color="primary" variant="soft" class="-translate-x-full"/>
       <template #panel>
-        <div class="p-5 flex flex-col gap-2">
+        <div class="p-5 flex flex-col gap-2 min-w-64">
           <UButton
             :label="$t('footer.feedbackGithub')"
             to="https://github.com/sruusk/ou-lunch/issues/new"
