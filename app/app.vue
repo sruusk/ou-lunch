@@ -83,6 +83,8 @@ export default defineNuxtComponent({
         return titleChunk ? `${titleChunk} - ${this.$t("title")}` : this.$t("title");
       },
     });
+
+    this.date = this.dates[0];
   },
   beforeMount() {
     if(!this.restaurants?.length) {
