@@ -1,7 +1,7 @@
 <template>
   <div>
     <NuxtRouteAnnouncer/>
-    <UCard>
+    <UCard class="min-h-screen" :ui="{base: 'flex flex-col justify-between', body: { base: 'flex-auto' }}">
       <template #header>
         <PageHeader/>
       </template>
