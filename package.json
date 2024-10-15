@@ -21,7 +21,7 @@
     "nodemon": "^2.0.22"
   },
   "dependencies": {
-    "@nuxt/ui": "^2.18.5",
+    "@nuxt/ui": "^2.18.7",
     "@nuxtjs/i18n": "^8.5.5",
     "@nuxtjs/seo": "^2.0.0-rc.21",
     "@nuxtjs/sitemap": "^6.1.0",

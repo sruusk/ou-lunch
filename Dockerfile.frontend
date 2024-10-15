@@ -8,7 +8,7 @@ WORKDIR /usr/src/app
 COPY . .
 
 # Install dependencies
-RUN npm install
+RUN npm ci
 
 # Build the NuxtJS application
 RUN npm run build

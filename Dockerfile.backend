@@ -8,7 +8,7 @@ WORKDIR /usr/src/app
 COPY . .
 
 # Install dependencies
-RUN npm install
+RUN npm ci
 
 # Start the backend server
 CMD ["npm", "start"]
