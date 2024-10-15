@@ -2,33 +2,35 @@
   <UContainer class="flex justify-between items-center">
     <div/>
     <ULink
-      class="text-cool-600 dark:text-cool-400 flex items-center"
-      to="https://github.com/sruusk/ou-lunch"
-      target="_blank"
       :aria-label="$t('aria.source')"
+      class="text-cool-600 dark:text-cool-400 flex items-center"
+      target="_blank"
+      to="https://github.com/sruusk/ou-lunch"
     >
       <UIcon class="w-10 h-10" name="grommet-icons:github"/>
     </ULink>
-    <UPopover class="w-0" :popper="{ placement: 'top-end', strategy: 'absolute', adaptive: true }">
-      <UButton :label="$t('footer.feedback')" color="primary" variant="soft" class="-translate-x-full"/>
-      <template #panel>
-        <div class="p-5 flex flex-col gap-2 min-w-64">
-          <UButton
-            :label="$t('footer.feedbackGithub')"
-            to="https://github.com/sruusk/ou-lunch/issues/new"
-          />
-          <UButton
-            :label="$t('footer.feedbackTelegram')"
-            @click="openTelegram"
-          />
-        </div>
-      </template>
-    </UPopover>
+    <UButton
+      :label="$t('footer.feedback')"
+      color="primary"
+      variant="soft"
+      @click="open = true"
+    />
+    <UModal v-model="open">
+      <div class="p-5 h-[900px] max-h-[80svh]">
+        <iframe class="rounded-lg h-full"
+                src="https://forms.office.com/Pages/ResponsePage.aspx?id=muScnwFRo0qMdQ1ZNa1lJRYDqcnmLlJIpYBLLUY7cYpUN0gxNkRVN1k3QUQ4Q09IOU1EMFdXQzBZRy4u&embed=true" style="border: none; max-width:100%; max-height:100vh" width="640px"></iframe>
+      </div>
+    </UModal>
   </UContainer>
 </template>
 <script>
 export default {
   name: 'PageFooter',
+  data() {
+    return {
+      open: false,
+    };
+  },
   methods: {
     openTelegram() {
       window.open('https://t.me/+IL4dgF98VahmY2U0', '_blank');
