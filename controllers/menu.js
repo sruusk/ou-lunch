@@ -1,4 +1,4 @@
-const { sendJson } = require("../utils/responseUtils");
+const { sendJson, badRequest } = require("../utils/responseUtils");
 const { getMenus } = require("../models/restaurants");
 
 /**
@@ -10,7 +10,10 @@ const { getMenus } = require("../models/restaurants");
  */
 const getMenu = async (request, response, query) => {
     const campus = query.get('campus');
-    const menu = await getMenus(campus ? { campus } : {});
+    const city = query.get('city');
+    if(campus && !city) return badRequest(response, 'City is required');
+    if(city && !campus) return badRequest(response, 'Campus is required');
+    const menu = await getMenus(campus && city ? { campus, city } : {});
     return sendJson(response, menu);
 }
 

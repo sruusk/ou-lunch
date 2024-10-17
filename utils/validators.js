@@ -5,7 +5,7 @@ module.exports = {
     restaurants: {
         $jsonSchema: {
             bsonType: 'object',
-            required: ['name', 'url', 'campus', 'menu'],
+            required: ['name', 'url', 'campus', 'city', 'menu'],
             properties: {
                 name: {
                     bsonType: 'string',
@@ -17,7 +17,11 @@ module.exports = {
                 },
                 campus: {
                     bsonType: 'string',
-                    description: 'Campus',
+                    description: 'Campus name',
+                },
+                city: {
+                    bsonType: 'string',
+                    description: 'City',
                 },
                 menu: {
                     bsonType: 'array',

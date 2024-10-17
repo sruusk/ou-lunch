@@ -7,7 +7,15 @@ const restaurants = [
         meta: {
             name: "Reaktori",
             url: "https://www.compass-group.fi/ravintolat-ja-ruokalistat/foodco/kaupungit/tampere/reaktori/",
-            campus: CAMPUSES.TAMPERE.HERVANTA
+            ...CAMPUSES.TAMPERE.HERVANTA
+        }
+    },
+    {
+        costCenter: "0351",
+        meta: {
+            name: "Silvia",
+            url: "https://www.compass-group.fi/ravintolat-ja-ruokalistat/foodco/kaupungit/pori/silvia/",
+            ...CAMPUSES.PORI.SAMK
         }
     }
 ];
@@ -98,7 +106,7 @@ const updateRestaurants = async () => {
     const restaurants = await getAllRestaurants();
     for(const r of restaurants) {
         if(!await restaurantExists(r.name)) {
-            await addRestaurant(r.name, r.url, r.campus);
+            await addRestaurant(r.name, r.url, r.campus, r.city);
         }
     }
     restaurants.forEach(r => {

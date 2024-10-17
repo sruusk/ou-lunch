@@ -1,6 +1,7 @@
 const jamix = require('../models/jamix');
 const poweresta = require('../models/poweresta');
 const compass = require('../models/compass');
+const sodexo = require('../models/sodexo');
 
 // Update menus on startup and at 10:00 every day
 const updateMenus = async () => {
@@ -8,14 +9,16 @@ const updateMenus = async () => {
         await Promise.all([
             jamix.updateRestaurants(),
             poweresta.updateRestaurants(),
+            compass.updateRestaurants(),
+            sodexo.updateRestaurants()
         ]);
     } catch(err) {
         console.error(err);
     }
 }
 
-const start = async () => {
-    await updateMenus();
+const start = () => {
+    updateMenus();
     setInterval(updateMenus, 1000 * 60 * 60 * 24);
 }
 
