@@ -5,14 +5,6 @@ const { restaurantExists, addRestaurant, updateMenu } = require("./restaurants")
 const {CAMPUSES} = require("../utils/static");
 const restaurants = [
     {
-        name: "preludi",
-        menu: "ravintolapreludi",
-        meta: {
-            name: "Preludi",
-            url: "https://www.uniresta.fi/preludi",
-            campus: CAMPUSES.OULU.LINNANMAA,
-        }
-    }, {
         name: "julinia",
         menu: "ravintolajulinia",
         meta: {
@@ -26,14 +18,6 @@ const restaurants = [
         meta: {
             name: "Lipasto",
             url: "https://www.uniresta.fi/lipasto",
-            campus: CAMPUSES.OULU.LINNANMAA
-        }
-    }, {
-        name: "pekuri",
-        menu: "ravintolapekuri",
-        meta: {
-            name: "Pekuri",
-            url: "https://ravintolapekuri.fi/",
             campus: CAMPUSES.OULU.LINNANMAA
         }
     }, {
