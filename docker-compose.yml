@@ -11,8 +11,11 @@ services:
       - DBNAME=ou-lunch
     depends_on:
       - mongo
-    networks:
-      - ouf_internal_network
+    healthcheck:
+      test: [ "CMD-SHELL", "wget -qO- http://127.0.0.1:3000/api/menu" ]
+      interval: 10s
+      timeout: 20s
+      retries: 10
 
   frontend:
     build:
@@ -27,19 +30,16 @@ services:
     depends_on:
       - backend
       - mongo
-    networks:
-      - ouf_internal_network
+    healthcheck:
+      test: [ "CMD-SHELL", "wget -qO- http://127.0.0.1:3000/" ]
+      interval: 10s
+      timeout: 20s
+      retries: 10
 
   mongo:
     image: mongo:latest
     volumes:
       - mongo-data:/data/db
-    networks:
-        - ouf_internal_network
 
 volumes:
   mongo-data:
-
-networks:
-  ouf_internal_network:
-    driver: bridge
