@@ -35,7 +35,8 @@ export default defineNuxtConfig({
     global: true,
   },
   runtimeConfig: {
-    apiUrl: 'http://localhost:3001',
+    dbUrl: 'mongodb://127.0.0.1:27017',
+    dbName: 'ou-lunch',
     public: {
       uId: undefined,
       uScript: undefined,

@@ -14,4 +14,4 @@ RUN npm ci
 RUN npm run build
 
 # Start the NuxtJS server
-CMD ["node", "app/.output/server/index.mjs"]
+CMD ["node", ".output/server/index.mjs"]

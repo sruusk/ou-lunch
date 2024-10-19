@@ -7,6 +7,18 @@ paths:
   /api/menu:
     get:
       summary: Get all restaurants
+      description: If parameters are provided, both campus and city must be provided
+      parameters:
+        - in: query
+          name: campus
+          schema:
+            type: string
+          description: Campus
+        - in: query
+          name: city
+          schema:
+            type: string
+          description: City
       responses:
         '200':
           description: A list of restaurants
