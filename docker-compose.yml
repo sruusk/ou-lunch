@@ -10,6 +10,8 @@ services:
       - NUXT_PUBLIC_U_ID=${U_ID}
       - NUXT_DB_URL=mongodb://mongo:27017/ou-lunch
       - NUXT_DB_NAME=ou-lunch
+    ports:
+      - "3000:3000"
     depends_on:
       - mongo
     healthcheck:
