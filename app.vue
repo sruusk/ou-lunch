@@ -25,7 +25,6 @@
   </div>
 </template>
 <script>
-
 export default defineNuxtComponent({
   name: "app",
   data() {
@@ -51,7 +50,8 @@ export default defineNuxtComponent({
       ogImage: "/logo.png",
     });
 
-    const response = await useFetch('/api/menu', {
+    const campus = CAMPUSES.OULU.LINNANMAA;
+    const response = await useFetch(`/api/menu?city=${campus.city}&campus=${campus.campus}`, {
       key: "restaurants",
       server: true,
       transform: (data) => {

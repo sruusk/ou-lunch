@@ -3,7 +3,6 @@
 </p>
 
 ![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white)
-![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
 ![Nuxtjs](https://img.shields.io/badge/Nuxt-002E3B?style=for-the-badge&logo=nuxtdotjs&logoColor=#00DC82)
 ![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
 ![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)
@@ -19,7 +18,7 @@
 ![Git](https://img.shields.io/badge/git-%23F05032.svg?style=for-the-badge&logo=git&logoColor=white)
 <img src="https://cdn.hetzner.com/assets/Uploads/Hetzner-Logo-slogan_white_space-red.jpg" alt="Hetzner" height="28"/>
 
-This repository contains both the backend and the NuxtJS frontend for fetching, updating, and displaying lunch menus from various restaurant APIs on the Oulu University campus. The menus are stored in a MongoDB database and can be accessed via an API endpoint.
+This repository contains the NuxtJS frontend and Nitro backend for fetching, updating, and displaying lunch menus from various restaurant APIs on the Oulu University campus. The menus are stored in a MongoDB database and can be accessed via an API endpoint.
 
 ## Features
 
@@ -36,14 +35,6 @@ This repository contains both the backend and the NuxtJS frontend for fetching, 
 | DBNAME       | MongoDB database name  | ou-lunch                  |
 | PORT         | Backend server port    | 3001                      |
 | NUXT_API_URL | API Url                | http://localhost:3001     |
-
-## API Endpoints
-
-### Get Compiled Menus
-
-- **URL:** `/api/menu`
-- **Method:** `GET`
-- **Description:** Retrieves the compiled list of lunch menus from the database.
 
 ## Frontend
 
