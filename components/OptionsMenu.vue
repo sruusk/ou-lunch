@@ -43,7 +43,7 @@
   </UPopover>
 </template>
 
-<script lang="ts">
+<script>
 import { VueDraggableNext } from 'vue-draggable-next'
 
 export default defineNuxtComponent({

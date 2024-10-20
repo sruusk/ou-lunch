@@ -59,7 +59,12 @@ const resolvers: { restaurant: number; id: string; meta: RestaurantMeta }[] = [
   }
 ];
 
-const getMenu = async (restaurant: number): Promise<(RestaurantMeta & { menuTypeId: string; fin: Menu[]; eng?: Menu[] })[]> => {
+interface MenuDay {
+  date: Date;
+  options: MenuCategory[];
+}
+
+const getMenu = async (restaurant: number): Promise<(RestaurantMeta & { menuTypeId: string; fin: MenuDay[]; eng?: MenuDay[] })[]> => {
   try {
     const fin = await getRestaurant(restaurant, 'fi');
     const eng = await getRestaurant(restaurant, 'en');
@@ -69,9 +74,9 @@ const getMenu = async (restaurant: number): Promise<(RestaurantMeta & { menuType
       return {
         ...meta,
         menuTypeId: menu.menuTypeId,
-        fin: menu.days
+        fin: menu.days,
       };
-    }).filter(menu => menu) as (RestaurantMeta & { menuTypeId: string; fin: Menu[] })[];
+    }).filter(menu => menu) as (RestaurantMeta & { menuTypeId: string; fin: MenuDay[]; eng?: MenuDay[] })[];
     formatMenu(eng).forEach((menu) => {
       const a = menus.find(m => m.menuTypeId === menu.menuTypeId);
       if (a) a.eng = menu.days;
@@ -88,8 +93,8 @@ const getRestaurant = (restaurant: number, lang: string): Promise<any> => {
     .then(res => res.json());
 };
 
-const formatMenu = (menu: any): { menuTypeId: string; days: Menu[] }[] => {
-  return menu[0].menuTypes.map(type => {
+const formatMenu = (menu: any): { menuTypeId: string; days: MenuDay[] }[] => {
+  return menu[0].menuTypes.map((type: { menuTypeId: any; menus: any[]; }) => {
     return {
       menuTypeId: type.menuTypeId,
       days: type.menus.map((m: any) => m.days.map((day: any) => {
@@ -100,25 +105,25 @@ const formatMenu = (menu: any): { menuTypeId: string; days: Menu[] }[] => {
 
         return {
           date,
-          options: day.mealoptions.map((option: any) => {
+          options: day.mealoptions.map((option: any): MenuCategory => {
             return {
               name: option.name,
-              items: option.menuItems.map((menuItem: any) => {
+              items: option.menuItems.map((menuItem: any): MenuItem => {
                 return {
                   name: menuItem.name,
                   diets: menuItem.diets,
                   ingredients: menuItem.ingredients
-                } as MenuItem;
+                };
               })
-            } as MenuCategory;
+            };
           })
-        } as Menu;
+        };
       })).flat()
     };
   });
 };
 
-const getAllMenus = async (): Promise<(RestaurantMeta & { menuTypeId: string; fin: Menu[]; eng?: Menu[] })[]> => {
+const getAllMenus = async (): Promise<(RestaurantMeta & { menuTypeId: string; fin: MenuDay[]; eng?: MenuDay[] })[]> => {
   const menus = await Promise.all(restaurants.map(getMenu));
   return menus.flat();
 };
@@ -132,9 +137,9 @@ const updateJamixRestaurants = async (): Promise<void> => {
   }
   menus.forEach(menu => {
     menu.fin.forEach(day => {
-      const out = {
+      const out: {en: MenuCategory[], fi: MenuCategory[]} = {
         fi: day.options,
-        en: menu.eng?.find(m => m.date.getTime() === day.date.getTime())?.options
+        en: menu.eng?.find(m => m.date.getTime() === day.date.getTime())?.options || []
       };
       updateMenu(menu.name, day.date, out);
     });

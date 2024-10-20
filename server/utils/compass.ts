@@ -24,7 +24,7 @@ const restaurants: CompassRestaurant[] = [
   }
 ];
 
-const getRestaurant = async (restaurant: CompassRestaurant): Promise<RestaurantMeta & { menu: Menu[] }> => {
+const getRestaurant = async (restaurant: CompassRestaurant): Promise<Restaurant> => {
   const now = new Date();
   const thisMonday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - now.getDay() + 2).toISOString().split('T')[0];
   const nextMonday = new Date(now.getFullYear(), now.getMonth(), now.getDate() + (1 + 7 - now.getDay()) % 7 + 1).toISOString().split('T')[0];
@@ -41,12 +41,12 @@ const getRestaurant = async (restaurant: CompassRestaurant): Promise<RestaurantM
         ...thisWeekFi.map(day => ({
           date: day.date,
           fi: day.fi,
-          en: thisWeekEn.find(d => d.date.getTime() === day.date.getTime())?.en
+          en: thisWeekEn.find(d => d.date.getTime() === day.date.getTime())?.en || []
         })),
         ...nextWeekFi.map(day => ({
           date: day.date,
           fi: day.fi,
-          en: nextWeekEn.find(d => d.date.getTime() === day.date.getTime())?.en
+          en: nextWeekEn.find(d => d.date.getTime() === day.date.getTime())?.en || []
         }))
       ]
     };
@@ -71,10 +71,10 @@ const getWeeklyMenu = async (restaurant: CompassRestaurant, date: string, lang: 
   return menu;
 };
 
-const formatMenu = (menu: any, lang: string): Menu[] => {
+const formatMenu = (menu: any, lang: string) => {
   return menu.menus.map((day: any) => {
     const date = new Date(day.date);
-    const o: { date: Date; [key: string]: MenuCategory[] } = { date: new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())) };
+    const o: { [key: string]: any } = { date: new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())) };
     o[lang] = day.menuPackages.map((menu: any) => ({
       name: menu.name,
       items: menu.meals.map((item: any) => ({
@@ -83,7 +83,7 @@ const formatMenu = (menu: any, lang: string): Menu[] => {
         ingredients: item.recipeId || 0
       }))
     })).filter((menu: MenuCategory) => menu.items.length > 0);
-    return o as Menu;
+    return o;
   });
 };
 

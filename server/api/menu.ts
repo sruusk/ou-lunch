@@ -1,13 +1,11 @@
 // server/api/menu.ts
-import {defineEventHandler} from "h3";
-
 export default defineEventHandler(async (event) => {
   // Get query parameters
   const { city, campus } = getQuery(event);
-  const filter = {};
+  const filter: RestaurantFilter = {};
   if(city && campus) {
-    filter['city'] = city;
-    filter['campus'] = campus;
+    filter['city'] = city as string;
+    filter['campus'] = campus as string;
   }
   return await getMenus(filter);
 });

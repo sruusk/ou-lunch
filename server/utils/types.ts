@@ -30,3 +30,8 @@ export interface Menu {
   en: MenuCategory[];
   fi: MenuCategory[];
 }
+
+export interface RestaurantFilter {
+  city?: string;
+  campus?: string;
+}

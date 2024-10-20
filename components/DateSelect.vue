@@ -2,7 +2,7 @@
     <UTabs :items="items" v-model="selected" :content="false"/>
 </template>
 
-<script lang="ts">
+<script>
 
 export default defineNuxtComponent({
   name: "DateSelect",
@@ -12,7 +12,7 @@ export default defineNuxtComponent({
       required: true
     },
     dates: {
-      type: Array as PropType<Date[]>,
+      type: Array,
       required: true
     }
   },
@@ -27,16 +27,16 @@ export default defineNuxtComponent({
       get() {
         return this.dates.findIndex(date => date.toDateString() === this.date.toDateString());
       },
-      set(index: number) {
+      set(index) {
         this.setDate(index);
       }
     }
   },
   methods: {
-    setDate(index: number) {
+    setDate(index) {
       this.$emit("update:date", this.dates[index]);
     },
-    formatDate(date: Date) {
+    formatDate(date) {
       const lang = this.$i18n.locale === "en" ? "en" : "fi";
       return date.toLocaleDateString(lang, {
         weekday: "short",

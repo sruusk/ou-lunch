@@ -7,8 +7,14 @@ interface RestaurantMeta {
   city: string;
 }
 
+interface PowerestaRestaurant {
+  name: string;
+  menu: string;
+  meta: RestaurantMeta;
+}
 
-const restaurants: {name: string, menu: string, meta: RestaurantMeta}[] = [
+
+const restaurants: PowerestaRestaurant[] = [
   {
     name: 'julinia',
     menu: 'ravintolajulinia',
@@ -38,7 +44,7 @@ const restaurants: {name: string, menu: string, meta: RestaurantMeta}[] = [
   }
 ];
 
-const getRestaurant = async (restaurant: Restaurant): Promise<RestaurantMeta & { menu: Menu[] }> => {
+const getRestaurant = async (restaurant: PowerestaRestaurant): Promise<RestaurantMeta & { menu: Menu[] }> => {
   const dates: string[] = [];
   for (let i = 0; i < 7; i++) {
     const date = new Date();
@@ -57,7 +63,7 @@ const getRestaurant = async (restaurant: Restaurant): Promise<RestaurantMeta & {
 
 const formatMenu = (menu: any[]): Menu[] => {
   return menu.map(day => {
-    const out: { en: MenuCategory[]; fi: MenuCategory[] } = { en: [], fi: [] };
+    const out: any = { en: [], fi: [] };
     ['en', 'fi'].forEach(lang => {
       out[lang] = day.data.mealOptions.map((option: any) => {
         return {

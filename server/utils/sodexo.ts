@@ -1,22 +1,27 @@
-import { CAMPUSES } from '~/utils/constants';
+import {CAMPUSES} from "~/utils/constants";
 
-const restaurants = [
+interface SodexoRestaurant {
+  meta: { city: string; campus: string; name: string; url: string };
+  id: string;
+}
+
+const restaurants: SodexoRestaurant[] = [
   {
-    id: '111',
+    id: "111",
     meta: {
-      name: 'Hertsi',
-      url: 'https://www.sodexo.fi/ravintolat/ravintola-hertsi',
+      name: "Hertsi",
+      url: "https://www.sodexo.fi/ravintolat/ravintola-hertsi",
       ...CAMPUSES.TAMPERE.HERVANTA
     }
   }
 ];
 
-const getRestaurant = async (restaurant: Restaurant): Promise<RestaurantMeta & { menu: Menu[] }> => {
+const getRestaurant = async (restaurant: SodexoRestaurant): Promise<RestaurantMeta & { menu: Menu[] }> => {
   try {
-    return { ...restaurant.meta, menu: formatMenu(await getRestaurantMenu(restaurant.id)) };
+    return {...restaurant.meta, menu: formatMenu(await getRestaurantMenu(restaurant.id))};
   } catch (err) {
-    console.error('Error getting menu for', restaurant.meta.name, err);
-    throw new Error('Failed to get restaurant menu');
+    console.error("Error getting menu for", restaurant.meta.name, err);
+    throw new Error("Failed to get restaurant menu");
   }
 };
 
@@ -26,14 +31,14 @@ const getRestaurantMenu = async (restaurantId: string): Promise<any> => {
 };
 
 const formatMenu = (menu: any): Menu[] => {
-  let monday = menu.timeperiod.split(' - ')[0].split('.');
+  let monday = menu.timeperiod.split(" - ")[0].split(".");
   monday.pop();
   monday.push(new Date().getFullYear().toString());
   monday.reverse();
   monday = new Date(Date.UTC(parseInt(monday[0]), parseInt(monday[1]) - 1, parseInt(monday[2])));
 
   return menu.mealdates.map((day: any) => {
-    const [en, fi] = ['en', 'fi'].map(lang => {
+    const [en, fi] = ["en", "fi"].map(lang => {
       return Object.values(day.courses).map((course: any) => {
         return {
           name: course.category,
@@ -46,7 +51,7 @@ const formatMenu = (menu: any): Menu[] => {
                   if (recipe.ingredients) return `${recipe.name} (${recipe.ingredients})\n`;
                 })
                 .filter((i: any) => i)
-                .join('')
+                .join("")
                 .trim()
             }
           ]
@@ -88,9 +93,9 @@ const updateSodexoRestaurants = async (): Promise<void> => {
   }
   rest.forEach(r => {
     r.menu.forEach(day => {
-      updateMenu(r.name, day.date, { en: day.en, fi: day.fi });
+      updateMenu(r.name, day.date, {en: day.en, fi: day.fi});
     });
   });
 };
 
-export { updateSodexoRestaurants };
+export {updateSodexoRestaurants};

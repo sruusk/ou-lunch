@@ -21,7 +21,7 @@ export default defineNitroPlugin((nitroApp) => {
 
 
     const now = new Date();
-    const timeToTen = 1000 * 60 * 60 * 24 - (now - new Date(now.getFullYear(), now.getMonth(), now.getDate(), 10));
+    const timeToTen = 1000 * 60 * 60 * 24 - (now.valueOf() - new Date(now.getFullYear(), now.getMonth(), now.getDate(), 10).valueOf());
 
     const start = () => {
         updateMenus();
