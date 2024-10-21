@@ -7,6 +7,7 @@ export default defineNitroPlugin((nitroApp) => {
                 updateCompassRestaurants(),
                 updateSodexoRestaurants()
             ]);
+            console.log('Menus updated');
         } catch(err) {
             console.error(err);
         }

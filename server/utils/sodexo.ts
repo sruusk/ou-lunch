@@ -86,6 +86,9 @@ const getAllRestaurants = async (): Promise<(RestaurantMeta & { menu: Menu[] })[
 
 const updateSodexoRestaurants = async (): Promise<void> => {
   const rest = await getAllRestaurants();
+  if(rest.length !== restaurants.length) {
+    console.log("Sodexo restaurant count mismatch");
+  }
   for (const r of rest) {
     if (!await restaurantExists(r.name)) {
       await addRestaurant(r.name, r.url, r.campus, r.city);
