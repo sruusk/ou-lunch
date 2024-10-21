@@ -40,7 +40,9 @@ export default defineNuxtComponent({
     menus() {
       const lang = this.$i18n.locale === "en" ? "en" : "fi";
       // Find the menu for the current date and return it in the correct language
-      return this.restaurant.menu.find(menu => menu.date.toDateString() === this.date.toDateString())?.[lang];
+      return this.restaurant.menu
+        .find(menu => menu.date.toDateString() === this.date.toDateString())?.[lang]
+        .filter(menu => menu.items.length);
     },
   },
 });

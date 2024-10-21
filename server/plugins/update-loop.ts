@@ -13,12 +13,12 @@ export default defineNitroPlugin((nitroApp) => {
         }
     }
 
-    getDb().then(async (db) => {
-        await db.collection('restaurants').deleteMany({});
-        console.log('Restaurants collection emptied.');
-        await updateMenus();
-        console.log('Menus loaded');
-    });
+    // getDb().then(async (db) => {
+    //     await db.collection('restaurants').deleteMany({});
+    //     console.log('Restaurants collection emptied.');
+    //     await updateMenus();
+    //     console.log('Menus loaded');
+    // });
 
 
     const now = new Date();

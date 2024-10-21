@@ -50,26 +50,29 @@ export default defineNuxtComponent({
       ogImage: "/logo.png",
     });
 
+    const orderCookie = useCookie('order', { maxAge: 60 * 60 * 24 * 365 }); // 1 year
+    const order = useState('order', () => {
+      return orderCookie.value;
+    });
+
     const campus = CAMPUSES.OULU.LINNANMAA;
     const response = await useFetch(`/api/menu?city=${campus.city}&campus=${campus.campus}`, {
       key: "restaurants",
       server: true,
       transform: (data) => {
+        if(!order.value) {
+          order.value = data.map(r => r.name);
+        }
         return data.map(r => {
           r.menu = r.menu.map(m => {
             m.date = new Date(m.date);
             return m;
           });
           return r;
+        }).sort((a, b) => {
+          return order.value.indexOf(a.name) - order.value.indexOf(b.name);
         });
       }
-    });
-
-
-    const orderCookie = useCookie('order', { maxAge: 60 * 60 * 24 * 365 }); // 1 year
-
-    const order = useState('order', () => {
-      return orderCookie.value || response.data.value.map(r => r.name);
     });
 
     return {

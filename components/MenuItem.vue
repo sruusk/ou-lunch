@@ -1,10 +1,9 @@
 <template>
   <div
-    v-show="isVisible"
     class="mb-2 last:mb-0 flex flex-nowrap justify-between items-center"
     :class="{
-      'border-l-2 border-cool-600 dark:border-cool-300 pl-2 -ml-2': isFiltered && hasFilters && !filterHide,
-      'opacity-50': !isFiltered && hasFilters && !filterHide,
+      'border-l-2 border-cool-600 dark:border-cool-300 pl-2 -ml-2': showFilter && isFiltered,
+      'opacity-50': showFilter && !isFiltered,
     }"
   >
     <div>
@@ -27,55 +26,21 @@
   </div>
 </template>
 <script>
-export default {
+export default defineNuxtComponent({
   name: 'MenuItem',
   props: {
     item: {
       type: Object,
       required: true
     },
-  },
-  setup() {
-    const filters = useState('config');
-    return { filters };
-  },
-  created() {
-    this.$emit('visibility', this.isVisible);
-  },
-  computed: {
-    isFiltered() {
-      let d = this.item.diets?.split(", ").map(i => i.trim());
-      if (!d?.length) return false;
-
-      // Should return true if all enabled filters are present in the diets
-      const f = [
-        [/(^G$)|(Gluten free)/i, this.filters.filters.glutenFree],
-        [/(^L$)|(Lactose free)|(Low lactose)/i, this.filters.filters.lactoseFree],
-        [/(^VEG$)|(Vegan)/i, this.filters.filters.vegan],
-        [/(^M$)|(Milk free)/i, this.filters.filters.milkFree],
-        [/^Mu$/i, this.filters.filters.eggFree],
-        [/\*/i, this.filters.filters.recommended],
-      ];
-
-      return f.every(([r, v]) => {
-        if(!v) return true;
-        return d.some(i => r.test(i));
-      });
+    isFiltered: {
+      type: Boolean,
+      default: false
     },
-    hasFilters() {
-      return Object.values(this.filters.filters).some(v => v);
+    showFilter: {
+      type: Boolean,
+      default: false
     },
-    filterHide() {
-      return this.filters.method === 'hide';
-    },
-    isVisible() {
-      return !this.hasFilters || this.isFiltered || !this.filterHide;
-    }
   },
-  watch: {
-    isVisible() {
-      this.$emit('visibility', this.isVisible);
-    }
-  }
-};
+});
 </script>
