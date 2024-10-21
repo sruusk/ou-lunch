@@ -13,7 +13,7 @@ export default defineNitroPlugin((nitroApp) => {
         }
     }
 
-    updateMenus().then(() => console.log('Menus updated'));
+    updateMenus();
 
     const now = new Date();
     const timeToTen = 1000 * 60 * 60 * 24 - (now.valueOf() - new Date(now.getFullYear(), now.getMonth(), now.getDate(), 10).valueOf());
