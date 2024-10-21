@@ -124,8 +124,11 @@ const formatMenu = (menu: any): { menuTypeId: string; days: MenuDay[] }[] => {
 };
 
 const getAllMenus = async (): Promise<(RestaurantMeta & { menuTypeId: string; fin: MenuDay[]; eng?: MenuDay[] })[]> => {
-  const menus = await Promise.all(restaurants.map(getMenu));
-  return menus.flat();
+  const menus = (await Promise.all(restaurants.map(getMenu))).flat();
+  if(menus.length !== resolvers.length) {
+    console.error('Failed to get all jamix menus. Expected', resolvers.length, 'got', menus.length);
+  }
+  return menus;
 };
 
 const updateJamixRestaurants = async (): Promise<void> => {

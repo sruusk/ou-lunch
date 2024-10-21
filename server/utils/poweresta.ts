@@ -92,6 +92,11 @@ const formatMenu = (menu: any[]): Menu[] => {
 
 const getAllMenus = async (): Promise<(RestaurantMeta & { menu: Menu[] })[]> => {
   const menus = await Promise.all(restaurants.map(getRestaurant));
+  const emptyMenus = menus.filter(m => m.menu.length === 0);
+  if(emptyMenus.length > 0) {
+    console.error('Failed to get all poweresta menus.');
+    console.error(emptyMenus.map(m => m.name));
+  }
   return menus.flat();
 };
 

@@ -13,13 +13,7 @@ export default defineNitroPlugin((nitroApp) => {
         }
     }
 
-    // getDb().then(async (db) => {
-    //     await db.collection('restaurants').deleteMany({});
-    //     console.log('Restaurants collection emptied.');
-    //     await updateMenus();
-    //     console.log('Menus loaded');
-    // });
-
+    updateMenus().then(() => console.log('Menus updated'));
 
     const now = new Date();
     const timeToTen = 1000 * 60 * 60 * 24 - (now.valueOf() - new Date(now.getFullYear(), now.getMonth(), now.getDate(), 10).valueOf());
