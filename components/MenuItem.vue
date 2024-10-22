@@ -8,7 +8,7 @@
   >
     <div>
       <h3 class="text-cool-800 dark:text-cool-200">
-        {{ item.name }}
+        {{ item.name || $t('notAvailableForLanguage') }}
       </h3>
       <p v-if="item.diets?.length" class="text-cool-600 dark:text-cool-400 text-xs -mt-0.5">
         {{ item.diets }}

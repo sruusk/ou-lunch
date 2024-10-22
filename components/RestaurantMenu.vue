@@ -6,6 +6,7 @@
         :to="restaurant.url"
         class="capitalize text-xl text-blue-800 font-semibold dark:text-blue-200"
         target="_blank"
+        :aria-label="`${$t('aria.open')} ${restaurant.name} ${$t('aria.page')}`"
       >
         {{ restaurant.name }}
       </ULink>
@@ -13,11 +14,11 @@
     <div v-if="menus?.length"
          v-for="(menu, index) in menus"
          :key="index"
-         class="first:-mt-2"
+         class="first:-mt-2 mt-3"
     >
       <MenuVariant :menu="menu"/>
     </div>
-    <div v-else class="py-2">
+    <div v-else>
       <p class="text-cool-600 dark:text-cool-400">{{ $t("noMenu") }}</p>
     </div>
   </UCard>

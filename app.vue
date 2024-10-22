@@ -9,7 +9,7 @@
         <DateSelect v-model:date="date" :dates="dates"/>
         <OptionsMenu v-model:config="filterConfig"/>
       </div>
-      <UContainer class="flex flex-wrap justify-center max-w-7xl">
+      <UContainer class="flex flex-wrap justify-center max-w-7xl" role="main">
         <RestaurantMenu
           v-for="restaurant in restaurants"
           :key="restaurant.name"

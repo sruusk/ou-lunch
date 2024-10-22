@@ -3,7 +3,7 @@
     v-model="selected"
     :options="languageOptions"
     :icon="selected.icon"
-    aria-label="Language"
+    :aria-label="$t('aria.language')"
   />
 </template>
 

@@ -6,6 +6,7 @@ export default defineI18nConfig(() => ({
             title: 'Oulu University Food',
             description: 'Lunch menus of the University of Oulu',
             noMenu: 'No menu available for selected day',
+            notAvailableForLanguage: 'No English translation available',
             footer: {
                 feedback: 'Feedback',
                 feedbackTelegram: 'Give feedback on Telegram',
@@ -15,6 +16,11 @@ export default defineI18nConfig(() => ({
                 ingredients: 'Ingredients',
                 source: 'Source code on GitHub',
                 filterOptions: 'Filter options',
+                logo: 'Oulu University Food logo',
+                colourMode: 'Toggle color mode',
+                language: 'Select language',
+                open: 'Open',
+                page: 'restaurant\'s own page',
             },
             filters: {
                 filter: 'Filter',
@@ -35,6 +41,7 @@ export default defineI18nConfig(() => ({
             title: 'Oulun Yliopiston Lounaat',
             description: 'Oulun yliopiston lounasravintoloiden ruokalistat',
             noMenu: 'Valitulle päivälle ei ole saatavilla ruokalistaa',
+            notAvailableForLanguage: '',
             footer: {
                 feedback: 'Anna palautetta',
                 feedbackTelegram: 'Anna palautetta Telegramissa',
@@ -44,6 +51,11 @@ export default defineI18nConfig(() => ({
                 ingredients: 'Ainesosat',
                 source: 'Lähdekoodi GitHub',
                 filterOptions: 'Suodatusvaihtoehdot',
+                logo: 'Oulun Yliopiston Lounaat logo',
+                colourMode: 'Vaihda värimoodi',
+                language: 'Valitse kieli',
+                open: 'Avaa',
+                page: 'ravintolan omat sivut',
             },
             filters: {
                 filter: 'Suodata',
