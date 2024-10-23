@@ -30,7 +30,13 @@
             <h3 class="text-lg">{{ $t('filters.order') }}</h3>
             <Draggable v-if="order?.length" v-model="order">
               <transition-group type="transition" name="flip-list">
-                <li v-for="r in order" :key="r" class="list-group-item">
+                <li v-for="r in order"
+                    :key="r"
+                    class="list-group-item"
+                    tabindex="0"
+                    @keydown.up.prevent="oderUp(r)"
+                    @keydown.down.prevent="orderDown(r)"
+                >
                   <i
                     aria-hidden="true"
                   ></i>
@@ -99,7 +105,21 @@ export default defineNuxtComponent({
         this.orderCookie = this.order;
       }
     }
-  }
+  },
+  methods: {
+    oderUp(r) {
+      const index = this.order.indexOf(r);
+      if (index > 0) {
+        this.order.splice(index - 1, 0, this.order.splice(index, 1)[0]);
+      }
+    },
+    orderDown(r) {
+      const index = this.order.indexOf(r);
+      if (index < this.order.length - 1) {
+        this.order.splice(index + 1, 0, this.order.splice(index, 1)[0]);
+      }
+    },
+  },
 });
 </script>
 
