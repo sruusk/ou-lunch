@@ -23,6 +23,7 @@ export default defineNuxtComponent({
         id: locale.language,
         code: locale.code,
         icon: `circle-flags:${locale.language?.split('-')[1].toLowerCase()}`,
+        label: locale.code === 'en' ? 'English' : 'Suomi',
       }))
     },
     selected: {
