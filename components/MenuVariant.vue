@@ -1,6 +1,8 @@
 <template>
     <div v-show="menuItems.length">
-      <UDivider :label="menu.name" size="sm"/>
+      <UDivider size="sm">
+        <h3>{{ menu.name }}</h3>
+      </UDivider>
       <MenuItem v-for="(item, itemIndex) in menuItems"
                 :key="itemIndex"
                 :item="item.item"
