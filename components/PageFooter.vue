@@ -1,6 +1,6 @@
 <template>
   <footer>
-    <UContainer class="flex justify-between items-center">
+    <UContainer class="flex justify-between items-center contain-content">
       <div/>
       <ULink
         :aria-label="$t('aria.source')"
