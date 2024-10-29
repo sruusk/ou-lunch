@@ -21,6 +21,7 @@ export default defineI18nConfig(() => ({
                 language: 'Select language',
                 open: 'Open',
                 page: 'restaurant\'s own page',
+                restaurantInfo: 'More information about the restaurant',
             },
             filters: {
                 filter: 'Filter',
@@ -35,6 +36,10 @@ export default defineI18nConfig(() => ({
                 highlight: 'Highlight',
                 hide: 'Hide others',
                 order: 'Order (drag and drop)',
+            },
+            restaurant: {
+                openPage: 'Open restaurant\'s page',
+                prices: 'Prices',
             }
         },
         fi: {
@@ -56,6 +61,7 @@ export default defineI18nConfig(() => ({
                 language: 'Valitse kieli',
                 open: 'Avaa',
                 page: 'ravintolan omat sivut',
+                restaurantInfo: 'Lisätietoja ravintolasta',
             },
             filters: {
                 filter: 'Suodata',
@@ -70,6 +76,10 @@ export default defineI18nConfig(() => ({
                 highlight: 'Korosta',
                 hide: 'Piilota muut',
                 order: 'Järjestys (vedä ja pudota)',
+            },
+            restaurant: {
+                openPage: 'Avaa ravintolan sivut',
+                prices: 'Hinnat',
             }
         }
     }

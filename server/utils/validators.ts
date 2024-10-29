@@ -20,6 +20,10 @@ export const db_validators = {
           bsonType: "string",
           description: "City",
         },
+        provider: {
+          bsonType: "string",
+          description: "Restaurant service provider",
+        },
         menu: {
           bsonType: "array",
           description: "Menu items",

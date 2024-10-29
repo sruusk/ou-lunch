@@ -1,12 +1,5 @@
 import { CAMPUSES } from '~/utils/constants';
 
-interface RestaurantMeta {
-  name: string;
-  url: string;
-  campus: string;
-  city: string;
-}
-
 interface PowerestaRestaurant {
   name: string;
   menu: string;
@@ -21,6 +14,7 @@ const restaurants: PowerestaRestaurant[] = [
     meta: {
       name: 'Julinia',
       url: 'https://www.uniresta.fi/julinia',
+      provider: Provider.uniresta,
       ...CAMPUSES.OULU.LINNANMAA
     }
   },
@@ -30,6 +24,7 @@ const restaurants: PowerestaRestaurant[] = [
     meta: {
       name: 'Lipasto',
       url: 'https://www.uniresta.fi/lipasto',
+      provider: Provider.uniresta,
       ...CAMPUSES.OULU.LINNANMAA
     }
   },
@@ -39,6 +34,7 @@ const restaurants: PowerestaRestaurant[] = [
     meta: {
       name: 'H2O Campus',
       url: 'https://www.health2organic.fi/',
+      provider: Provider.uniresta,
       ...CAMPUSES.OULU.LINNANMAA
     }
   }
@@ -104,7 +100,7 @@ const updatePowerestaRestaurants = async (): Promise<void> => {
   const menus = await getAllMenus();
   for (const m of menus) {
     if (!await restaurantExists(m.name)) {
-      await addRestaurant(m.name, m.url, m.campus, m.city);
+      await addRestaurant(m);
     }
   }
   // Update the menu for each restaurant

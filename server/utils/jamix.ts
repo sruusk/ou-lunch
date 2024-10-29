@@ -9,6 +9,7 @@ const resolvers: { restaurant: number; id: string; meta: RestaurantMeta }[] = [
     meta: {
       name: 'Mara',
       url: 'https://juvenes.fi/mara/',
+      provider: Provider.juvenes,
       ...CAMPUSES.OULU.LINNANMAA
     }
   },
@@ -18,6 +19,7 @@ const resolvers: { restaurant: number; id: string; meta: RestaurantMeta }[] = [
     meta: {
       name: 'Foobar',
       url: 'https://juvenes.fi/foobar/',
+      provider: Provider.juvenes,
       ...CAMPUSES.OULU.LINNANMAA
     }
   },
@@ -27,6 +29,7 @@ const resolvers: { restaurant: number; id: string; meta: RestaurantMeta }[] = [
     meta: {
       name: 'Kerttu',
       url: 'https://juvenes.fi/kerttu/',
+      provider: Provider.juvenes,
       ...CAMPUSES.OULU.LINNANMAA
     }
   },
@@ -36,6 +39,7 @@ const resolvers: { restaurant: number; id: string; meta: RestaurantMeta }[] = [
     meta: {
       name: 'Voltti',
       url: 'https://juvenes.fi/voltti/',
+      provider: Provider.juvenes,
       ...CAMPUSES.OULU.LINNANMAA
     }
   },
@@ -45,6 +49,7 @@ const resolvers: { restaurant: number; id: string; meta: RestaurantMeta }[] = [
     meta: {
       name: 'Konehuone',
       url: 'https://juvenes.fi/konehuone/',
+      provider: Provider.juvenes,
       ...CAMPUSES.TAMPERE.HERVANTA
     }
   },
@@ -54,6 +59,7 @@ const resolvers: { restaurant: number; id: string; meta: RestaurantMeta }[] = [
     meta: {
       name: 'Newton',
       url: 'https://juvenes.fi/newton/',
+      provider: Provider.juvenes,
       ...CAMPUSES.TAMPERE.HERVANTA
     }
   }
@@ -135,7 +141,7 @@ const updateJamixRestaurants = async (): Promise<void> => {
   const menus = await getAllMenus();
   for (const m of menus) {
     if (!await restaurantExists(m.name)) {
-      await addRestaurant(m.name, m.url, m.campus, m.city);
+      await addRestaurant(m);
     }
   }
   menus.forEach(menu => {

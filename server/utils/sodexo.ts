@@ -1,7 +1,7 @@
 import {CAMPUSES} from "~/utils/constants";
 
 interface SodexoRestaurant {
-  meta: { city: string; campus: string; name: string; url: string };
+  meta: RestaurantMeta;
   id: string;
 }
 
@@ -11,6 +11,7 @@ const restaurants: SodexoRestaurant[] = [
     meta: {
       name: "Hertsi",
       url: "https://www.sodexo.fi/ravintolat/ravintola-hertsi",
+      provider: Provider.sodexo,
       ...CAMPUSES.TAMPERE.HERVANTA
     }
   }
@@ -91,7 +92,7 @@ const updateSodexoRestaurants = async (): Promise<void> => {
   }
   for (const r of rest) {
     if (!await restaurantExists(r.name)) {
-      await addRestaurant(r.name, r.url, r.campus, r.city);
+      await addRestaurant(r);
     }
   }
   rest.forEach(r => {

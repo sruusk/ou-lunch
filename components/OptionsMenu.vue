@@ -12,8 +12,8 @@
     <template #panel>
       <div class="p-4 max-w-[90dvw]">
         <div class="mb-4 flex flex-wrap gap-4">
-          <div class="flex flex-wrap gap-2 flex-col" tabindex="1">
-            <h3 class="text-lg">{{ $t('filters.filter') }}</h3>
+          <div class="flex flex-wrap gap-2 flex-col">
+            <h3 class="text-lg" tabindex="1">{{ $t('filters.filter') }}</h3>
             <UCheckbox v-for="(filter, index) in Object.keys(conf.filters)"
                        :tabindex="index ? undefined : 0"
                        :key="filter"

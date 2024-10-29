@@ -18,13 +18,10 @@ export const getMenus = async (filter: object): Promise<Restaurant[]> => {
   }
 };
 
-export const addRestaurant = async (name: string, url: string, campus: string, city: string): Promise<void> => {
-  if (!name) throw new Error('Name is required');
-  if (!url) throw new Error('URL is required');
-  if (!campus) throw new Error('Campus is required');
-  if (!city) throw new Error('City is required');
+export const addRestaurant = async (details: RestaurantMeta): Promise<void> => {
+  const { name, url, campus, city, provider } = details;
   try {
-    await (await getDb()).collection('restaurants').insertOne({ name, url, city, campus, menu: [] });
+    await (await getDb()).collection('restaurants').insertOne({ name, url, city, campus, provider, menu: [] });
   } catch (err) {
     console.error(JSON.stringify(err, null, 2));
     throw new Error('Failed to add restaurant');

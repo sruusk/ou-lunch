@@ -1,15 +1,20 @@
 <template>
   <UCard class="my-2 mx-2 min-h-full max-w-80 w-full">
     <template #header>
-      <ULink
-        :external="true"
-        :to="restaurant.url"
-        class="capitalize text-xl text-blue-800 font-semibold dark:text-blue-200"
-        target="_blank"
-        :aria-label="`${$t('aria.open')} ${restaurant.name} ${$t('aria.page')}`"
-      >
-        {{ restaurant.name }}
-      </ULink>
+      <div class="flex justify-between">
+        <ULink
+          :external="true"
+          :to="restaurant.url"
+          class="capitalize text-xl text-blue-800 font-semibold dark:text-blue-200"
+          target="_blank"
+          :aria-label="`${$t('aria.open')} ${restaurant.name} ${$t('aria.page')}`"
+        >
+          {{ restaurant.name }}
+        </ULink>
+        <UBadge color="white" variant="solid">
+          {{ restaurant.provider }}
+        </UBadge>
+      </div>
     </template>
     <div v-if="menus?.length"
          v-for="(menu, index) in menus"
@@ -36,6 +41,11 @@ export default defineNuxtComponent({
       type: Date,
       required: true
     }
+  },
+  data() {
+    return {
+
+    };
   },
   computed: {
     menus() {

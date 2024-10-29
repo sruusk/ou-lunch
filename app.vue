@@ -1,28 +1,26 @@
 <template>
-  <div>
-    <NuxtRouteAnnouncer/>
-    <UCard class="min-h-screen" :ui="{base: 'flex flex-col justify-between', body: { base: 'flex-auto' }}">
-      <template #header>
-        <PageHeader/>
-      </template>
-      <div class="flex justify-center items-center flex-wrap mb-4 gap-5">
-        <DateSelect v-model:date="date" :dates="dates"/>
-        <OptionsMenu v-model:config="filterConfig"/>
-      </div>
-      <UContainer class="flex flex-wrap justify-center max-w-7xl" role="main">
-        <RestaurantMenu
-          v-for="restaurant in restaurants"
-          :key="restaurant.name"
-          :date="date"
-          :restaurant="restaurant"
-          :filters="filterConfig"
-        />
-      </UContainer>
-      <template #footer>
-        <PageFooter/>
-      </template>
-    </UCard>
-  </div>
+  <NuxtRouteAnnouncer/>
+  <UCard>
+    <template #header>
+      <PageHeader/>
+    </template>
+    <div class="flex justify-center items-center flex-wrap mb-4 gap-5">
+      <DateSelect v-model:date="date" :dates="dates"/>
+      <OptionsMenu v-model:config="filterConfig"/>
+    </div>
+    <UContainer class="flex flex-wrap justify-center max-w-7xl" role="main">
+      <RestaurantMenu
+        v-for="restaurant in restaurants"
+        :key="restaurant.name"
+        :date="date"
+        :restaurant="restaurant"
+        :filters="filterConfig"
+      />
+    </UContainer>
+    <template #footer>
+      <PageFooter/>
+    </template>
+  </UCard>
 </template>
 <script>
 export default defineNuxtComponent({

@@ -4,13 +4,10 @@ export interface RestaurantMeta {
   url: string;
   campus: string;
   city: string;
+  provider: string;
 }
 
-export interface Restaurant {
-  name: string;
-  url: string;
-  campus: string;
-  city: string;
+export interface Restaurant extends RestaurantMeta {
   menu: Menu[];
 }
 
@@ -34,4 +31,12 @@ export interface Menu {
 export interface RestaurantFilter {
   city?: string;
   campus?: string;
+}
+
+export enum Provider {
+  foodandco = 'Food&Co',
+  compass = 'Compass Group',
+  sodexo = 'Sodexo',
+  uniresta = 'Uniresta',
+  juvenes = 'Juvenes',
 }
