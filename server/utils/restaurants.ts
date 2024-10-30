@@ -50,3 +50,12 @@ export const updateMenu = async (name: string, date: Date, menu: { en: MenuCateg
     throw new Error('Failed to update menu');
   }
 };
+
+export const updatePrices = async (name: string, prices: Price[]): Promise<void> => {
+  try {
+    await (await getDb()).collection('restaurants').updateOne({ name }, { $set: { prices } });
+  } catch (err) {
+    console.error(err);
+    throw new Error('Failed to update prices');
+  }
+};

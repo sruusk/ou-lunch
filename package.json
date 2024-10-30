@@ -27,5 +27,9 @@
   },
   "engines": {
     "node": ">=16.0.0"
+  },
+  "devDependencies": {
+    "@iconify-json/ion": "^1.2.1",
+    "@iconify-json/material-symbols": "^1.2.5"
   }
 }

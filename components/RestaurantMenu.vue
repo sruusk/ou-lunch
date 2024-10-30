@@ -11,9 +11,16 @@
         >
           {{ restaurant.name }}
         </ULink>
-        <UBadge color="white" variant="solid">
-          {{ restaurant.provider }}
-        </UBadge>
+<!--        <UBadge color="white" variant="solid">-->
+<!--          {{ restaurant.provider }}-->
+<!--        </UBadge>-->
+        <UDropdown :items="items">
+          <UButton color="white"
+                   :aria-label="$t('aria.restaurantInfo')"
+                   variant="ghost"
+                   trailing-icon="material-symbols:menu-rounded" />
+        </UDropdown>
+        <PricesOverlay :menu="restaurant" :show="showPrices" @show="(val) => showPrices = val"/>
       </div>
     </template>
     <div v-if="menus?.length"
@@ -44,7 +51,7 @@ export default defineNuxtComponent({
   },
   data() {
     return {
-
+      showPrices: false
     };
   },
   computed: {
@@ -55,6 +62,26 @@ export default defineNuxtComponent({
         .find(menu => menu.date.toDateString() === this.date.toDateString())?.[lang]
         .filter(menu => menu.items.length);
     },
+    items() {
+      return [
+        [{
+          label: this.restaurant.provider,
+          icon: 'ion:restaurant-outline',
+          color: 'blue'
+        }], [{
+          label: this.$t('restaurant.openPage'),
+          icon: 'material-symbols:arrow-circle-right-outline-rounded',
+          color: 'blue',
+          click: () => window.open(this.restaurant.url, '_blank')
+        }, {
+          label: this.$t('restaurant.prices'),
+          icon: 'material-symbols:euro',
+          color: 'green',
+          disabled: !this.restaurant.prices,
+          click: () => this.showPrices = !this.showPrices
+        }]
+      ]
+    }
   },
 });
 </script>

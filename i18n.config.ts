@@ -40,6 +40,10 @@ export default defineI18nConfig(() => ({
             restaurant: {
                 openPage: 'Open restaurant\'s page',
                 prices: 'Prices',
+                student: 'Students',
+                staff: 'Staff',
+                other: 'Visitors',
+                disclaimer: 'Prices may not be accurate, please check the restaurant\'s own page for the most up-to-date information',
             }
         },
         fi: {
@@ -80,6 +84,10 @@ export default defineI18nConfig(() => ({
             restaurant: {
                 openPage: 'Avaa ravintolan sivut',
                 prices: 'Hinnat',
+                student: 'Opiskelijat',
+                staff: 'Henkilökunta',
+                other: 'Vieraat',
+                disclaimer: 'Hinnoissa voi ilmetä virheitä, tarkista ravintolan omilta sivuilta ajantasaisin tieto',
             }
         }
     }

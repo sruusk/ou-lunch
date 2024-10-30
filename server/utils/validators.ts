@@ -24,6 +24,36 @@ export const db_validators = {
           bsonType: "string",
           description: "Restaurant service provider",
         },
+        prices: {
+          bsonType: "array",
+          description: "Prices object",
+          items: {
+            bsonType: "object",
+            description: "Price",
+            properties: {
+              title_fi: {
+                bsonType: "string",
+                description: "Title in Finnish",
+              },
+              title_en: {
+                bsonType: "string",
+                description: "Title in English",
+              },
+              student: {
+                bsonType: "string",
+                description: "Student price",
+              },
+              staff: {
+                bsonType: "string",
+                description: "Staff price",
+              },
+              other: {
+                bsonType: "string",
+                description: "Other price",
+              },
+            },
+          }
+        },
         menu: {
           bsonType: "array",
           description: "Menu items",

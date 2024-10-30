@@ -40,3 +40,11 @@ export enum Provider {
   uniresta = 'Uniresta',
   juvenes = 'Juvenes',
 }
+
+export interface Price {
+    title_fi: string;
+    title_en: string;
+    student: string;
+    staff: string;
+    other: string;
+}

@@ -1,3 +1,4 @@
+
 export default defineNitroPlugin((nitroApp) => {
     const updateMenus = async () => {
         try {
@@ -13,7 +14,10 @@ export default defineNitroPlugin((nitroApp) => {
         }
     }
 
-    updateMenus();
+    updateMenus().then(() => {
+        console.log('Getting prices');
+        updateRestaurantPrices();
+    });
 
     const now = new Date();
     const timeToTen = 1000 * 60 * 60 * 24 - (now.valueOf() - new Date(now.getFullYear(), now.getMonth(), now.getDate(), 10).valueOf());
