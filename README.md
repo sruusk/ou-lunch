@@ -29,12 +29,10 @@ This repository contains the NuxtJS frontend and Nitro backend for fetching, upd
 
 ## Environment
 
-| Variable     | Description            | Default                   |
-|--------------|------------------------|---------------------------|
-| DBURL        | MongoDB connection URL | mongodb://127.0.0.1:27017 |
-| DBNAME       | MongoDB database name  | ou-lunch                  |
-| PORT         | Backend server port    | 3001                      |
-| NUXT_API_URL | API Url                | http://localhost:3001     |
+| Variable      | Description            | Default                   |
+|---------------|------------------------|---------------------------|
+| NUXT_DB_URL   | MongoDB connection URL | mongodb://127.0.0.1:27017 |
+| NUXT_DB_NAME  | MongoDB database name  | ou-lunch                  |
 
 ## Frontend
 
