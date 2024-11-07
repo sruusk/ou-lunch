@@ -22,6 +22,7 @@ export default defineI18nConfig(() => ({
                 open: 'Open',
                 page: 'restaurant\'s own page',
                 restaurantInfo: 'More information about the restaurant',
+                openingHours: 'Opening hours',
             },
             filters: {
                 filter: 'Filter',
@@ -66,6 +67,7 @@ export default defineI18nConfig(() => ({
                 open: 'Avaa',
                 page: 'ravintolan omat sivut',
                 restaurantInfo: 'Lisätietoja ravintolasta',
+                openingHours: 'Aukioloajat',
             },
             filters: {
                 filter: 'Suodata',

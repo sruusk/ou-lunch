@@ -1,7 +1,7 @@
 <template>
-  <UCard class="my-2 mx-2 min-h-full max-w-80 w-full">
+  <UCard class="my-2 mx-2 min-h-full md:max-w-80 max-w-md w-full" :ui="{header: { base: 'contain-layout' }}">
     <template #header>
-      <div class="flex justify-between">
+      <div class="flex justify-between items-center">
         <ULink
           :external="true"
           :to="restaurant.url"
@@ -11,9 +11,32 @@
         >
           {{ restaurant.name }}
         </ULink>
-<!--        <UBadge color="white" variant="solid">-->
-<!--          {{ restaurant.provider }}-->
-<!--        </UBadge>-->
+
+<!--        <div class="flex items-center gap-1">-->
+<!--          <UIcon name="ic:round-access-time"-->
+<!--                 class="text-cool-600 dark:text-cool-400"-->
+<!--          />-->
+<!--          <p class="text-cool-600 dark:text-cool-400 text-xs whitespace-nowrap">-->
+<!--            10:30-18:00-->
+<!--          </p>-->
+<!--        </div>-->
+
+<!--        <div class="flex items-center gap-1 absolute bottom-1 left-6">-->
+<!--          <p class="text-cool-600 dark:text-cool-400 text-xs whitespace-nowrap">-->
+<!--            10:30-18:00-->
+<!--          </p>-->
+<!--        </div>-->
+        <div
+          v-if="openingHours"
+          class="absolute bottom-1 right-[50%] translate-x-[50%] translate-y-[50%]
+          border rounded px-1 -mb-1 dark:border-cool-700 border-cool-300 backdrop-blur-3xl"
+        >
+          <p class="text-cool-600 dark:text-cool-400 text-xs whitespace-nowrap">
+            {{ openingHours.open.hours }}:{{ openingHours.open.minutes.toString().padStart(2, '0') }}
+            -
+            {{ openingHours.close.hours }}:{{ openingHours.close.minutes.toString().padStart(2, '0') }}
+          </p>
+        </div>
         <UDropdown :items="items">
           <UButton color="white"
                    :aria-label="$t('aria.restaurantInfo')"
@@ -81,6 +104,11 @@ export default defineNuxtComponent({
           click: () => this.showPrices = !this.showPrices
         }]
       ]
+    },
+    openingHours() {
+      if(!this.restaurant.openingHours) return;
+      const today = this.date.getDay();
+      return this.restaurant.openingHours.find(oh => oh.day === today);
     }
   },
 });

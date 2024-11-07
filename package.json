@@ -9,27 +9,28 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "start:db": "docker run --rm -p 27017:27017 --name ou-lunch-mongo mongo:latest"
   },
   "keywords": [],
   "license": "MIT",
   "dependencies": {
-    "@nuxt/ui": "^2.18.7",
-    "@nuxtjs/i18n": "^8.5.5",
+    "@nuxt/ui": "^2.19.2",
+    "@nuxtjs/i18n": "^8.5.6",
     "@nuxtjs/seo": "^2.0.0-rc.21",
-    "@nuxtjs/sitemap": "^6.1.0",
-    "moment-timezone": "^0.5.45",
-    "mongodb": "^6.9.0",
-    "nuxt": "^3.13.0",
+    "@nuxtjs/sitemap": "^6.1.5",
+    "moment-timezone": "^0.5.46",
+    "mongodb": "^6.10.0",
+    "nuxt": "^3.14.159",
     "vue": "latest",
     "vue-draggable-next": "^2.2.1",
-    "vue-router": "latest"
+    "vue-router": "^4.4.5"
   },
   "engines": {
     "node": ">=16.0.0"
   },
   "devDependencies": {
     "@iconify-json/ion": "^1.2.1",
-    "@iconify-json/material-symbols": "^1.2.5"
+    "@iconify-json/material-symbols": "^1.2.6"
   }
 }

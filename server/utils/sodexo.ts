@@ -92,7 +92,7 @@ const updateSodexoRestaurants = async (): Promise<void> => {
   }
   for (const r of rest) {
     if (!await restaurantExists(r.name)) {
-      await addRestaurant(r);
+      await upsertRestaurant(r);
     }
   }
   rest.forEach(r => {

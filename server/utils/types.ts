@@ -5,6 +5,7 @@ export interface RestaurantMeta {
   campus: string;
   city: string;
   provider: string;
+  openingHours?: LunchWindow[];
 }
 
 export interface Restaurant extends RestaurantMeta {
@@ -47,4 +48,16 @@ export interface Price {
     student: string;
     staff: string;
     other: string;
+}
+
+export interface LunchWindow {
+  day: number; // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+  open: {
+    hours: number;
+    minutes: number;
+  },
+  close: {
+    hours: number;
+    minutes: number;
+  }
 }

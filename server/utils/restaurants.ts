@@ -18,13 +18,17 @@ export const getMenus = async (filter: object): Promise<Restaurant[]> => {
   }
 };
 
-export const addRestaurant = async (details: RestaurantMeta): Promise<void> => {
-  const { name, url, campus, city, provider } = details;
+export const upsertRestaurant = async (details: RestaurantMeta): Promise<void> => {
+  const { name, url, campus, city, provider, openingHours } = details;
   try {
-    await (await getDb()).collection('restaurants').insertOne({ name, url, city, campus, provider, menu: [] });
+    await (await getDb()).collection('restaurants').updateOne(
+      { name },
+      { $set: { name, url, city, campus, provider, menu: [], ...(openingHours && { openingHours }) } },
+      { upsert: true }
+    );
   } catch (err) {
     console.error(JSON.stringify(err, null, 2));
-    throw new Error('Failed to add restaurant');
+    throw new Error('Failed to add or update restaurant');
   }
 };
 

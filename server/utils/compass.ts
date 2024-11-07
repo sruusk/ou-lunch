@@ -103,9 +103,7 @@ const getAllRestaurants = async (): Promise<(RestaurantMeta & { menu: Menu[] })[
 const updateCompassRestaurants = async (): Promise<void> => {
   const restaurants = await getAllRestaurants();
   for (const r of restaurants) {
-    if (!await restaurantExists(r.name)) {
-      await addRestaurant(r);
-    }
+    await upsertRestaurant(r);
   }
   restaurants.forEach(r => {
     r.menu.forEach(day => {

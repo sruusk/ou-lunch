@@ -10,7 +10,12 @@ const resolvers: { restaurant: number; id: string; meta: RestaurantMeta }[] = [
       name: 'Mara',
       url: 'https://juvenes.fi/mara/',
       provider: Provider.juvenes,
-      ...CAMPUSES.OULU.LINNANMAA
+      ...CAMPUSES.OULU.LINNANMAA,
+      openingHours: [1,2,3,4,5].map(day => ({
+        day,
+        open: { hours: 10, minutes: 0 },
+        close: { hours: 14, minutes: 30 }
+      }))
     }
   },
   {
@@ -20,7 +25,19 @@ const resolvers: { restaurant: number; id: string; meta: RestaurantMeta }[] = [
       name: 'Foobar',
       url: 'https://juvenes.fi/foobar/',
       provider: Provider.juvenes,
-      ...CAMPUSES.OULU.LINNANMAA
+      ...CAMPUSES.OULU.LINNANMAA,
+      openingHours: [
+        ...[1,2,3,4].map(day => ({
+          day,
+          open: { hours: 10, minutes: 0 },
+          close: { hours: 17, minutes: 30 }
+        })),
+        {
+          day: 5,
+          open: { hours: 10, minutes: 0 },
+          close: { hours: 16, minutes: 0 }
+        }
+      ]
     }
   },
   {
@@ -30,7 +47,12 @@ const resolvers: { restaurant: number; id: string; meta: RestaurantMeta }[] = [
       name: 'Kerttu',
       url: 'https://juvenes.fi/kerttu/',
       provider: Provider.juvenes,
-      ...CAMPUSES.OULU.LINNANMAA
+      ...CAMPUSES.OULU.LINNANMAA,
+      openingHours: [1,2,3,4,5].map(day => ({
+        day,
+        open: { hours: 10, minutes: 30 },
+        close: { hours: 14, minutes: 0 }
+      }))
     }
   },
   {
@@ -40,7 +62,12 @@ const resolvers: { restaurant: number; id: string; meta: RestaurantMeta }[] = [
       name: 'Voltti',
       url: 'https://juvenes.fi/voltti/',
       provider: Provider.juvenes,
-      ...CAMPUSES.OULU.LINNANMAA
+      ...CAMPUSES.OULU.LINNANMAA,
+      openingHours: [1,2,3,4,5].map(day => ({
+        day,
+        open: { hours: 10, minutes: 30 },
+        close: { hours: 14, minutes: 0 }
+      }))
     }
   },
   {
@@ -140,9 +167,7 @@ const getAllMenus = async (): Promise<(RestaurantMeta & { menuTypeId: string; fi
 const updateJamixRestaurants = async (): Promise<void> => {
   const menus = await getAllMenus();
   for (const m of menus) {
-    if (!await restaurantExists(m.name)) {
-      await addRestaurant(m);
-    }
+    await upsertRestaurant(m);
   }
   menus.forEach(menu => {
     menu.fin.forEach(day => {

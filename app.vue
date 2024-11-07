@@ -15,6 +15,7 @@
         :date="date"
         :restaurant="restaurant"
         :filters="filterConfig"
+        class="flex-grow"
       />
     </UContainer>
     <template #footer>
@@ -127,6 +128,6 @@ export default defineNuxtComponent({
 
 <style>
 * {
-  transition: background-color 0.5s;
+  transition: background-color 0.5s ease-out, border-color 0.5s ease-out, box-shadow 0.5s ease-out;
 }
 </style>

@@ -15,7 +15,19 @@ const restaurants: PowerestaRestaurant[] = [
       name: 'Julinia',
       url: 'https://www.uniresta.fi/julinia',
       provider: Provider.uniresta,
-      ...CAMPUSES.OULU.LINNANMAA
+      ...CAMPUSES.OULU.LINNANMAA,
+      openingHours: [
+        ...[1,2,3,4].map(day => ({
+          day,
+          open: {hours: 10, minutes: 30},
+          close: {hours: 14, minutes: 30}
+        })),
+        {
+          day: 5,
+          open: { hours: 10, minutes: 30 },
+          close: { hours: 14, minutes: 0 }
+        }
+      ]
     }
   },
   {
@@ -25,7 +37,19 @@ const restaurants: PowerestaRestaurant[] = [
       name: 'Lipasto',
       url: 'https://www.uniresta.fi/lipasto',
       provider: Provider.uniresta,
-      ...CAMPUSES.OULU.LINNANMAA
+      ...CAMPUSES.OULU.LINNANMAA,
+      openingHours: [
+        ...[1,2,3,4,5].map(day => ({
+          day,
+          open: {hours: 10, minutes: 30},
+          close: {hours: 14, minutes: 0}
+        })),
+        {
+          day: 6,
+          open: { hours: 11, minutes: 30 },
+          close: { hours: 14, minutes: 30 }
+        }
+      ]
     }
   },
   {
@@ -35,7 +59,12 @@ const restaurants: PowerestaRestaurant[] = [
       name: 'H2O Campus',
       url: 'https://www.health2organic.fi/',
       provider: Provider.uniresta,
-      ...CAMPUSES.OULU.LINNANMAA
+      ...CAMPUSES.OULU.LINNANMAA,
+      openingHours: [1,2,3,4,5].map(day => ({
+        day: day,
+        open: { hours: 10, minutes: 30 },
+        close: { hours: 14, minutes: 0 }
+      }))
     }
   }
 ];
@@ -99,9 +128,7 @@ const getAllMenus = async (): Promise<(RestaurantMeta & { menu: Menu[] })[]> => 
 const updatePowerestaRestaurants = async (): Promise<void> => {
   const menus = await getAllMenus();
   for (const m of menus) {
-    if (!await restaurantExists(m.name)) {
-      await addRestaurant(m);
-    }
+    await upsertRestaurant(m);
   }
   // Update the menu for each restaurant
   menus.forEach(menu => {
