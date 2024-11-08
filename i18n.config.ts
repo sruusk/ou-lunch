@@ -7,6 +7,7 @@ export default defineI18nConfig(() => ({
             description: 'Lunch menus of the University of Oulu',
             noMenu: 'No menu available for selected day',
             notAvailableForLanguage: 'No English translation available',
+            pageDescription: 'Oulu University lunch menus for various restaurants. Find the best lunch options available today.',
             footer: {
                 feedback: 'Feedback',
                 feedbackTelegram: 'Give feedback on Telegram',
@@ -52,6 +53,7 @@ export default defineI18nConfig(() => ({
             description: 'Oulun yliopiston lounasravintoloiden ruokalistat',
             noMenu: 'Valitulle päivälle ei ole saatavilla ruokalistaa',
             notAvailableForLanguage: '',
+            pageDescription: 'Oulun yliopiston lounaslistat eri ravintoloille. Löydä parhaat lounasvaihtoehdot tänään.',
             footer: {
                 feedback: 'Anna palautetta',
                 feedbackTelegram: 'Anna palautetta Telegramissa',

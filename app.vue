@@ -4,6 +4,7 @@
     <template #header>
       <PageHeader/>
     </template>
+    <h1 class="hidden">{{ $t('pageDescription') }}</h1>
     <div class="flex justify-center items-center flex-wrap mb-4 gap-5">
       <DateSelect v-model:date="date" :dates="dates"/>
       <OptionsMenu v-model:config="filterConfig"/>
