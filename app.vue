@@ -45,7 +45,7 @@ export default defineNuxtComponent({
   },
   async setup() {
     useSeoMeta({
-      title: "Menu",
+      title: "OUF",
       description: "Oulu University lunch menus",
       ogImage: "/logo.png",
     });
