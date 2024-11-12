@@ -42,7 +42,7 @@ const restaurants: PowerestaRestaurant[] = [
         ...[1,2,3,4,5].map(day => ({
           day,
           open: {hours: 10, minutes: 30},
-          close: {hours: 14, minutes: 0}
+          close: {hours: 18, minutes: 0}
         })),
         {
           day: 6,
