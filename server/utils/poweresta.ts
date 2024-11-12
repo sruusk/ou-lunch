@@ -4,6 +4,7 @@ interface PowerestaRestaurant {
   name: string;
   menu: string;
   meta: RestaurantMeta;
+  map?: (menu: Menu) => Menu; // Optional function to apply a mapping to the menu
 }
 
 
@@ -49,7 +50,24 @@ const restaurants: PowerestaRestaurant[] = [
           open: { hours: 11, minutes: 30 },
           close: { hours: 14, minutes: 30 }
         }
-      ]
+      ],
+    },
+    map: (menu: Menu) => {
+      const day = (new Date(menu.date)).getDay();
+      const open = day > 0 && day < 5
+        ? '11:00 - 17:00'
+        : day === 5 ? '11:00 - 16:30' : false;
+
+      if(!open) return menu;
+
+      const grillRx = /Grilli?/i;
+      [menu.en, menu.fi] = [menu.en, menu.fi].map(lang => lang.map(meal => {
+        if(grillRx.test(meal.name)) {
+          meal.name += ` ${open}`;
+        }
+        return meal;
+      }));
+      return menu;
     }
   },
   {
@@ -79,7 +97,8 @@ const getRestaurant = async (restaurant: PowerestaRestaurant): Promise<Restauran
 
   try {
     const res = await fetch(`https://api.fi.poweresta.com/publicmenu/dates/uniresta/${restaurant.name}/?menu=${restaurant.menu}&dates=${dates.join(',')}`).then(res => res.json());
-    return { ...restaurant.meta, menu: formatMenu(res) };
+    const menu = restaurant.map ? formatMenu(res).map(restaurant.map) : formatMenu(res);
+    return { ...restaurant.meta, menu };
   } catch (err) {
     console.error('Error getting menu for', restaurant.meta.name, err);
     return { ...restaurant.meta, menu: [] };

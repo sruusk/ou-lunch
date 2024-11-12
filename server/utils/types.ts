@@ -27,6 +27,7 @@ export interface Menu {
   date: Date;
   en: MenuCategory[];
   fi: MenuCategory[];
+  [key: string]: MenuCategory[] | Date;
 }
 
 export interface RestaurantFilter {
