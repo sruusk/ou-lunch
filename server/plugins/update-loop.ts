@@ -1,3 +1,4 @@
+import moment from "moment-timezone";
 
 export default defineNitroPlugin((nitroApp) => {
     const updateMenus = async () => {
@@ -20,12 +21,14 @@ export default defineNitroPlugin((nitroApp) => {
     });
 
     const now = new Date();
-    const timeToTen = 1000 * 60 * 60 * 24 - (now.valueOf() - new Date(now.getFullYear(), now.getMonth(), now.getDate(), 10).valueOf());
+    const timeToNine = moment.tz('Europe/Helsinki').startOf('day').add(1, 'day').add(9, 'hours').diff(now);
 
-    const start = () => {
+    setTimeout(() => {
         updateMenus();
-        setInterval(updateMenus, 1000 * 60 * 60 * 24);
-    }
-
-    setTimeout(start, timeToTen);
+        setInterval(() => { // Update menus every day at 9:00, 10:00 and 11:00
+            updateMenus();
+            setTimeout(updateMenus, 1000 * 60 * 60); // 1 hour
+            setTimeout(updateMenus, 1000 * 60 * 60 * 2); // 2 hours
+        }, 1000 * 60 * 60 * 24);
+    }, timeToNine);
 });
