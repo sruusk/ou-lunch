@@ -22,7 +22,9 @@
       <UModal v-model="open">
         <div class="p-5 h-[900px] max-h-[80svh]">
           <iframe class="rounded-lg h-full"
-                  src="https://forms.office.com/Pages/ResponsePage.aspx?id=muScnwFRo0qMdQ1ZNa1lJRYDqcnmLlJIpYBLLUY7cYpUN0gxNkRVN1k3QUQ4Q09IOU1EMFdXQzBZRy4u&embed=true" style="border: none; max-width:100%; max-height:100vh" width="640px"></iframe>
+                  src="https://forms.office.com/Pages/ResponsePage.aspx?id=muScnwFRo0qMdQ1ZNa1lJRYDqcnmLlJIpYBLLUY7cYpUN0gxNkRVN1k3QUQ4Q09IOU1EMFdXQzBZRy4u&embed=true"
+                  style="border: none; max-width:100%; max-height:100vh" width="640px"
+          ></iframe>
         </div>
       </UModal>
     </UContainer>

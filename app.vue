@@ -1,10 +1,10 @@
 <template>
   <NuxtRouteAnnouncer/>
-  <UCard>
+  <h1 class="hidden">{{ $t('pageDescription') }}</h1>
+  <UCard :ui="{ body: { base: 'min-h-[calc(100vh-153px)]' } }">
     <template #header>
-      <PageHeader/>
+      <PageHeader class="h-10"/>
     </template>
-    <h1 class="hidden">{{ $t('pageDescription') }}</h1>
     <div class="flex justify-center items-center flex-wrap mb-4 gap-5">
       <DateSelect v-model:date="date" :dates="dates"/>
       <OptionsMenu v-model:config="filterConfig"/>
@@ -20,7 +20,7 @@
       />
     </UContainer>
     <template #footer>
-      <PageFooter/>
+      <PageFooter class="h-10"/>
     </template>
   </UCard>
 </template>

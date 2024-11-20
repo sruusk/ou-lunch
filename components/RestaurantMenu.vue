@@ -5,7 +5,7 @@
         <ULink
           :external="true"
           :to="restaurant.url"
-          class="capitalize text-xl text-blue-800 font-semibold dark:text-blue-200"
+          class="capitalize text-xl text-blue-800 font-semibold dark:text-blue-200 whitespace-nowrap"
           target="_blank"
           :aria-label="`${$t('aria.open')} ${restaurant.name} ${$t('aria.page')}`"
         >
