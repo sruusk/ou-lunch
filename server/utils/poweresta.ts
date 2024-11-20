@@ -55,8 +55,8 @@ const restaurants: PowerestaRestaurant[] = [
     map: (menu: Menu) => {
       const day = (new Date(menu.date)).getDay();
       const open = day > 0 && day < 5
-        ? '11:00 - 17:00'
-        : day === 5 ? '11:00 - 16:30' : false;
+        ? '11.00-17.00'
+        : day === 5 ? '11.00-16.30' : false;
 
       if(!open) return menu;
 
