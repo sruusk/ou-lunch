@@ -101,6 +101,9 @@ export default defineNuxtComponent({
       if(removedItems.length) this.order = this.order.filter(i => !removedItems.includes(i));
     }
   },
+  mounted() {
+    umTrackView();
+  },
   computed: {
     restaurants() {
       if(!this.apiRestaurants) return [];

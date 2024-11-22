@@ -7,7 +7,16 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     '@nuxtjs/i18n',
     '@nuxtjs/seo',
+    'nuxt-umami',
   ],
+  umami: {
+    id: 'e64eac9b-39ff-4e8c-a6f5-f2fcc63baf58',
+    host: 'https://umami.anttila.io',
+    autoTrack: true,
+    ignoreLocalhost: true,
+    excludeQueryParams: true,
+    trailingSlash: 'never',
+  },
   i18n: {
     vueI18n: './i18n.config.ts',
     locales: [
@@ -36,10 +45,6 @@ export default defineNuxtConfig({
   runtimeConfig: {
     dbUrl: 'mongodb://127.0.0.1:27017',
     dbName: 'ou-lunch',
-    public: {
-      uId: undefined,
-      uScript: undefined,
-    }
   },
   ogImage: {
     enabled: false,
