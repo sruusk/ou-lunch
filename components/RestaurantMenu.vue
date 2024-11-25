@@ -1,5 +1,5 @@
 <template>
-  <UCard class="my-2 mx-2 min-h-full md:max-w-80 max-w-md w-full" >
+  <UCard v-show="menus?.length" class="my-2 mx-2 min-h-full md:max-w-80 max-w-md w-full">
     <template #header>
       <div class="flex justify-between items-center">
         <ULink
@@ -44,6 +44,15 @@
       <p class="text-cool-600 dark:text-cool-400">{{ $t("noMenu") }}</p>
     </div>
   </UCard>
+  <DevOnly v-if="!menus?.length">
+    <UCard class="my-2 mx-2 min-h-full md:max-w-80 max-w-md w-full">
+      <h3>{{ restaurant.name }}</h3>
+      <br>
+      {{ $t("noMenu") }}
+      <br>
+      <UAlert class="mt-5" type="info" icon="ion:information-circle-outline" description="This message is only visible in development mode"/>
+    </UCard>
+  </DevOnly>
 </template>
 
 <script>
@@ -77,7 +86,8 @@ export default defineNuxtComponent({
         [{
           label: this.restaurant.provider,
           icon: 'ion:restaurant-outline',
-          color: 'blue'
+          color: 'blue',
+          type: 'label'
         }], [{
           label: this.$t('restaurant.openPage'),
           icon: 'material-symbols:arrow-circle-right-outline-rounded',

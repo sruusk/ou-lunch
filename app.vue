@@ -1,7 +1,7 @@
 <template>
   <NuxtRouteAnnouncer/>
   <h1 class="hidden">{{ $t('pageDescription') }}</h1>
-  <UCard :ui="{ body: { base: 'min-h-[calc(100vh-153px)]' } }">
+  <UCard :ui="{ body: { base: 'grow' } }" class="flex flex-col min-h-dvh">
     <template #header>
       <PageHeader class="h-10"/>
     </template>
@@ -15,8 +15,6 @@
         :key="restaurant.name"
         :date="date"
         :restaurant="restaurant"
-        :filters="filterConfig"
-        class="flex-grow"
       />
     </UContainer>
     <template #footer>
