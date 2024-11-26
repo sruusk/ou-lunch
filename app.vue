@@ -73,6 +73,15 @@ export default defineNuxtComponent({
       }
     });
 
+    // Check for removed or added restaurants and add new ones to the end of the list
+    if(Array.isArray(order.value)) {
+      const r = response.data.value.map(r => r.name);
+      const newItems = r.filter(i => !order.value.includes(i));
+      const removedItems = order.value.filter(i => !r.includes(i));
+      if(newItems.length) order.value.push(...newItems);
+      if(removedItems.length) order.value = order.value.filter(i => !removedItems.includes(i));
+    }
+
     return {
       apiRestaurants: response.data,
       order,
