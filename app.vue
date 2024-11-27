@@ -99,13 +99,6 @@ export default defineNuxtComponent({
   beforeMount() {
     if(!this.restaurants?.length) {
       alert("Could not fetch data from the server. Please try again later.");
-    } else if(Array.isArray(this.order)) {
-      // Check for removed or added restaurants and add new ones to the end of the list
-      const r = this.apiRestaurants.map(r => r.name);
-      const newItems = r.filter(i => !this.order.includes(i));
-      const removedItems = this.order.filter(i => !r.includes(i));
-      if(newItems.length) this.order.push(...newItems);
-      if(removedItems.length) this.order = this.order.filter(i => !removedItems.includes(i));
     }
   },
   mounted() {
@@ -125,7 +118,7 @@ export default defineNuxtComponent({
       this.restaurants.forEach(r => {
         r.menu.forEach(m => {
           if(m.fi?.length)
-            dates.add(m.date.toDateString());
+            dates.add(m.date.toISOString());
         });
       });
       return Array.from(dates)

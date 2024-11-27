@@ -25,7 +25,7 @@ export default defineNuxtComponent({
     },
     selected: {
       get() {
-        return this.dates.findIndex(date => date.toDateString() === this.date.toDateString());
+        return this.dates.findIndex(date => date.toISOString() === this.date.toISOString());
       },
       set(index) {
         this.setDate(index);
@@ -40,6 +40,7 @@ export default defineNuxtComponent({
       const lang = this.$i18n.locale === "en" ? "en" : "fi";
       return date.toLocaleDateString(lang, {
         weekday: "short",
+        timeZone: 'Europe/Helsinki'
       });
     }
   },
