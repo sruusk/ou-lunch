@@ -42,6 +42,17 @@ export default defineNuxtConfig({
   ui: {
     global: true,
   },
+  nitro: {
+    experimental: {
+      tasks: true,
+    },
+    scheduledTasks: {
+      // Run updateMenu every day at 6, 7, 8, 9 (UTC)
+      '0 6,7,8,9 * * *': ['updateMenu'],
+      // Run updatePrices every Monday at 08:00 (UTC)
+      '0 8 * * 1': ['updatePrices'],
+    }
+  },
   runtimeConfig: {
     dbUrl: 'mongodb://127.0.0.1:27017',
     dbName: 'ou-lunch',
