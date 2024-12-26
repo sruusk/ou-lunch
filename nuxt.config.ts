@@ -56,6 +56,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     dbUrl: 'mongodb://127.0.0.1:27017',
     dbName: 'ou-lunch',
+    heroCoreUrl: '127.0.0.1:1818',
   },
   ogImage: {
     enabled: false,

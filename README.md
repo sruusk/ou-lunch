@@ -29,10 +29,12 @@ This repository contains the NuxtJS frontend and Nitro backend for fetching, upd
 
 ## Environment
 
-| Variable      | Description            | Default                   |
-|---------------|------------------------|---------------------------|
-| NUXT_DB_URL   | MongoDB connection URL | mongodb://127.0.0.1:27017 |
-| NUXT_DB_NAME  | MongoDB database name  | ou-lunch                  |
+| Variable           | Description                  | Default                   |
+|--------------------|------------------------------|---------------------------|
+| NUXT_DB_URL        | MongoDB connection URL       | mongodb://127.0.0.1:27017 |
+| NUXT_DB_NAME       | MongoDB database name        | ou-lunch                  |
+| NUXT_HERO_CORE_URL | Url to a hero cloud instance | 127.0.0.1:1818            |
+| OPENAI_API_KEY     | OpenAI API key               |                           |
 
 ## Frontend
 

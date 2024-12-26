@@ -1,3 +1,5 @@
+import {updateOpeningHours} from "~/server/utils/openingHours";
+
 export default defineTask({
   meta: {
     name: 'updateMenu',
@@ -11,6 +13,7 @@ export default defineTask({
       updateCompassRestaurants(),
       updateSodexoRestaurants()
     ]);
+    updateOpeningHours({url: 'https://juvenes.fi/foobar/', provider: Provider.juvenes});
     return {result: 'Success'}
   }
 })

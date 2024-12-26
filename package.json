@@ -10,7 +10,8 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "start:db": "docker run --rm -p 27017:27017 --name ou-lunch-mongo mongo:latest"
+    "start:db": "docker run --rm -p 27017:27017 --name ou-lunch-mongo mongo:latest",
+    "start:cloud": "npx @ulixee/cloud start"
   },
   "keywords": [],
   "license": "MIT",
@@ -19,13 +20,16 @@
     "@nuxtjs/i18n": "^8.5.6",
     "@nuxtjs/seo": "^2.0.0-rc.21",
     "@nuxtjs/sitemap": "^6.1.5",
+    "@ulixee/hero": "^2.0.0-alpha.31",
     "moment-timezone": "^0.5.46",
     "mongodb": "^6.10.0",
     "nuxt": "^3.14.159",
     "nuxt-umami": "^3.0.2",
+    "openai": "^4.77.0",
     "vue": "latest",
     "vue-draggable-next": "^2.2.1",
-    "vue-router": "^4.4.5"
+    "vue-router": "^4.4.5",
+    "zod": "^3.24.1"
   },
   "engines": {
     "node": ">=16.0.0"
