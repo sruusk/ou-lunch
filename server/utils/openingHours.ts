@@ -25,15 +25,20 @@ export const updateOpeningHours = async (restaurant: { url: string, provider: Pr
   }
   console.log(text);
   if(!text) return;
+  const now = new Date();
+  const nextWeek = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
   const completions = await client.beta.chat.completions.parse({
     model: 'gpt-4o',
     messages: [
-      { role: 'system', content: 'You are an expert at structured data extraction. ' +
+      {
+        role: 'system',
+        content: 'You are an expert at structured data extraction. ' +
           'You will be given unstructured text from a restaurants webpage and should convert the lunchtimes to the given format.' +
           'The lunchtimes are per weekday, where day is an integer from 0 to 6, where 0 is Sunday and 6 is Saturday.' +
-          'Extract the lunchtimes that are valid for the current week.' +
+          'Extract the lunchtimes that are valid for the given time period. ' +
           'If the restaurants opening times differ from the lunchtimes, use the lunchtimes.' +
-          `The current date is ${new Date().toISOString()}.` },
+          `The timeperiod is ${now.toISOString()} to ${nextWeek.toISOString()}.`
+      },
       { role: 'user', content: text }
     ],
     response_format: zodResponseFormat(OpeningHours, 'opening_hours_extraction')
