@@ -4,8 +4,9 @@ export default defineTask({
     description: 'Update opening hours for restaurants',
   },
   async run() {
-    console.log('Updating menus');
-    updateOpeningHours({url: 'https://www.uniresta.fi/lipasto/', provider: Provider.uniresta});
-    return {result: 'Success'}
+    console.log('Updating non-normal opening hours');
+    const restaurants = await getMenus({});
+    await Promise.all(restaurants.filter(r => r.openingHours?.length).map(updateOpeningHours));
+    return {result: 'Successfully updated non-normal opening hours'}
   }
 })

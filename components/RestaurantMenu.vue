@@ -25,12 +25,35 @@
           class="h-fit w-fit bottom-0 right-0 translate-y-1/2
           border rounded px-1 -mb-1 dark:border-cool-700 border-cool-300 backdrop-blur-3xl"
         >
-          <p class="text-cool-600 dark:text-cool-400 text-xs whitespace-nowrap">
+          <p class="text-cool-600 dark:text-cool-400 text-xs whitespace-nowrap flex">
             {{ openingHours.open.hours }}:{{ openingHours.open.minutes.toString().padStart(2, '0') }}
             -
             {{ openingHours.close.hours }}:{{ openingHours.close.minutes.toString().padStart(2, '0') }}
           </p>
         </div>
+        <UPopover
+          mode="click"
+          :label="$t('aria.nonNormalOpeningHours')"
+          v-if="nonNormalOpeningHours"
+        >
+          <UButton
+            icon="iconoir:warning-circle-solid"
+            color="yellow"
+            variant="link"
+            size="xs"
+            class="px-1 py-0 translate-y-1/2"
+            :aria-label="$t('aria.nonNormalOpeningHours')"
+          />
+          <template #panel>
+            <div class="w-96 max-w-[90vw]">
+              <UAlert
+                type="warning"
+                icon="iconoir:warning-circle-solid"
+                :description="$t('restaurant.openingHoursDisclaimer')"
+              />
+            </div>
+          </template>
+        </UPopover>
       </div>
     </template>
     <div v-if="menus?.length"
@@ -50,7 +73,7 @@
       <br>
       {{ $t("noMenu") }}
       <br>
-      <UAlert class="mt-5" type="info" icon="ion:information-circle-outline" description="This message is only visible in development mode"/>
+      <UAlert class="mt-5" type="info" icon="ion:information-circle-outline" description="This restaurant is hidden in production mode"/>
     </UCard>
   </DevOnly>
 </template>
@@ -105,7 +128,16 @@ export default defineNuxtComponent({
     openingHours() {
       if(!this.restaurant.openingHours) return;
       const today = this.date.getDay();
+      const nonNormal = this.nonNormalOpeningHours;
+      if(nonNormal) {
+        // console.log(`Non-normal opening hours for ${this.restaurant.name} on ${this.date.toDateString()}: ${nonNormal.open.hours}:${nonNormal.open.minutes} - ${nonNormal.close.hours}:${nonNormal.close.minutes}`);
+        return nonNormal;
+      }
       return this.restaurant.openingHours.find(oh => oh.day === today);
+    },
+    nonNormalOpeningHours() {
+      const today = this.date.getDay();
+      return this.restaurant.nonNormalOpeningHours?.find(oh => (new Date(oh.day)).getDay() === today);
     }
   },
 });

@@ -6,13 +6,13 @@ import Hero from "@ulixee/hero";
 
 const OpeningHours = z.object({
   times: z.array(z.object({
-    day: z.number(),
+    day: z.string(),
     open: z.object({ hours: z.number(), minutes: z.number() }),
     close: z.object({ hours: z.number(), minutes: z.number() })
   }))
 });
 
-export const updateOpeningHours = async (restaurant: { url: string, provider: Provider }) => {
+export const updateOpeningHours = async (restaurant: Restaurant) => {
   const client = new OpenAI();
   let text;
   switch (restaurant.provider) {
@@ -20,13 +20,16 @@ export const updateOpeningHours = async (restaurant: { url: string, provider: Pr
       text = await scrapeTextContent(restaurant.url, 'div.grve-bookmark');
       break;
     case Provider.uniresta:
-      text = await scrapeTextContent(restaurant.url, 'div.rivi.two-columns');
+      if(restaurant.url.includes('uniresta.fi'))
+        text = await scrapeTextContent(restaurant.url, 'div.rivi.two-columns');
       break;
   }
-  console.log(text);
+
   if(!text) return;
+
   const now = new Date();
-  const nextWeek = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
+  const end = new Date(now.getTime() + 10 * 24 * 60 * 60 * 1000);
+
   const completions = await client.beta.chat.completions.parse({
     model: 'gpt-4o',
     messages: [
@@ -34,21 +37,34 @@ export const updateOpeningHours = async (restaurant: { url: string, provider: Pr
         role: 'system',
         content: 'You are an expert at structured data extraction. ' +
           'You will be given unstructured text from a restaurants webpage and should convert the lunchtimes to the given format.' +
-          'The lunchtimes are per weekday, where day is an integer from 0 to 6, where 0 is Sunday and 6 is Saturday.' +
           'Extract the lunchtimes that are valid for the given time period. ' +
+          'The date is a ISO 8601 type date string without the time. ' +
           'If the restaurants opening times differ from the lunchtimes, use the lunchtimes.' +
-          `The timeperiod is ${now.toISOString()} to ${nextWeek.toISOString()}.`
+          `The timeperiod is ${now.toISOString()} to ${end.toISOString()}.`
       },
       { role: 'user', content: text }
     ],
     response_format: zodResponseFormat(OpeningHours, 'opening_hours_extraction')
   })
 
-  console.log(completions);
+  let openingHours = completions.choices[0].message.parsed?.times;
+  console.log(openingHours);
+  if(!openingHours) return;
 
-  const openingHours = completions.choices[0].message.parsed;
+  openingHours = openingHours.map(time => {
+    const day = new Date(time.day).getDay();
+    const current = restaurant.openingHours?.find(o => o.day === day);
+    if (!current) return;
+    // If the opening hours are the same, don't update
+    if (time.open.hours === current.open.hours && time.open.minutes === current.open.minutes &&
+      time.close.hours === current.close.hours && time.close.minutes === current.close.minutes) {
+      return;
+    } else return time;
+  }).filter(o => o !== undefined) as NonNormalOpeningHours[];
 
-  console.log(openingHours?.times);
+  if (openingHours.length > 0) {
+    await updateNonNormalOpeningHours(restaurant.name, openingHours);
+  }
 }
 
 const scrapeTextContent = async (url: string, selector: string) => {
@@ -66,7 +82,13 @@ const scrapeTextContent = async (url: string, selector: string) => {
   // Wait for the page to load
   await hero.waitForPaintingStable();
 
-  const text = await hero.document.querySelector(selector).innerText;
+  let text;
+  try {
+    text = await hero.document.querySelector(selector).innerText;
+  } catch (err) {
+    console.error(`Failed to scrape text content from ${url}`, err);
+  }
+
   await hero.close();
   return text;
 }
