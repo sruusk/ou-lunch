@@ -31,8 +31,12 @@
     "vue-router": "^4.5.0",
     "zod": "^3.24.1"
   },
+  "overrides": {
+    "vite": "5.4.11",
+    "vue": "latest"
+  },
   "engines": {
-    "node": ">=16.0.0"
+    "node": ">=20.0.0"
   },
   "devDependencies": {
     "@iconify-json/ion": "^1.2.2",
