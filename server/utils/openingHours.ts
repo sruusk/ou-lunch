@@ -74,15 +74,12 @@ const scrapeTextContent = async (url: string, selector: string) => {
   });
 
   await hero.goto(url);
-  // Wait for all content to load or max 10 seconds
-  await hero.waitForLoad('AllContentLoaded', {
-    timeoutMs: 120000,
-  })
-  // Wait for the page to load
-  await hero.waitForPaintingStable();
 
   let text;
   try {
+    await hero.waitForLoad('AllContentLoaded', { timeoutMs: 120000 })
+    await hero.waitForPaintingStable();
+
     text = await hero.document.querySelector(selector).innerText;
   } catch (err) {
     console.error(`Failed to scrape text content from ${url}`, err);
