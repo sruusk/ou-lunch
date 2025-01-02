@@ -1,6 +1,4 @@
 export default defineNitroPlugin((nitroApp) => {
-  console.log('Nitro plugin', nitroApp)
-
   console.log('Running scheduled tasks on startup');
   runTask('updateMenu').then((a) => {
     console.log(a);
