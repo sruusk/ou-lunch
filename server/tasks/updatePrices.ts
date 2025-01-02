@@ -10,5 +10,3 @@ export default defineTask({
   }
 })
 
-// Run on server start
-runTask('updatePrices').then(console.log).catch(console.error);

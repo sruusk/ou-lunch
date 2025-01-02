@@ -11,5 +11,3 @@ export default defineTask({
   }
 })
 
-// Run on server start - only in production, although it's not actually running for some reason
-if(!process.dev) runTask('updateHours').then(console.log).catch(console.error);

@@ -14,6 +14,3 @@ export default defineTask({
     return {result: 'Successfully updated menus'}
   }
 })
-
-// Run on server start
-runTask('updateMenu').then(console.log).catch(console.error);
