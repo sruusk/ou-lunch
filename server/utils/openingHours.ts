@@ -76,7 +76,7 @@ const scrapeTextContent = async (url: string, selector: string) => {
   await hero.goto(url);
   // Wait for all content to load or max 10 seconds
   await hero.waitForLoad('AllContentLoaded', {
-    timeoutMs: 10000,
+    timeoutMs: 120000,
   })
   // Wait for the page to load
   await hero.waitForPaintingStable();
