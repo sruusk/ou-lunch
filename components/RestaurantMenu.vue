@@ -22,8 +22,9 @@
       <div class="h-0 w-full flex justify-center">
         <div
           v-if="openingHours"
-          class="h-fit w-fit bottom-0 right-0 translate-y-1/2
+          class="h-fit w-fit bottom-0 right-0 translate-y-1/2 flex
           border rounded px-1 -mb-1 dark:border-cool-700 border-cool-300 backdrop-blur-3xl"
+          :class="{ '!border-yellow-600': nonNormalOpeningHours }"
         >
           <p class="text-cool-600 dark:text-cool-400 text-xs whitespace-nowrap flex">
             {{ openingHours.open.hours }}:{{ openingHours.open.minutes.toString().padStart(2, '0') }}
@@ -32,16 +33,17 @@
           </p>
         </div>
         <UPopover
+          v-if="nonNormalOpeningHours"
           mode="click"
           :label="$t('aria.nonNormalOpeningHours')"
-          v-if="nonNormalOpeningHours"
+          :ui="{ wrapper: 'w-0' }"
         >
           <UButton
             icon="iconoir:warning-circle-solid"
-            color="yellow"
+            color="orange"
             variant="link"
             size="xs"
-            class="px-1 py-0 translate-y-1/2"
+            class="translate-y-1"
             :aria-label="$t('aria.nonNormalOpeningHours')"
           />
           <template #panel>
