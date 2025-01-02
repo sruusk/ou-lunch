@@ -51,8 +51,8 @@ export default defineNuxtConfig({
       '0 6,7,8,9 * * *': ['updateMenu'],
       // Run updatePrices every Monday at 08:00 (UTC)
       '0 8 * * 1': ['updatePrices'],
-      // Run updateOpeningHours every other day at 10:00 (UTC)
-      '0 10 */2 * *': ['updateOpeningHours'],
+      // Run updateHours every other day at 10:00 (UTC)
+      '0 10 */2 * *': ['updateHours'],
     }
   },
   runtimeConfig: {
