@@ -10,3 +10,6 @@ export default defineTask({
     return {result: 'Successfully updated non-normal opening hours'}
   }
 })
+
+// Run on server start
+if(!process.dev) runTask('updateHours').then(console.log).catch(console.error);

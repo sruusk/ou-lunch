@@ -40,6 +40,15 @@ This repository contains the NuxtJS frontend and Nitro backend for fetching, upd
 
 The frontend for this project is built with NuxtJS and is hosted at [ouf.fi](https://ouf.fi).
 
+## Development
+Parts marked with `*` are only needed if developing the non-normal opening hours feature.
+
+- Run `npm install` in the root directory to install the dependencies.
+- *Run `npm run start:cloud` to start the Ulixee Cloud instance.
+- Run `npm run start:db` to start the MongoDB database on Docker. You must have Docker installed.
+- Run `npm run dev` to start the NuxtJS frontend in development mode.
+- *To update the opening hours, visit `localhost:3000/_nitro/tasks/updateHours` in your browser.
+
 ## Contributing
 
 Contributions are welcome! Please fork the repository and submit a pull request.
