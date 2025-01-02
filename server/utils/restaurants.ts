@@ -2,7 +2,7 @@ import moment from 'moment-timezone';
 import type {PushOperator} from "mongodb";
 import {Document} from "yaml";
 
-export const getMenus = async (filter: object): Promise<Restaurant[]> => {
+export const getMenus = async (filter: RestaurantFilter): Promise<Restaurant[]> => {
   try {
     const today = moment.tz('Europe/Helsinki').startOf('day').toDate();
     const restaurants = await (await getDb()).collection("restaurants").find(filter).toArray() as unknown as Restaurant[];
@@ -61,5 +61,14 @@ export const updatePrices = async (name: string, prices: Price[]): Promise<void>
   } catch (err) {
     console.error(err);
     throw new Error('Failed to update prices');
+  }
+};
+
+export const updateNonNormalOpeningHours = async (name: string, nonNormalOpeningHours: NonNormalOpeningHours[]): Promise<void> => {
+  try {
+    await (await getDb()).collection('restaurants').updateOne({ name }, { $set: { nonNormalOpeningHours } });
+  } catch (err) {
+    console.error(err);
+    throw new Error('Failed to update non-normal opening hours');
   }
 };

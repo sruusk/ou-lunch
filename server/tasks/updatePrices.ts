@@ -6,9 +6,6 @@ export default defineTask({
   async run() {
     console.log('Updating prices');
     await updateRestaurantPrices();
-    return {result: 'Success'}
+    return {result: 'Successfully updated prices'}
   }
 })
-
-// Run on server start
-runTask('updatePrices').then(console.log).catch(console.error);

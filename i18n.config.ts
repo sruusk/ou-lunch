@@ -24,6 +24,7 @@ export default defineI18nConfig(() => ({
                 page: 'restaurant\'s own page',
                 restaurantInfo: 'More information about the restaurant',
                 openingHours: 'Opening hours',
+                nonNormalOpeningHours: 'Non-normal opening hours',
             },
             filters: {
                 filter: 'Filter',
@@ -46,6 +47,7 @@ export default defineI18nConfig(() => ({
                 staff: 'Staff',
                 other: 'Visitors',
                 disclaimer: 'Prices may not be accurate, please check the restaurant\'s own page for the most up-to-date information',
+                openingHoursDisclaimer: 'We use large language models to extract non-normal opening hours from restaurant websites. Our system has detected non-normal opening hours for this restaurant. We cannot guarantee the accuracy of this information. Please check the restaurant\'s own page for the most up-to-date information.',
             }
         },
         fi: {
@@ -70,6 +72,7 @@ export default defineI18nConfig(() => ({
                 page: 'ravintolan omat sivut',
                 restaurantInfo: 'Lisätietoja ravintolasta',
                 openingHours: 'Aukioloajat',
+                nonNormalOpeningHours: 'Ei-normaalit aukioloajat',
             },
             filters: {
                 filter: 'Suodata',
@@ -92,6 +95,7 @@ export default defineI18nConfig(() => ({
                 staff: 'Henkilökunta',
                 other: 'Vieraat',
                 disclaimer: 'Hinnoissa voi ilmetä virheitä, tarkista ravintolan omilta sivuilta ajantasaisin tieto',
+                openingHoursDisclaimer: 'Käytämme suuria kielimalleja poimimaan poikkeavia aukioloaikoja ravintoloiden verkkosivuilta. Järjestelmämme on havainnut poikkeavia aukioloaikoja tälle ravintolalle. Emme voi taata tämän tiedon tarkkuutta. Tarkista ajantasaisin tieto ravintolan omilta sivuilta.',
             }
         }
     }

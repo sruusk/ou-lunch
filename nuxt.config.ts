@@ -51,11 +51,14 @@ export default defineNuxtConfig({
       '0 6,7,8,9 * * *': ['updateMenu'],
       // Run updatePrices every Monday at 08:00 (UTC)
       '0 8 * * 1': ['updatePrices'],
+      // Run updateHours every other day at 10:00 (UTC)
+      '0 10 */2 * *': ['updateHours'],
     }
   },
   runtimeConfig: {
     dbUrl: 'mongodb://127.0.0.1:27017',
     dbName: 'ou-lunch',
+    heroCoreUrl: '127.0.0.1:1818',
   },
   ogImage: {
     enabled: false,

@@ -11,9 +11,6 @@ export default defineTask({
       updateCompassRestaurants(),
       updateSodexoRestaurants()
     ]);
-    return {result: 'Success'}
+    return {result: 'Successfully updated menus'}
   }
 })
-
-// Run on server start
-runTask('updateMenu').then(console.log).catch(console.error);

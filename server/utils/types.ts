@@ -51,8 +51,15 @@ export interface Price {
     other: string;
 }
 
-export interface LunchWindow {
+export interface LunchWindow extends OpeningHours {
   day: number; // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+}
+
+export interface NonNormalOpeningHours extends OpeningHours {
+  day: string;
+}
+
+interface OpeningHours {
   open: {
     hours: number;
     minutes: number;
