@@ -71,4 +71,4 @@ export const updateNonNormalOpeningHours = async (name: string, nonNormalOpening
     console.error(err);
     throw new Error('Failed to update non-normal opening hours');
   }
-}
+};

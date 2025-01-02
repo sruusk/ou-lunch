@@ -79,7 +79,7 @@ const scrapeTextContent = async (url: string, selector: string) => {
 
   let text;
   try {
-    await hero.waitForLoad('AllContentLoaded', { timeoutMs: 120000 })
+    await hero.waitForLoad('AllContentLoaded', { timeoutMs: 120000 });
     await hero.waitForPaintingStable();
 
     text = await hero.document.querySelector(selector).innerText;

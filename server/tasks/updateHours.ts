@@ -10,4 +10,3 @@ export default defineTask({
     return {result: 'Successfully updated non-normal opening hours'}
   }
 })
-

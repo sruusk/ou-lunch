@@ -9,4 +9,3 @@ export default defineTask({
     return {result: 'Successfully updated prices'}
   }
 })
-
