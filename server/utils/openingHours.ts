@@ -61,6 +61,8 @@ export const updateOpeningHours = async (restaurant: Restaurant) => {
     } else return time;
   }).filter(o => o !== undefined) as NonNormalOpeningHours[];
 
+  console.log(`Found ${openingHours.length} non-normal opening hours for ${restaurant.name}`, openingHours);
+
   if (openingHours.length > 0) {
     await updateNonNormalOpeningHours(restaurant.name, openingHours);
   }
