@@ -17,7 +17,7 @@ export const updateOpeningHours = async (restaurant: Restaurant) => {
   let text;
   switch (restaurant.provider) {
     case Provider.juvenes:
-      text = await scrapeTextContent(restaurant.url, 'div.grve-bookmark');
+      text = await scrapeTextContent(restaurant.url, 'div.grve-bookmark .grve-element');
       break;
     case Provider.uniresta:
       if(restaurant.url.includes('uniresta.fi'))
@@ -48,7 +48,6 @@ export const updateOpeningHours = async (restaurant: Restaurant) => {
   })
 
   let openingHours = completions.choices[0].message.parsed?.times;
-  console.log(openingHours);
   if(!openingHours) return;
 
   openingHours = openingHours.map(time => {
