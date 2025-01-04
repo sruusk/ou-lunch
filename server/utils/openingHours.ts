@@ -14,18 +14,23 @@ const OpeningHours = z.object({
 
 export const updateOpeningHours = async (restaurant: Restaurant) => {
   const client = new OpenAI();
-  let text;
+  let text = '';
   switch (restaurant.provider) {
     case Provider.juvenes:
-      text = await scrapeTextContent(restaurant.url, 'div.grve-bookmark .grve-element');
+      text = await scrapeTextContent(restaurant.url, [
+          'div.grve-bookmark > div > div > div.grve-with-bg-color',
+          'div.grve-bookmark > div > div > div.grve-element.grve-text',
+          'div.grve-bookmark.grve-column-1-3 div.grve-text',
+        ]);
+      console.log('\n\nJuvenes text\n', text);
       break;
     case Provider.uniresta:
       if(restaurant.url.includes('uniresta.fi'))
-        text = await scrapeTextContent(restaurant.url, 'div.rivi.two-columns');
+        text = await scrapeTextContent(restaurant.url, ['div.rivi.two-columns']);
       break;
   }
 
-  if(!text) return;
+  if(!text?.length) return;
 
   const now = new Date();
   const end = new Date(now.getTime() + 10 * 24 * 60 * 60 * 1000);
@@ -68,7 +73,7 @@ export const updateOpeningHours = async (restaurant: Restaurant) => {
   }
 }
 
-const scrapeTextContent = async (url: string, selector: string) => {
+const scrapeTextContent = async (url: string, selectors: string[]) => {
   const config = useRuntimeConfig();
   const hero = new Hero({
     connectionToCore: ConnectionToHeroCore.remote(config.heroCoreUrl),
@@ -77,12 +82,19 @@ const scrapeTextContent = async (url: string, selector: string) => {
 
   await hero.goto(url);
 
-  let text;
+  let text = '';
   try {
     await hero.waitForLoad('AllContentLoaded', { timeoutMs: 120000 });
     await hero.waitForPaintingStable();
 
-    text = await hero.document.querySelector(selector).innerText;
+    // text = await hero.document.querySelector(selector).innerText;
+    for (const selector of selectors) {
+      const element = await hero.document.querySelector(selector);
+      if (element) {
+        if(text?.length) text += '\n\n';
+        text += await element.innerText;
+      }
+    }
   } catch (err) {
     console.error(`Failed to scrape text content from ${url}`, err);
   }
