@@ -40,11 +40,16 @@ const restaurants: PowerestaRestaurant[] = [
       provider: Provider.uniresta,
       ...CAMPUSES.OULU.LINNANMAA,
       openingHours: [
-        ...[1,2,3,4,5].map(day => ({
+        ...[1,2,3,4].map(day => ({
           day,
           open: {hours: 10, minutes: 30},
           close: {hours: 18, minutes: 0}
         })),
+        {
+          day: 5,
+          open: { hours: 10, minutes: 30 },
+          close: { hours: 17, minutes: 0 }
+        },
         {
           day: 6,
           open: { hours: 11, minutes: 30 },
@@ -52,23 +57,23 @@ const restaurants: PowerestaRestaurant[] = [
         }
       ],
     },
-    map: (menu: Menu) => {
-      const day = (new Date(menu.date)).getDay();
-      const open = day > 0 && day < 5
-        ? '11.00-17.00'
-        : day === 5 ? '11.00-16.30' : false;
-
-      if(!open) return menu;
-
-      const grillRx = /Grilli?/i;
-      [menu.en, menu.fi] = [menu.en, menu.fi].map(lang => lang.map(meal => {
-        if(grillRx.test(meal.name)) {
-          meal.name += ` ${open}`;
-        }
-        return meal;
-      }));
-      return menu;
-    }
+    // map: (menu: Menu) => {
+    //   const day = (new Date(menu.date)).getDay();
+    //   const open = day > 0 && day < 5
+    //     ? '11.00-17.00'
+    //     : day === 5 ? '11.00-16.30' : false;
+    //
+    //   if(!open) return menu;
+    //
+    //   const grillRx = /Grilli?/i;
+    //   [menu.en, menu.fi] = [menu.en, menu.fi].map(lang => lang.map(meal => {
+    //     if(grillRx.test(meal.name)) {
+    //       meal.name += ` ${open}`;
+    //     }
+    //     return meal;
+    //   }));
+    //   return menu;
+    // }
   },
   {
     name: 'campus',
