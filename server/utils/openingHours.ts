@@ -67,9 +67,7 @@ export const updateOpeningHours = async (restaurant: Restaurant) => {
 
   console.log(`Found ${openingHours.length} non-normal opening hours for ${restaurant.name}`, openingHours);
 
-  if (openingHours.length > 0) {
-    await updateNonNormalOpeningHours(restaurant.name, openingHours);
-  }
+  await updateNonNormalOpeningHours(restaurant.name, openingHours);
 }
 
 const scrapeTextContent = async (url: string, selectors: string[]) => {
