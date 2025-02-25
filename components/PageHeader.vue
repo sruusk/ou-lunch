@@ -14,8 +14,10 @@
         :aria-label="$t('aria.logo')"
       />
       <div class="flex gap-2">
-        <ColourMode />
-        <LanguageSelect/>
+        <ClientOnly>
+          <ColourMode />
+          <LanguageSelect/>
+        </ClientOnly>
       </div>
     </UContainer>
   </header>
