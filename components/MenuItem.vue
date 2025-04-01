@@ -7,7 +7,7 @@
     class="mb-2 last:mb-0 flex flex-nowrap justify-between items-center"
   >
     <div>
-      <h3 class="text-cool-800 dark:text-cool-200 text-balance break-keep">
+      <h3 class="text-cool-800 dark:text-cool-200 text-balance break-normal">
         {{ item.name || $t('notAvailableForLanguage') }}
       </h3>
       <p v-if="item.diets?.length" class="text-cool-600 dark:text-cool-400 text-xs -mt-0.5">
