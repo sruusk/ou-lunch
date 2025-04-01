@@ -1,11 +1,10 @@
 <template>
-    <UTabs :items="items" v-model="selected" :content="false"/>
+  <UTabs v-model="selected" :content="false" :items="items"/>
 </template>
 
-<script>
-
+<script lang="ts">
 export default defineNuxtComponent({
-  name: "DateSelect",
+  name: 'DateSelect',
   props: {
     date: {
       type: Date,
@@ -16,7 +15,7 @@ export default defineNuxtComponent({
       required: true
     }
   },
-  emits: ["update:date"],
+  emits: ['update:date'],
   computed: {
     items() {
       return this.dates.map(date => ({
@@ -34,12 +33,12 @@ export default defineNuxtComponent({
   },
   methods: {
     setDate(index) {
-      this.$emit("update:date", this.dates[index]);
+      this.$emit('update:date', this.dates[index]);
     },
     formatDate(date) {
-      const lang = this.$i18n.locale === "en" ? "en" : "fi";
+      const lang = this.$i18n.locale === 'en' ? 'en' : 'fi';
       return date.toLocaleDateString(lang, {
-        weekday: "short",
+        weekday: 'short',
         timeZone: 'Europe/Helsinki'
       });
     }

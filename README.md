@@ -18,7 +18,9 @@
 ![Git](https://img.shields.io/badge/git-%23F05032.svg?style=for-the-badge&logo=git&logoColor=white)
 <img src="https://cdn.hetzner.com/assets/Uploads/Hetzner-Logo-slogan_white_space-red.jpg" alt="Hetzner" height="28"/>
 
-This repository contains the NuxtJS frontend and Nitro backend for fetching, updating, and displaying lunch menus from various restaurant APIs on the Oulu University campus. The menus are stored in a MongoDB database and can be accessed via an API endpoint.
+This repository contains the NuxtJS frontend and Nitro backend for fetching, updating, and displaying lunch menus from
+various restaurant APIs on the Oulu University campus. The menus are stored in a MongoDB database and can be accessed
+via an API endpoint.
 
 ## Features
 
@@ -41,6 +43,7 @@ This repository contains the NuxtJS frontend and Nitro backend for fetching, upd
 The frontend for this project is built with NuxtJS and is hosted at [ouf.fi](https://ouf.fi).
 
 ## Development
+
 Parts marked with `*` are only needed if developing the non-normal opening hours feature.
 
 - Run `npm install` in the root directory to install the dependencies.

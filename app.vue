@@ -22,9 +22,9 @@
     </template>
   </UCard>
 </template>
-<script>
+<script lang="ts">
 export default defineNuxtComponent({
-  name: "app",
+  name: 'app',
   data() {
     return {
       date: new Date(),
@@ -37,28 +37,28 @@ export default defineNuxtComponent({
           lactoseFree: false,
           recommended: false,
         },
-        method: "highlight",
+        method: 'highlight',
       },
     };
   },
   async setup() {
     useSeoMeta({
-      title: "OUF",
-      description: "Oulu University lunch menus",
-      ogImage: "/logo.png",
+      title: 'OUF',
+      description: 'Oulu University lunch menus',
+      ogImage: '/logo.png',
     });
 
     const orderCookie = useCookie('order', { maxAge: 60 * 60 * 24 * 365 }); // 1 year
     const order = useState('order', () => {
       return orderCookie.value;
-    });
+    }) as unknown as { value: string[] }; // value is only used in setup function
 
     const campus = CAMPUSES.OULU.LINNANMAA;
-    const response = await useFetch(`/api/menu?city=${campus.city}&campus=${campus.campus}`, {
-      key: "restaurants",
+    const response = await useFetch(`/api/menu?city=${ campus.city }&campus=${ campus.campus }`, {
+      key: 'restaurants',
       server: true,
-      transform: (data) => {
-        if(!order.value) {
+      transform: (data: Restaurant[]) => {
+        if (!order.value) {
           order.value = data.map(r => r.name);
         }
         return data.map(r => {
@@ -74,56 +74,56 @@ export default defineNuxtComponent({
     });
 
     // Check for removed or added restaurants and add new ones to the end of the list
-    if(Array.isArray(order.value)) {
-      const r = response.data.value.map(r => r.name);
+    if (Array.isArray(order.value) && response.data.value) {
+      const r = response.data.value.map((r: Restaurant) => r.name);
       const newItems = r.filter(i => !order.value.includes(i));
       const removedItems = order.value.filter(i => !r.includes(i));
-      if(newItems.length) order.value.push(...newItems);
-      if(removedItems.length) order.value = order.value.filter(i => !removedItems.includes(i));
+      if (newItems.length) order.value.push(...newItems);
+      if (removedItems.length) order.value = order.value.filter(i => !removedItems.includes(i));
     }
 
     return {
       apiRestaurants: response.data,
-      order,
+      order: order as unknown as string[],
     };
   },
   created() {
     useHead({
       titleTemplate: (titleChunk) => {
-        return titleChunk ? `${titleChunk} - ${this.$t("title")}` : this.$t("title");
+        return titleChunk ? `${ titleChunk } - ${ this.$t('title') }` : this.$t('title');
       },
     });
 
-    this.date = this.dates[0];
+    this.date = this.dates[0] ?? new Date();
   },
   beforeMount() {
-    if(!this.restaurants?.length) {
-      alert("Could not fetch data from the server. Please try again later.");
+    if (!this.restaurants?.length) {
+      alert('Could not fetch data from the server. Please try again later.');
     }
   },
   mounted() {
     umTrackView();
   },
   computed: {
-    restaurants() {
-      if(!this.apiRestaurants) return [];
-      if(!this.order) return this.apiRestaurants;
+    restaurants(): Restaurant[] {
+      if (!this.apiRestaurants) return [];
+      if (!this.order) return this.apiRestaurants;
       return this.apiRestaurants.filter(r => r.menu.length).sort((a, b) => {
         return this.order.indexOf(a.name) - this.order.indexOf(b.name);
       });
     },
     dates() {
-      if(!this.restaurants?.length) return [];
-      const dates = new Set();
+      if (!this.restaurants?.length) return [];
+      const dates: Set<string> = new Set();
       this.restaurants.forEach(r => {
         r.menu.forEach(m => {
-          if(m.fi?.length)
+          if (m.fi?.length)
             dates.add(m.date.toISOString());
         });
       });
       return Array.from(dates)
         .map(d => new Date(d))
-        .sort((a, b) => a - b)
+        .sort((a: Date, b: Date) => a.getTime() - b.getTime())
         .slice(0, 6);
     },
   }

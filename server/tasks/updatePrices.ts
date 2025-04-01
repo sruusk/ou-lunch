@@ -6,6 +6,6 @@ export default defineTask({
   async run() {
     console.log('Updating prices');
     await updateRestaurantPrices();
-    return {result: 'Successfully updated prices'}
+    return { result: 'Successfully updated prices' };
   }
-})
+});

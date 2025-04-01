@@ -23,6 +23,6 @@ export interface Campus {
   [key: string]: {
     city: string;
     campus: string;
-  }
+  };
 }
 

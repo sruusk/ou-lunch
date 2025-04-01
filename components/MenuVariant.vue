@@ -1,31 +1,31 @@
 <template>
-    <div v-show="menuItems.length">
-      <UDivider size="sm">
-        <h3>{{ menu.name }}</h3>
-      </UDivider>
-      <MenuItem v-for="(item, itemIndex) in menuItems"
-                :key="itemIndex"
-                :item="item.item"
-                :isFiltered="item.isFiltered"
-                :showFilter="hasFilters && !filterHide"
-      />
-    </div>
+  <div v-show="menuItems.length">
+    <UDivider size="sm">
+      <h3>{{ menu.name }}</h3>
+    </UDivider>
+    <MenuItem v-for="(item, itemIndex) in menuItems"
+              :key="itemIndex"
+              :isFiltered="item.isFiltered"
+              :item="item.item"
+              :showFilter="hasFilters && !filterHide"
+    />
+  </div>
 </template>
-<script>
+<script lang="ts">
 export default defineNuxtComponent({
   name: 'MenuVariant',
   props: {
     menu: {
-      type: Object,
+      type: Object as () => MenuCategory,
       required: true
     }
   },
   setup() {
-    const filters = useState('config');
+    const filters = useState<FilterConfig>('config');
     return { filters };
   },
   computed: {
-    menuItems() {
+    menuItems(): { item: MenuItem, isFiltered: boolean }[] {
       return this.menu.items.map(item => {
         return {
           item,
@@ -41,12 +41,12 @@ export default defineNuxtComponent({
     },
   },
   methods: {
-    isFiltered(diets) {
-      let d = diets?.split(", ").map(i => i.trim());
+    isFiltered(diets: string | undefined): boolean {
+      let d = diets?.split(', ').map(i => i.trim());
       if (!d?.length) return false;
 
       // Should return true if all enabled filters are present in the diets
-      const f = [
+      const f: [RegExp, boolean][] = [
         [/(^G$)|(Gluten free)/i, this.filters.filters.glutenFree],
         [/(^L$)|(Lactose free)|(Low lactose)/i, this.filters.filters.lactoseFree],
         [/(^VEG$)|(Vegan)/i, this.filters.filters.vegan],
@@ -56,7 +56,7 @@ export default defineNuxtComponent({
       ];
 
       return f.every(([r, v]) => {
-        if(!v) return true;
+        if (!v) return true;
         return d.some(i => r.test(i));
       });
     }

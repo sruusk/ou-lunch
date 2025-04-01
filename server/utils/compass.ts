@@ -59,7 +59,7 @@ const getRestaurant = async (restaurant: CompassRestaurant): Promise<Restaurant>
 };
 
 const getWeeklyMenu = async (restaurant: CompassRestaurant, date: string, lang: string): Promise<Menu[]> => {
-  const res = await fetch(`https://www.compass-group.fi/menuapi/week-menus?costCenter=${restaurant.costCenter}&date=${date}&language=${lang}`).then(res => res.json());
+  const res = await fetch(`https://www.compass-group.fi/menuapi/week-menus?costCenter=${ restaurant.costCenter }&date=${ date }&language=${ lang }`).then(res => res.json());
   const menu = formatMenu(res, lang);
   for (const day of menu) {
     for (const meal of day[lang]) {
@@ -90,7 +90,7 @@ const formatMenu = (menu: any, lang: string) => {
 };
 
 const getIngredients = (recipeId: number, lang: string): Promise<string> => {
-  return fetch(`https://www.compass-group.fi/menuapi/recipes/${recipeId}?language=${lang}`)
+  return fetch(`https://www.compass-group.fi/menuapi/recipes/${ recipeId }?language=${ lang }`)
     .then(res => res.json())
     .then(res => res.ingredientsCleaned);
 };

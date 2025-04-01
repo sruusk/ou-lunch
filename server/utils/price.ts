@@ -1,3 +1,4 @@
+// noinspection SpellCheckingInspection
 
 export const updateRestaurantPrices = async (): Promise<void> => {
   const restaurants = await getMenus({});
@@ -12,7 +13,7 @@ export const updateRestaurantPrices = async (): Promise<void> => {
   for (const restaurant of uniresta) {
     await updatePrices(restaurant.name, prices);
   }
-}
+};
 
 const getJuvenesPrices = async (url: string): Promise<Price[]> => {
   const pricesRegexes = [
@@ -24,13 +25,13 @@ const getJuvenesPrices = async (url: string): Promise<Price[]> => {
   const resEng = await fetch(url.replace('juvenes.fi/', 'juvenes.fi/en/')).then(res => res.text());
   let prices: Price[] = [];
 
-  for(const r of pricesRegexes) {
+  for (const r of pricesRegexes) {
     const matches = res.matchAll(r);
     const matchesEng = resEng.matchAll(r);
     for (const match of matches) {
-      if(match.length < 3) continue;
+      if (match.length < 3) continue;
       const [, name, student, staff, other] = match;
-      if(prices.some(price => price.title_fi === name)) continue; // Skip duplicates
+      if (prices.some(price => price.title_fi === name)) continue; // Skip duplicates
       const next = matchesEng?.next();
       const nameEng = next?.value?.[1];
       prices.push({
@@ -41,11 +42,11 @@ const getJuvenesPrices = async (url: string): Promise<Price[]> => {
         other: other
       });
     }
-    if(prices.length > 0) break;
+    if (prices.length > 0) break;
   }
-  if(prices.length === 0) console.error('No prices found for', url);
+  if (prices.length === 0) console.error('No prices found for', url);
   return prices;
-}
+};
 
 // TODO: Dynamically fetch prices from Uniresta
 const getUnirestaPrices = (): Price[] => {
@@ -67,5 +68,5 @@ const getUnirestaPrices = (): Price[] => {
     student: '5,60 €',
     staff: '11,10 €',
     other: '13,60 €'
-  }]
-}
+  }];
+};

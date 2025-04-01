@@ -11,6 +11,6 @@ export default defineTask({
       updateCompassRestaurants(),
       updateSodexoRestaurants()
     ]);
-    return {result: 'Successfully updated menus'}
+    return { result: 'Successfully updated menus' };
   }
-})
+});

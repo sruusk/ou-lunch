@@ -1,4 +1,4 @@
-import {CAMPUSES} from "~/utils/constants";
+import { CAMPUSES } from '~/utils/constants';
 
 interface SodexoRestaurant {
   meta: RestaurantMeta;
@@ -7,10 +7,10 @@ interface SodexoRestaurant {
 
 const restaurants: SodexoRestaurant[] = [
   {
-    id: "111",
+    id: '111',
     meta: {
-      name: "Hertsi",
-      url: "https://www.sodexo.fi/ravintolat/ravintola-hertsi",
+      name: 'Hertsi',
+      url: 'https://www.sodexo.fi/ravintolat/ravintola-hertsi',
       provider: Provider.sodexo,
       ...CAMPUSES.TAMPERE.HERVANTA
     }
@@ -19,40 +19,40 @@ const restaurants: SodexoRestaurant[] = [
 
 const getRestaurant = async (restaurant: SodexoRestaurant): Promise<RestaurantMeta & { menu: Menu[] }> => {
   try {
-    return {...restaurant.meta, menu: formatMenu(await getRestaurantMenu(restaurant.id))};
+    return { ...restaurant.meta, menu: formatMenu(await getRestaurantMenu(restaurant.id)) };
   } catch (err) {
-    console.error("Error getting menu for", restaurant.meta.name, err);
-    throw new Error("Failed to get restaurant menu");
+    console.error('Error getting menu for', restaurant.meta.name, err);
+    throw new Error('Failed to get restaurant menu');
   }
 };
 
 const getRestaurantMenu = async (restaurantId: string): Promise<any> => {
-  const response = await fetch(`https://www.sodexo.fi/ruokalistat/output/weekly_json/${restaurantId}`);
+  const response = await fetch(`https://www.sodexo.fi/ruokalistat/output/weekly_json/${ restaurantId }`);
   return response.json();
 };
 
 const formatMenu = (menu: any): Menu[] => {
-  let monday = menu.timeperiod.split(" - ")[0].split(".");
+  let monday = menu.timeperiod.split(' - ')[0].split('.');
   monday.pop();
   monday.push(new Date().getFullYear().toString());
   monday.reverse();
   monday = new Date(Date.UTC(parseInt(monday[0]), parseInt(monday[1]) - 1, parseInt(monday[2])));
 
   return menu.mealdates.map((day: any) => {
-    const [en, fi] = ["en", "fi"].map(lang => {
+    const [en, fi] = ['en', 'fi'].map(lang => {
       return Object.values(day.courses).map((course: any) => {
         return {
           name: course.category,
           items: [
             {
-              name: course[`title_${lang}`],
+              name: course[`title_${ lang }`],
               diets: course.dietcodes,
               ingredients: Object.values(course.recipes)
                 .map((recipe: any) => {
-                  if (recipe.ingredients) return `${recipe.name} (${recipe.ingredients})\n`;
+                  if (recipe.ingredients) return `${ recipe.name } (${ recipe.ingredients })\n`;
                 })
                 .filter((i: any) => i)
-                .join("")
+                .join('')
                 .trim()
             }
           ]
@@ -87,8 +87,8 @@ const getAllRestaurants = async (): Promise<(RestaurantMeta & { menu: Menu[] })[
 
 const updateSodexoRestaurants = async (): Promise<void> => {
   const rest = await getAllRestaurants();
-  if(rest.length !== restaurants.length) {
-    console.log("Sodexo restaurant count mismatch");
+  if (rest.length !== restaurants.length) {
+    console.log('Sodexo restaurant count mismatch');
   }
   for (const r of rest) {
     if (!await restaurantExists(r.name)) {
@@ -97,9 +97,9 @@ const updateSodexoRestaurants = async (): Promise<void> => {
   }
   rest.forEach(r => {
     r.menu.forEach(day => {
-      updateMenu(r.name, day.date, {en: day.en, fi: day.fi});
+      updateMenu(r.name, day.date, { en: day.en, fi: day.fi });
     });
   });
 };
 
-export {updateSodexoRestaurants};
+export { updateSodexoRestaurants };

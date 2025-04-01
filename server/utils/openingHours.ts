@@ -1,8 +1,9 @@
+// noinspection SpellCheckingInspection
+
 import OpenAI from 'openai';
-import { z } from "zod";
-import { zodResponseFormat } from "openai/helpers/zod";
-import {ConnectionToHeroCore} from "@ulixee/hero";
-import Hero from "@ulixee/hero";
+import { z } from 'zod';
+import { zodResponseFormat } from 'openai/helpers/zod';
+import Hero, { ConnectionToHeroCore } from '@ulixee/hero';
 
 const OpeningHours = z.object({
   times: z.array(z.object({
@@ -18,18 +19,18 @@ export const updateOpeningHours = async (restaurant: Restaurant) => {
   switch (restaurant.provider) {
     case Provider.juvenes:
       text = await scrapeTextContent(restaurant.url, [
-          'div.grve-bookmark > div > div > div.grve-with-bg-color',
-          'div.grve-bookmark > div > div > div.grve-element.grve-text',
-          'div.grve-bookmark.grve-column-1-3 div.grve-text',
-        ]);
+        'div.grve-bookmark > div > div > div.grve-with-bg-color',
+        'div.grve-bookmark > div > div > div.grve-element.grve-text',
+        'div.grve-bookmark.grve-column-1-3 div.grve-text',
+      ]);
       break;
     case Provider.uniresta:
-      if(restaurant.url.includes('uniresta.fi'))
+      if (restaurant.url.includes('uniresta.fi'))
         text = await scrapeTextContent(restaurant.url, ['div.rivi.two-columns']);
       break;
   }
 
-  if(!text?.length) return;
+  if (!text?.length) return;
 
   const now = new Date();
   const end = new Date(now.getTime() + 10 * 24 * 60 * 60 * 1000);
@@ -44,15 +45,15 @@ export const updateOpeningHours = async (restaurant: Restaurant) => {
           'Extract the lunchtimes that are valid for the given time period. ' +
           'The date is a ISO 8601 type date string without the time. ' +
           'If the restaurants opening times differ from the lunchtimes, use the lunchtimes.' +
-          `The timeperiod is ${now.toISOString()} to ${end.toISOString()}.`
+          `The time period is ${ now.toISOString() } to ${ end.toISOString() }.`
       },
       { role: 'user', content: text }
     ],
     response_format: zodResponseFormat(OpeningHours, 'opening_hours_extraction')
-  })
+  });
 
   let openingHours = completions.choices[0].message.parsed?.times;
-  if(!openingHours) return;
+  if (!openingHours) return;
 
   openingHours = openingHours.map(time => {
     const day = new Date(time.day).getDay();
@@ -65,10 +66,10 @@ export const updateOpeningHours = async (restaurant: Restaurant) => {
     } else return time;
   }).filter(o => o !== undefined) as NonNormalOpeningHours[];
 
-  console.log(`Found ${openingHours.length} non-normal opening hours for ${restaurant.name}`, openingHours);
+  console.log(`Found ${ openingHours.length } non-normal opening hours for ${ restaurant.name }`, openingHours);
 
   await updateNonNormalOpeningHours(restaurant.name, openingHours);
-}
+};
 
 const scrapeTextContent = async (url: string, selectors: string[]) => {
   const config = useRuntimeConfig();
@@ -88,14 +89,14 @@ const scrapeTextContent = async (url: string, selectors: string[]) => {
     for (const selector of selectors) {
       const element = await hero.document.querySelector(selector);
       if (element) {
-        if(text?.length) text += '\n\n';
+        if (text?.length) text += '\n\n';
         text += await element.innerText;
       }
     }
   } catch (err) {
-    console.error(`Failed to scrape text content from ${url}`, err);
+    console.error(`Failed to scrape text content from ${ url }`, err);
   }
 
   await hero.close();
   return text;
-}
+};

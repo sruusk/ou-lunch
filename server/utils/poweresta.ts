@@ -1,3 +1,5 @@
+// noinspection SpellCheckingInspection
+
 import { CAMPUSES } from '~/utils/constants';
 
 interface PowerestaRestaurant {
@@ -18,10 +20,10 @@ const restaurants: PowerestaRestaurant[] = [
       provider: Provider.uniresta,
       ...CAMPUSES.OULU.LINNANMAA,
       openingHours: [
-        ...[1,2,3,4].map(day => ({
+        ...[1, 2, 3, 4].map(day => ({
           day,
-          open: {hours: 10, minutes: 30},
-          close: {hours: 14, minutes: 30}
+          open: { hours: 10, minutes: 30 },
+          close: { hours: 14, minutes: 30 }
         })),
         {
           day: 5,
@@ -40,10 +42,10 @@ const restaurants: PowerestaRestaurant[] = [
       provider: Provider.uniresta,
       ...CAMPUSES.OULU.LINNANMAA,
       openingHours: [
-        ...[1,2,3,4].map(day => ({
+        ...[1, 2, 3, 4].map(day => ({
           day,
-          open: {hours: 10, minutes: 30},
-          close: {hours: 18, minutes: 0}
+          open: { hours: 10, minutes: 30 },
+          close: { hours: 18, minutes: 0 }
         })),
         {
           day: 5,
@@ -83,7 +85,7 @@ const restaurants: PowerestaRestaurant[] = [
       url: 'https://www.health2organic.fi/',
       provider: Provider.uniresta,
       ...CAMPUSES.OULU.LINNANMAA,
-      openingHours: [1,2,3,4,5].map(day => ({
+      openingHours: [1, 2, 3, 4, 5].map(day => ({
         day: day,
         open: { hours: 10, minutes: 30 },
         close: { hours: 14, minutes: 0 }
@@ -101,7 +103,7 @@ const getRestaurant = async (restaurant: PowerestaRestaurant): Promise<Restauran
   }
 
   try {
-    const res = await fetch(`https://api.fi.poweresta.com/publicmenu/dates/uniresta/${restaurant.name}/?menu=${restaurant.menu}&dates=${dates.join(',')}`).then(res => res.json());
+    const res = await fetch(`https://api.fi.poweresta.com/publicmenu/dates/uniresta/${ restaurant.name }/?menu=${ restaurant.menu }&dates=${ dates.join(',') }`).then(res => res.json());
     const menu = restaurant.map ? formatMenu(res).map(restaurant.map) : formatMenu(res);
     return { ...restaurant.meta, menu };
   } catch (err) {
@@ -142,7 +144,7 @@ const formatMenu = (menu: any[]): Menu[] => {
 const getAllMenus = async (): Promise<(RestaurantMeta & { menu: Menu[] })[]> => {
   const menus = await Promise.all(restaurants.map(getRestaurant));
   const emptyMenus = menus.filter(m => m.menu.length === 0);
-  if(emptyMenus.length > 0) {
+  if (emptyMenus.length > 0) {
     console.error('Failed to get all poweresta menus.');
     console.error(emptyMenus.map(m => m.name));
   }

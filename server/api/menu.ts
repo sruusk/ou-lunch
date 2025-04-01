@@ -3,7 +3,7 @@ export default defineEventHandler(async (event) => {
   // Get query parameters
   const { city, campus } = getQuery(event);
   const filter: RestaurantFilter = {};
-  if(city && campus) {
+  if (city && campus) {
     filter['city'] = city as string;
     filter['campus'] = campus as string;
   } else if (city || campus) {
@@ -15,12 +15,12 @@ export default defineEventHandler(async (event) => {
 
   const restaurants = await getMenus(filter);
 
-  if(restaurants.length === 0) {
+  if (restaurants.length === 0) {
     throw createError({
       statusCode: 404,
       statusMessage: 'No restaurants found with the given parameters',
     });
   }
 
-  return restaurants;
+  return restaurants as Restaurant[];
 });

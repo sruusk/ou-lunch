@@ -1,99 +1,99 @@
 export const db_validators = {
   restaurants: {
     $jsonSchema: {
-      bsonType: "object",
-      required: ["name", "url", "campus", "city", "menu"],
+      bsonType: 'object',
+      required: ['name', 'url', 'campus', 'city', 'menu'],
       properties: {
         name: {
-          bsonType: "string",
-          description: "Restaurant name",
+          bsonType: 'string',
+          description: 'Restaurant name',
         },
         url: {
-          bsonType: "string",
-          description: "Restaurant URL",
+          bsonType: 'string',
+          description: 'Restaurant URL',
         },
         campus: {
-          bsonType: "string",
-          description: "Campus name",
+          bsonType: 'string',
+          description: 'Campus name',
         },
         city: {
-          bsonType: "string",
-          description: "City",
+          bsonType: 'string',
+          description: 'City',
         },
         provider: {
-          bsonType: "string",
-          description: "Restaurant service provider",
+          bsonType: 'string',
+          description: 'Restaurant service provider',
         },
         prices: {
-          bsonType: "array",
-          description: "Prices object",
+          bsonType: 'array',
+          description: 'Prices object',
           items: {
-            bsonType: "object",
-            description: "Price",
+            bsonType: 'object',
+            description: 'Price',
             properties: {
               title_fi: {
-                bsonType: "string",
-                description: "Title in Finnish",
+                bsonType: 'string',
+                description: 'Title in Finnish',
               },
               title_en: {
-                bsonType: "string",
-                description: "Title in English",
+                bsonType: 'string',
+                description: 'Title in English',
               },
               student: {
-                bsonType: "string",
-                description: "Student price",
+                bsonType: 'string',
+                description: 'Student price',
               },
               staff: {
-                bsonType: "string",
-                description: "Staff price",
+                bsonType: 'string',
+                description: 'Staff price',
               },
               other: {
-                bsonType: "string",
-                description: "Other price",
+                bsonType: 'string',
+                description: 'Other price',
               },
             },
           }
         },
         menu: {
-          bsonType: "array",
-          description: "Menu items",
+          bsonType: 'array',
+          description: 'Menu items',
           items: {
-            bsonType: "object",
-            required: ["date", "en", "fi"],
+            bsonType: 'object',
+            required: ['date', 'en', 'fi'],
             properties: {
               date: {
-                bsonType: "date",
-                description: "Date of the menu",
+                bsonType: 'date',
+                description: 'Date of the menu',
               },
               en: {
-                bsonType: "array",
-                description: "Menu items in English",
+                bsonType: 'array',
+                description: 'Menu items in English',
                 items: {
-                  bsonType: "object",
-                  required: ["name", "items"],
+                  bsonType: 'object',
+                  required: ['name', 'items'],
                   properties: {
                     name: {
-                      bsonType: "string",
-                      description: "Menu category name",
+                      bsonType: 'string',
+                      description: 'Menu category name',
                     },
                     items: {
-                      bsonType: "array",
-                      description: "Menu items",
+                      bsonType: 'array',
+                      description: 'Menu items',
                       items: {
-                        bsonType: "object",
-                        required: ["name"],
+                        bsonType: 'object',
+                        required: ['name'],
                         properties: {
                           name: {
-                            bsonType: "string",
-                            description: "Menu item name",
+                            bsonType: 'string',
+                            description: 'Menu item name',
                           },
                           diets: {
-                            bsonType: "string",
-                            description: "Dietary restrictions",
+                            bsonType: 'string',
+                            description: 'Dietary restrictions',
                           },
                           ingredients: {
-                            bsonType: "string",
-                            description: "Ingredients",
+                            bsonType: 'string',
+                            description: 'Ingredients',
                           }
                         },
                       },
@@ -102,34 +102,34 @@ export const db_validators = {
                 },
               },
               fi: {
-                bsonType: "array",
-                description: "Menu items in Finnish",
+                bsonType: 'array',
+                description: 'Menu items in Finnish',
                 items: {
-                  bsonType: "object",
-                  required: ["name", "items"],
+                  bsonType: 'object',
+                  required: ['name', 'items'],
                   properties: {
                     name: {
-                      bsonType: "string",
-                      description: "Menu category name",
+                      bsonType: 'string',
+                      description: 'Menu category name',
                     },
                     items: {
-                      bsonType: "array",
-                      description: "Menu items",
+                      bsonType: 'array',
+                      description: 'Menu items',
                       items: {
-                        bsonType: "object",
-                        required: ["name"],
+                        bsonType: 'object',
+                        required: ['name'],
                         properties: {
                           name: {
-                            bsonType: "string",
-                            description: "Menu item name",
+                            bsonType: 'string',
+                            description: 'Menu item name',
                           },
                           diets: {
-                            bsonType: "string",
-                            description: "Dietary restrictions",
+                            bsonType: 'string',
+                            description: 'Dietary restrictions',
                           },
                           ingredients: {
-                            bsonType: "string",
-                            description: "Ingredients",
+                            bsonType: 'string',
+                            description: 'Ingredients',
                           }
                         },
                       },

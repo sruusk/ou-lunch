@@ -2,31 +2,31 @@
   <header>
     <UContainer class="flex justify-between items-center">
       <img
-        src="@/assets/ouf-high-resolution-logo-transparent.webp"
+        :aria-label="$t('aria.logo')"
         alt="Oulu University Food"
         class="dark:hidden h-10"
-        :aria-label="$t('aria.logo')"
+        src="@/assets/ouf-high-resolution-logo-transparent.webp"
       />
       <img
-        src="@/assets/ouf-high-resolution-logo-white-transparent.webp"
+        :aria-label="$t('aria.logo')"
         alt="Oulu University Food"
         class="h-10 hidden dark:block"
-        :aria-label="$t('aria.logo')"
+        src="@/assets/ouf-high-resolution-logo-white-transparent.webp"
       />
       <div class="flex gap-2">
         <ClientOnly>
-          <ColourMode />
+          <ColourMode/>
           <LanguageSelect/>
         </ClientOnly>
       </div>
     </UContainer>
   </header>
 </template>
-<script>
+<script lang="ts">
 export default {
   name: 'PageHeader',
   computed: {
-    isDark() {
+    isDark(): boolean {
       return this.$colorMode.value === 'dark';
     },
   }

@@ -1,6 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
+  debug: false,
   devtools: { enabled: true },
   modules: [
     '@nuxtjs/sitemap',
@@ -18,7 +19,7 @@ export default defineNuxtConfig({
     trailingSlash: 'never',
   },
   i18n: {
-    vueI18n: './i18n.config.ts',
+    vueI18n: '../i18n.config.ts',
     locales: [
       { code: 'en', language: 'en-UK' },
       { code: 'fi', language: 'fi-FI' },
@@ -63,4 +64,4 @@ export default defineNuxtConfig({
   ogImage: {
     enabled: false,
   },
-})
+});

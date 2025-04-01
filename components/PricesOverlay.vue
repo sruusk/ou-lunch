@@ -2,7 +2,7 @@
   <UModal v-model="visible">
     <div class="p-8" tabindex="0">
       <h3 class="text-2xl font-bold">{{ $t('restaurant.prices') }}</h3>
-      <UTable class="my-3" :rows="prices" :columns="columns"/>
+      <UTable :columns="columns" :rows="prices" class="my-3"/>
       <UAlert
         :description="$t('restaurant.disclaimer')"
         icon="ion:information-circle-outline"/>
@@ -10,13 +10,14 @@
   </UModal>
 </template>
 
-<script>
+<script lang="ts">
+
 export default defineNuxtComponent({
-  name: "PricesOverlay",
+  name: 'PricesOverlay',
   emits: ['show'],
   props: {
     menu: {
-      type: Object,
+      type: Object as () => RestaurantMeta,
       required: true
     },
     show: {
@@ -31,7 +32,7 @@ export default defineNuxtComponent({
   },
   computed: {
     prices() {
-      return this.menu.prices.map(price => ({
+      return this.menu.prices?.map(price => ({
         title: this.$i18n.locale === 'en' ? price.title_en : price.title_fi,
         student: price.student,
         staff: price.staff,

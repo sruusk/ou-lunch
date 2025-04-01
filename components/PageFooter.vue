@@ -12,8 +12,8 @@
       </ULink>
       <div class="w-0">
         <UButton
-          class="min-w-fit -translate-x-full whitespace-nowrap"
           :label="$t('footer.feedback')"
+          class="min-w-fit -translate-x-full whitespace-nowrap"
           color="primary"
           variant="soft"
           @click="open = true"
@@ -30,18 +30,13 @@
     </UContainer>
   </footer>
 </template>
-<script>
+<script lang="ts">
 export default {
   name: 'PageFooter',
   data() {
     return {
       open: false,
     };
-  },
-  methods: {
-    openTelegram() {
-      window.open('https://t.me/+IL4dgF98VahmY2U0', '_blank');
-    },
-  },
+  }
 };
 </script>

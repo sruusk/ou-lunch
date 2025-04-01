@@ -1,12 +1,12 @@
 <template>
   <UPopover overlay>
-    <UChip inset size="md" :show="isFiltered">
-      <UButton variant="outline"
-               color="primary"
-               size="md"
+    <UChip :show="isFiltered" inset size="md">
+      <UButton :aria-label="$t('aria.filterOptions')"
                :ui="{ rounded: 'rounded-full' }"
+               color="primary"
                icon="fluent:textbox-settings-20-filled"
-               :aria-label="$t('aria.filterOptions')"
+               size="md"
+               variant="outline"
       />
     </UChip>
     <template #panel>
@@ -15,11 +15,11 @@
           <div class="flex flex-wrap gap-2 flex-col">
             <h3 class="text-lg" tabindex="1">{{ $t('filters.filter') }}</h3>
             <UCheckbox v-for="(filter, index) in Object.keys(conf.filters)"
-                       :tabindex="index ? undefined : 0"
                        :key="filter"
-                       @keydown.enter="conf.filters[filter] = !conf.filters[filter]"
                        v-model="conf.filters[filter]"
                        :label="$t(`filters.${filter}`)"
+                       :tabindex="index ? undefined : 0"
+                       @keydown.enter="conf.filters[filter] = !conf.filters[filter]"
             />
           </div>
           <div class="flex flex-col gap-2">
@@ -29,7 +29,7 @@
           <div class="flex flex-col gap-2">
             <h3 class="text-lg">{{ $t('filters.order') }}</h3>
             <Draggable v-if="order?.length" v-model="order">
-              <transition-group type="transition" name="flip-list">
+              <transition-group name="flip-list" type="transition">
                 <li v-for="r in order"
                     :key="r"
                     class="list-group-item"
@@ -51,19 +51,19 @@
   </UPopover>
 </template>
 
-<script>
-import { VueDraggableNext } from 'vue-draggable-next'
+<script lang="ts">
+import { VueDraggableNext } from 'vue-draggable-next';
 
 export default defineNuxtComponent({
-  name: "OptionsMenu",
+  name: 'OptionsMenu',
   components: {
     Draggable: VueDraggableNext,
   },
   setup() {
-    const cookie = useCookie('config', { maxAge: 60 * 60 * 24 * 365 }); // 1 year
-    const orderCookie = useCookie('order', { maxAge: 60 * 60 * 24 * 365 }); // 1 year
+    const cookie = useCookie<FilterConfig>('config', { maxAge: 60 * 60 * 24 * 365 }); // 1 year
+    const orderCookie = useCookie<string[]>('order', { maxAge: 60 * 60 * 24 * 365 }); // 1 year
 
-    const conf = useState('config', () => {
+    const conf = useState<FilterConfig>('config', () => {
       return cookie.value || {
         filters: {
           vegan: false,
@@ -73,19 +73,19 @@ export default defineNuxtComponent({
           lactoseFree: false,
           recommended: false,
         },
-        method: "highlight",
+        method: 'highlight',
       };
     });
 
-    const order = useState('order');
+    const order = useState<string[]>('order');
 
     return { cookie, conf, orderCookie, order };
   },
   computed: {
     availableMethods() {
       return [
-        { value: "highlight", label: this.$t("filters.highlight") },
-        { value: "hide", label: this.$t("filters.hide") },
+        { value: 'highlight', label: this.$t('filters.highlight') },
+        { value: 'hide', label: this.$t('filters.hide') },
       ];
     },
     isFiltered() {
@@ -107,13 +107,13 @@ export default defineNuxtComponent({
     }
   },
   methods: {
-    oderUp(r) {
+    oderUp(r: string) {
       const index = this.order.indexOf(r);
       if (index > 0) {
         this.order.splice(index - 1, 0, this.order.splice(index, 1)[0]);
       }
     },
-    orderDown(r) {
+    orderDown(r: string) {
       const index = this.order.indexOf(r);
       if (index < this.order.length - 1) {
         this.order.splice(index + 1, 0, this.order.splice(index, 1)[0]);
@@ -134,9 +134,11 @@ export default defineNuxtComponent({
 .flip-list-move {
   transition: transform 0.5s;
 }
+
 .list-group-item {
   cursor: move;
 }
+
 .list-group-item i {
   cursor: pointer;
 }

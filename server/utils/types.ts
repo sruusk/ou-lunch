@@ -5,7 +5,9 @@ export interface RestaurantMeta {
   campus: string;
   city: string;
   provider: string;
+  prices?: Price[];
   openingHours?: LunchWindow[];
+  nonNormalOpeningHours?: NonNormalOpeningHours[];
 }
 
 export interface Restaurant extends RestaurantMeta {
@@ -27,6 +29,7 @@ export interface Menu {
   date: Date;
   en: MenuCategory[];
   fi: MenuCategory[];
+
   [key: string]: MenuCategory[] | Date;
 }
 
@@ -44,11 +47,11 @@ export enum Provider {
 }
 
 export interface Price {
-    title_fi: string;
-    title_en: string;
-    student: string;
-    staff: string;
-    other: string;
+  title_fi: string;
+  title_en: string;
+  student: string;
+  staff: string;
+  other: string;
 }
 
 export interface LunchWindow extends OpeningHours {
