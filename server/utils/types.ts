@@ -34,8 +34,8 @@ export interface Menu {
 }
 
 export interface RestaurantFilter {
-  city?: string;
-  campus?: string;
+  city?: string | null;
+  campus?: string | null;
 }
 
 export enum Provider {
