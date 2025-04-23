@@ -38,6 +38,30 @@ via an API endpoint.
 | NUXT_HERO_CORE_URL | Url to a hero cloud instance | 127.0.0.1:1818            |
 | OPENAI_API_KEY     | OpenAI API key               |                           |
 
+## API
+
+### GET /api/menu
+
+Retrieves a list of restaurants with their menus for today and future dates.
+[view in browser](https://ouf.fi/api/menu?city=Oulu&campus=Linnanmaa)
+
+#### Query Parameters
+
+| Parameter | Type   | Required | Description                                                                                                |
+|-----------|--------|----------|------------------------------------------------------------------------------------------------------------|
+| city      | string | No       | Filter restaurants by city. If provided, campus must also be provided.                                     |
+| campus    | string | No       | Filter restaurants by campus. If provided, city must also be provided.                                     |
+
+#### Response
+
+Returns a JSON array of restaurant objects. For the detailed type definition, 
+see [server/utils/types.ts](server/utils/types.ts).
+
+#### Error Responses
+
+- **404 Not Found**: No restaurants found with the given parameters.
+- **500 Internal Server Error**: Failed to get menus.
+
 ## Frontend
 
 The frontend for this project is built with NuxtJS and is hosted at [ouf.fi](https://ouf.fi).
