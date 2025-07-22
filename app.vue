@@ -5,11 +5,17 @@
     <template #header>
       <PageHeader class="h-10"/>
     </template>
-    <div class="flex justify-center items-center flex-wrap mb-4 gap-5">
+    <div v-if="!noRestaurants" class="flex justify-center items-center flex-wrap mb-4 gap-5">
       <DateSelect v-model:date="date" :dates="dates"/>
       <OptionsMenu v-model:config="filterConfig"/>
     </div>
     <UContainer class="flex flex-wrap justify-center max-w-7xl" role="main">
+      <UAlert v-if="noRestaurants"
+              class="max-w-sm mt-36"
+              :title="$t('noRestaurants')"
+              :description="$t('noRestaurantsDescription')"
+              icon="ion:information-circle-outline"
+      />
       <RestaurantMenu
         v-for="restaurant in restaurants"
         :key="restaurant.name"
@@ -126,6 +132,9 @@ export default defineNuxtComponent({
         .sort((a: Date, b: Date) => a.getTime() - b.getTime())
         .slice(0, 6);
     },
+    noRestaurants(): boolean {
+      return !this.restaurants?.filter(r => r.menu.filter(m => m.fi.length).length)?.length;
+    }
   }
 });
 </script>

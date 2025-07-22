@@ -1,4 +1,3 @@
-// utils/types.ts
 export interface RestaurantMeta {
   name: string;
   url: string;

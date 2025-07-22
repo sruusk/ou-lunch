@@ -6,6 +6,8 @@ export default defineI18nConfig(() => ({
       title: 'Oulu University Food',
       description: 'Lunch menus of the University of Oulu',
       noMenu: 'No menu available for selected day',
+      noRestaurants: 'No restaurants available',
+      noRestaurantsDescription: 'This may be because the restaurants are currently closed, or there is an unknown error in the service.',
       notAvailableForLanguage: 'No English translation available',
       pageDescription: 'Oulu University lunch menus for various restaurants. Find the best lunch options available today.',
       footer: {
@@ -54,6 +56,8 @@ export default defineI18nConfig(() => ({
       title: 'Oulun Yliopiston Lounaat',
       description: 'Oulun yliopiston lounasravintoloiden ruokalistat',
       noMenu: 'Valitulle päivälle ei ole saatavilla ruokalistaa',
+      noRestaurants: 'Ei ravintoloita saatavilla',
+      noRestaurantsDescription: 'Tämä voi johtua siitä, että ravintolat eivät ole auki tällä hetkellä, tai palvelussa on tuntematon virhe.',
       notAvailableForLanguage: '',
       pageDescription: 'Oulun yliopiston lounaslistat eri ravintoloille. Löydä parhaat lounasvaihtoehdot tänään.',
       footer: {
