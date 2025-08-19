@@ -1,6 +1,8 @@
 import { CAMPUSES } from '~/utils/constants';
+import menu from '../api/menu';
 
 interface SodexoRestaurant {
+  map?: (menus: Menu[]) => Menu[];
   meta: RestaurantMeta;
   id: string;
 }
@@ -14,12 +16,37 @@ const restaurants: SodexoRestaurant[] = [
       provider: Provider.sodexo,
       ...CAMPUSES.TAMPERE.HERVANTA
     }
+  },
+  {
+    id: '3305493',
+    meta: {
+      name: 'Hilla ja Mustikka',
+      url: 'https://www.sodexo.fi/ravintolat/ravintolat-hilla-ja-mustikka',
+      provider: Provider.sodexo,
+      ...CAMPUSES.OULU.LINNANMAA
+    },
+    map: (menus: Menu[]): Menu[] => {
+      // Map the menu items to the desired format
+      const titlerx = /(.*)(?:\(|^)/;
+      return menus.map(menu => ({
+        ...menu,
+        en: menu.en.map(category => {
+          const name = category.name.match(titlerx)?.[1] || category.name;
+          return { ...category, name };
+        }),
+        fi: menu.fi.map(category => {
+          const name = category.name.match(titlerx)?.[1] || category.name;
+          return { ...category, name };
+        })
+      }));
+    }
   }
 ];
 
 const getRestaurant = async (restaurant: SodexoRestaurant): Promise<RestaurantMeta & { menu: Menu[] }> => {
-  try {
-    return { ...restaurant.meta, menu: formatMenu(await getRestaurantMenu(restaurant.id)) };
+  try { 
+    const menu = formatMenu(await getRestaurantMenu(restaurant.id));
+    return { ...restaurant.meta, menu: restaurant.map ? restaurant.map(menu) : menu };
   } catch (err) {
     console.error('Error getting menu for', restaurant.meta.name, err);
     throw new Error('Failed to get restaurant menu');
