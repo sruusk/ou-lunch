@@ -1,9 +1,10 @@
 <template>
   <USelectMenu
     v-model="selected"
+    :search-input="false"
     :aria-label="$t('aria.language')"
-    :icon="selected.icon"
-    :options="languageOptions"
+    :icon="selected?.icon as string"
+    :items="languageOptions"
   />
 </template>
 
@@ -22,7 +23,7 @@ export default defineNuxtComponent({
       return this.locales.map((locale: LocaleObject<'en' | 'fi'>) => ({
         id: locale.language,
         code: locale.code,
-        icon: `circle-flags:${ locale.language?.split('-')[1].toLowerCase() }`,
+        icon: `circle-flags:${ locale.language?.split('-')?.[1]!.toLowerCase() }`,
         label: locale.code === 'en' ? 'English' : 'Suomi',
       }));
     },

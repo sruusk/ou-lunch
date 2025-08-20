@@ -10,6 +10,7 @@ export default defineNuxtConfig({
     '@nuxtjs/seo',
     'nuxt-umami',
   ],
+  css: ['~/assets/css/main.css'],
   umami: {
     id: 'e64eac9b-39ff-4e8c-a6f5-f2fcc63baf58',
     host: 'https://umami.anttila.io',
@@ -19,10 +20,9 @@ export default defineNuxtConfig({
     trailingSlash: 'never',
   },
   i18n: {
-    vueI18n: '../i18n.config.ts',
     locales: [
-      { code: 'en', language: 'en-UK' },
-      { code: 'fi', language: 'fi-FI' },
+      { code: 'en', language: 'en-UK', name: 'English', file: 'en.json' },
+      { code: 'fi', language: 'fi-FI', name: 'Suomi', file: 'fi.json' },
     ],
     defaultLocale: 'en',
     pages: {
@@ -32,6 +32,9 @@ export default defineNuxtConfig({
       },
     }
   },
+  ui: {
+    colorMode: true,
+  },
   colorMode: {
     preference: 'system',
     fallback: 'light',
@@ -39,9 +42,6 @@ export default defineNuxtConfig({
   site: {
     name: 'Oulu University Food',
     url: 'https://ouf.fi',
-  },
-  ui: {
-    global: true,
   },
   nitro: {
     experimental: {

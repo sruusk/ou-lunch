@@ -4,12 +4,12 @@
       <UButton
         :aria-label="$t('aria.colourMode')"
         :icon="isDark ? 'i-heroicons-moon-20-solid' : 'i-heroicons-sun-20-solid'"
-        color="gray"
+        color="neutral"
         variant="ghost"
         @click="isDark = !isDark"
       />
       <template #fallback>
-        <div class="w-8 h-8"/>
+        <div class="size-8"/>
       </template>
     </ClientOnly>
   </div>

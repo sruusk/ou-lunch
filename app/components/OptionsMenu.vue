@@ -2,14 +2,14 @@
   <UPopover overlay>
     <UChip :show="isFiltered" inset size="md">
       <UButton :aria-label="$t('aria.filterOptions')"
-               :ui="{ rounded: 'rounded-full' }"
+               :ui="{ base: 'rounded-full' }"
                color="primary"
                icon="fluent:textbox-settings-20-filled"
                size="md"
                variant="outline"
       />
     </UChip>
-    <template #panel>
+    <template #content>
       <div class="p-4 max-w-[90dvw]">
         <div class="mb-4 flex flex-wrap gap-4">
           <div class="flex flex-wrap gap-2 flex-col">
@@ -24,7 +24,7 @@
           </div>
           <div class="flex flex-col gap-2">
             <h3 class="text-lg">{{ $t('filters.method') }}</h3>
-            <URadioGroup v-model="conf.method" :options="availableMethods" class="fieldset"/>
+            <URadioGroup v-model="conf.method" :items="availableMethods" class="fieldset"/>
           </div>
           <div class="flex flex-col gap-2">
             <h3 class="text-lg">{{ $t('filters.order') }}</h3>
@@ -34,7 +34,7 @@
                     :key="r"
                     class="list-group-item"
                     tabindex="0"
-                    @keydown.up.prevent="oderUp(r)"
+                    @keydown.up.prevent="orderUp(r)"
                     @keydown.down.prevent="orderDown(r)"
                 >
                   <i
@@ -107,16 +107,16 @@ export default defineNuxtComponent({
     }
   },
   methods: {
-    oderUp(r: string) {
+    orderUp(r: string) {
       const index = this.order.indexOf(r);
       if (index > 0) {
-        this.order.splice(index - 1, 0, this.order.splice(index, 1)[0]);
+        this.order.splice(index - 1, 0, this.order.splice(index, 1)[0]!);
       }
     },
     orderDown(r: string) {
       const index = this.order.indexOf(r);
       if (index < this.order.length - 1) {
-        this.order.splice(index + 1, 0, this.order.splice(index, 1)[0]);
+        this.order.splice(index + 1, 0, this.order.splice(index, 1)[0]!);
       }
     },
   },

@@ -1,7 +1,6 @@
 <template>
-  <NuxtRouteAnnouncer/>
   <h1 class="hidden">{{ $t('pageDescription') }}</h1>
-  <UCard :ui="{ body: { base: 'grow' } }" class="flex flex-col min-h-dvh">
+  <UCard :ui="{ body: 'grow' }" class="flex flex-col min-h-dvh">
     <template #header>
       <PageHeader class="h-10"/>
     </template>
@@ -28,9 +27,10 @@
     </template>
   </UCard>
 </template>
+
 <script lang="ts">
 export default defineNuxtComponent({
-  name: 'app',
+  name: "index",
   data() {
     return {
       date: new Date(),
@@ -138,9 +138,3 @@ export default defineNuxtComponent({
   }
 });
 </script>
-
-<style>
-* {
-  transition: background-color 0.5s ease-out, border-color 0.5s ease-out, box-shadow 0.5s ease-out;
-}
-</style>

@@ -1,5 +1,3 @@
-import { CAMPUSES } from '~/utils/constants';
-
 const restaurants = [6, 49, 69, 70];
 
 const resolvers: { restaurant: number; id: string; meta: RestaurantMeta }[] = [

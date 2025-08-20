@@ -11,13 +11,13 @@
         >
           {{ restaurant.name }}
         </ULink>
-        <UDropdown :items="items">
+        <UDropdownMenu :items="items">
           <UButton :aria-label="$t('aria.restaurantInfo')"
-                   color="white"
+                   color="neutral"
                    trailing-icon="material-symbols:menu-rounded"
                    variant="ghost"/>
-        </UDropdown>
-        <PricesOverlay :menu="restaurant" :show="showPrices" @show="(val) => showPrices = val"/>
+        </UDropdownMenu>
+        <PricesOverlay :menu="restaurant" v-model:open="showPrices"/>
       </div>
       <div class="h-0 w-full flex justify-center">
         <div
@@ -35,18 +35,18 @@
         <UPopover
           v-if="nonNormalOpeningHours"
           :label="$t('aria.nonNormalOpeningHours')"
-          :ui="{ wrapper: 'w-0' }"
+          :ui="{ content: 'w-0' }"
           mode="click"
         >
           <UButton
             :aria-label="$t('aria.nonNormalOpeningHours')"
             class="translate-y-1"
-            color="orange"
+            color="warning"
             icon="iconoir:warning-circle-solid"
             size="xs"
             variant="link"
           />
-          <template #panel>
+          <template #content>
             <div class="w-96 max-w-[90vw]">
               <UAlert
                 :description="$t('restaurant.openingHoursDisclaimer')"
@@ -112,19 +112,18 @@ export default defineNuxtComponent({
         [{
           label: this.restaurant.provider,
           icon: 'ion:restaurant-outline',
-          color: 'blue',
           type: 'label'
         }], [{
           label: this.$t('restaurant.openPage'),
           icon: 'material-symbols:arrow-circle-right-outline-rounded',
-          color: 'blue',
-          click: () => window.open(this.restaurant.url, '_blank')
+          to: this.restaurant.url,
+          target: '_blank',
         }, {
           label: this.$t('restaurant.prices'),
           icon: 'material-symbols:euro',
-          color: 'green',
           disabled: !this.restaurant.prices,
-          click: () => this.showPrices = !this.showPrices
+          type: 'link',
+          onSelect: () => this.showPrices = !this.showPrices
         }]
       ];
     },

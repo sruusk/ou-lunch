@@ -11,7 +11,7 @@ export default defineNuxtComponent({
       required: true
     },
     dates: {
-      type: Array,
+      type: Array as () => Date[],
       required: true
     }
   },
@@ -24,18 +24,18 @@ export default defineNuxtComponent({
     },
     selected: {
       get() {
-        return this.dates.findIndex(date => date.toISOString() === this.date.toISOString());
+        return this.dates.findIndex((date: Date) => date.toISOString() === this.date.toISOString());
       },
-      set(index) {
+      set(index: number) {
         this.setDate(index);
       }
     }
   },
   methods: {
-    setDate(index) {
+    setDate(index: number) {
       this.$emit('update:date', this.dates[index]);
     },
-    formatDate(date) {
+    formatDate(date: Date) {
       const lang = this.$i18n.locale === 'en' ? 'en' : 'fi';
       return date.toLocaleDateString(lang, {
         weekday: 'short',

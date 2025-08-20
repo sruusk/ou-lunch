@@ -1,4 +1,3 @@
-import { CAMPUSES } from '~/utils/constants';
 import menu from '../api/menu';
 
 interface SodexoRestaurant {
@@ -44,7 +43,7 @@ const restaurants: SodexoRestaurant[] = [
 ];
 
 const getRestaurant = async (restaurant: SodexoRestaurant): Promise<RestaurantMeta & { menu: Menu[] }> => {
-  try { 
+  try {
     const menu = formatMenu(await getRestaurantMenu(restaurant.id));
     return { ...restaurant.meta, menu: restaurant.map ? restaurant.map(menu) : menu };
   } catch (err) {

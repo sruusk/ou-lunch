@@ -1,8 +1,8 @@
 <template>
   <div v-show="menuItems.length">
-    <UDivider size="sm">
+    <USeparator size="sm">
       <h3>{{ menu.name }}</h3>
-    </UDivider>
+    </USeparator>
     <MenuItem v-for="(item, itemIndex) in menuItems"
               :key="itemIndex"
               :isFiltered="item.isFiltered"

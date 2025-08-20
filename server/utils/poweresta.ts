@@ -1,6 +1,5 @@
 // noinspection SpellCheckingInspection
 
-import { CAMPUSES } from '~/utils/constants';
 
 interface PowerestaRestaurant {
   name: string;

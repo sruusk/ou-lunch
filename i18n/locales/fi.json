@@ -1,0 +1,50 @@
+{
+  "title": "Oulun Yliopiston Lounaat",
+  "description": "Oulun yliopiston lounasravintoloiden ruokalistat",
+  "noMenu": "Valitulle päivälle ei ole saatavilla ruokalistaa",
+  "noRestaurants": "Ei ravintoloita saatavilla",
+  "noRestaurantsDescription": "Tämä voi johtua siitä, että ravintolat eivät ole auki tällä hetkellä, tai palvelussa on tuntematon virhe.",
+  "notAvailableForLanguage": "",
+  "pageDescription": "Oulun yliopiston lounaslistat eri ravintoloille. Löydä parhaat lounasvaihtoehdot tänään.",
+  "footer": {
+    "feedback": "Anna palautetta",
+    "feedbackTelegram": "Anna palautetta Telegramissa",
+    "feedbackGithub": "Anna palautetta GitHubissa"
+  },
+  "aria": {
+    "ingredients": "Ainesosat",
+    "source": "Lähdekoodi GitHub",
+    "filterOptions": "Suodatusvaihtoehdot",
+    "logo": "Oulun Yliopiston Lounaat logo",
+    "colourMode": "Vaihda värimoodi",
+    "language": "Valitse kieli",
+    "open": "Avaa",
+    "page": "ravintolan omat sivut",
+    "restaurantInfo": "Lisätietoja ravintolasta",
+    "openingHours": "Aukioloajat",
+    "nonNormalOpeningHours": "Ei-normaalit aukioloajat"
+  },
+  "filters": {
+    "filter": "Suodata",
+    "eggFree": "Munaton (Mu)",
+    "glutenFree": "Gluteeniton (G)",
+    "lactoseFree": "Laktoositon (L)",
+    "milkFree": "Maidoton (M)",
+    "vegan": "Vegaani (VEG)",
+    "recommended": "Suositusten mukainen (*)",
+    "apply": "Tallenna",
+    "method": "Valitse suodatustapa",
+    "highlight": "Korosta",
+    "hide": "Piilota muut",
+    "order": "Järjestys (vedä ja pudota)"
+  },
+  "restaurant": {
+    "openPage": "Avaa ravintolan sivut",
+    "prices": "Hinnat",
+    "student": "Opiskelijat",
+    "staff": "Henkilökunta",
+    "other": "Vieraat",
+    "disclaimer": "Hinnoissa voi ilmetä virheitä, tarkista ravintolan omilta sivuilta ajantasaisin tieto",
+    "openingHoursDisclaimer": "Käytämme suuria kielimalleja poimimaan poikkeavia aukioloaikoja ravintoloiden verkkosivuilta. Järjestelmämme on havainnut poikkeavia aukioloaikoja tälle ravintolalle. Emme voi taata tämän tiedon tarkkuutta. Tarkista ajantasaisin tieto ravintolan omilta sivuilta."
+  }
+}

@@ -1,4 +1,3 @@
-import { CAMPUSES } from '~/utils/constants';
 
 interface CompassRestaurant {
   costCenter: string;
