@@ -1,5 +1,5 @@
 <template>
-  <UApp>
+  <UApp :locale="locales[locale]">
     <NuxtRouteAnnouncer/>
     <NuxtPage />
   </UApp>
@@ -21,6 +21,11 @@ export default defineNuxtComponent({
         dir
       }
     })
+
+    return {
+      locales,
+      locale
+    }
   }
 });
 </script>
