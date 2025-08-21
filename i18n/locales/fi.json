@@ -47,4 +47,24 @@
     "disclaimer": "Hinnoissa voi ilmetä virheitä, tarkista ravintolan omilta sivuilta ajantasaisin tieto",
     "openingHoursDisclaimer": "Käytämme suuria kielimalleja poimimaan poikkeavia aukioloaikoja ravintoloiden verkkosivuilta. Järjestelmämme on havainnut poikkeavia aukioloaikoja tälle ravintolalle. Emme voi taata tämän tiedon tarkkuutta. Tarkista ajantasaisin tieto ravintolan omilta sivuilta."
   }
+  ,
+  "navigation": {
+    "back_to_menus": "Takaisin ruokalistoihin",
+    "discounts": "Alennukset"
+  },
+  "osako": {
+    "page_title": "OSAKO Opiskelija-alennukset Oulussa",
+    "page_description": "Eksklusiiviset alennukset Oulun yliopiston ja OAMK:n opiskelijoille paikallisissa yrityksissä",
+    "search_placeholder": "Hae yrityksiä...",
+    "showing_results": "Näytetään {count} tulosta",
+    "no_discounts_found": "Alennuksia ei löytynyt",
+    "try_different_search": "Kokeile muuttaa hakuehtoja tai kategoria-suodattimia",
+    "clear_filters": "Tyhjennä suodattimet",
+    "view_details": "Näytä tiedot",
+    "call": "Soita",
+    "website": "Verkkosivut",
+    "directions": "Reittiohjeet",
+    "student_card_required": "Opiskelijakortti vaaditaan",
+    "special_offer": "Erikoistarjous"
+  }
 }

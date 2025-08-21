@@ -47,4 +47,24 @@
     "disclaimer": "Prices may not be accurate, please check the restaurant's own page for the most up-to-date information",
     "openingHoursDisclaimer": "We use large language models to extract non-normal opening hours from restaurant websites. Our system has detected non-normal opening hours for this restaurant. We cannot guarantee the accuracy of this information. Please check the restaurant's own page for the most up-to-date information."
   }
+  ,
+  "navigation": {
+    "back_to_menus": "Back to Menus",
+    "discounts": "Discounts"
+  },
+  "osako": {
+    "page_title": "OSAKO Student Discounts in Oulu",
+    "page_description": "Exclusive discounts for University of Oulu and OAMK students at local businesses",
+    "search_placeholder": "Search businesses...",
+    "showing_results": "Showing {count} results",
+    "no_discounts_found": "No discounts found",
+    "try_different_search": "Try adjusting your search or category filters",
+    "clear_filters": "Clear Filters",
+    "view_details": "View Details",
+    "call": "Call",
+    "website": "Website",
+    "directions": "Directions",
+    "student_card_required": "Student card required",
+    "special_offer": "Special Offer"
+  }
 }
