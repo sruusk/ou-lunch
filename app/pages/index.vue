@@ -5,7 +5,7 @@
       <PageHeader class="h-10"/>
     </template>
     <div v-if="!noRestaurants" class="flex justify-center items-center flex-wrap mb-4 gap-5">
-      <DateSelect v-model:date="date" :dates="dates"/>
+      <DateSelect :dates="dates"/>
       <OptionsMenu v-model:config="filterConfig"/>
     </div>
     <UContainer class="flex flex-wrap justify-center max-w-7xl" role="main">
@@ -18,7 +18,6 @@
       <RestaurantMenu
         v-for="restaurant in restaurants"
         :key="restaurant.name"
-        :date="date"
         :restaurant="restaurant"
       />
     </UContainer>
@@ -33,7 +32,6 @@ export default defineNuxtComponent({
   name: "index",
   data() {
     return {
-      date: new Date(),
       filterConfig: {
         filters: {
           vegan: false,
@@ -91,6 +89,7 @@ export default defineNuxtComponent({
     return {
       apiRestaurants: response.data,
       order: order as unknown as string[],
+      selectedDate: useSelectedDate(),
     };
   },
   created() {
@@ -99,8 +98,6 @@ export default defineNuxtComponent({
         return titleChunk ? `${ titleChunk } - ${ this.$t('title') }` : this.$t('title');
       },
     });
-
-    this.date = this.dates[0] ?? new Date();
   },
   beforeMount() {
     if (!this.restaurants?.length) {
@@ -118,7 +115,7 @@ export default defineNuxtComponent({
         return this.order.indexOf(a.name) - this.order.indexOf(b.name);
       });
     },
-    dates() {
+    dates(): Date[] {
       if (!this.restaurants?.length) return [];
       const dates: Set<string> = new Set();
       this.restaurants.forEach(r => {
@@ -127,10 +124,17 @@ export default defineNuxtComponent({
             dates.add(m.date.toISOString());
         });
       });
-      return Array.from(dates)
+      const dateArray: Date[] = Array.from(dates)
         .map(d => new Date(d))
         .sort((a: Date, b: Date) => a.getTime() - b.getTime())
         .slice(0, 6);
+
+      const selectedDate = this.selectedDate.current.value.toDateString();
+      if(!dateArray.map(d => d.toDateString()).includes(selectedDate)) {
+        this.selectedDate.current.value = dateArray[0]!;
+      }
+
+      return dateArray;
     },
     noRestaurants(): boolean {
       return !this.restaurants?.filter(r => r.menu.filter(m => m.fi.length).length)?.length;

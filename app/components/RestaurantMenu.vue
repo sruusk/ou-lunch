@@ -22,9 +22,9 @@
       <div class="h-0 w-full flex justify-center">
         <div
           v-if="openingHours"
-          :class="{ '!border-yellow-600': nonNormalOpeningHours }"
+          :class="{ 'border-yellow-600!': nonNormalOpeningHours }"
           class="h-fit w-fit bottom-0 right-0 translate-y-1/2 flex
-          border rounded px-1 -mb-1 dark:border-cool-700 border-cool-300 backdrop-blur-3xl"
+          border rounded px-1 -mt-0.5 border-[var(--ui-border-muted)] backdrop-blur-3xl"
         >
           <p class="text-cool-600 dark:text-cool-400 text-xs whitespace-nowrap flex">
             {{ openingHours.open.hours }}:{{ openingHours.open.minutes.toString().padStart(2, '0') }}
@@ -89,22 +89,23 @@ export default defineNuxtComponent({
       type: Object as () => Restaurant,
       required: true
     },
-    date: {
-      type: Date,
-      required: true
-    }
   },
   data() {
     return {
       showPrices: false
     };
   },
+  setup() {
+    return {
+      date: useSelectedDate(),
+    }
+  },
   computed: {
     menus(): MenuCategory[] | undefined {
       const lang = this.$i18n.locale === 'en' ? 'en' : 'fi';
       // Find the menu for the current date and return it in the correct language
       return this.restaurant.menu
-        .find(menu => menu.date.toDateString() === this.date.toDateString())?.[lang]
+        .find(menu => menu.date.toDateString() === this.date.current.value.toDateString())?.[lang]
         .filter(menu => menu.items.length);
     },
     items() {
@@ -129,7 +130,7 @@ export default defineNuxtComponent({
     },
     openingHours(): LunchWindow | NonNormalOpeningHours | undefined {
       if (!this.restaurant.openingHours) return;
-      const today = this.date.getDay();
+      const today = this.date.current.value.getDay();
       const nonNormal = this.nonNormalOpeningHours;
       if (nonNormal) {
         // console.log(`Non-normal opening hours for ${this.restaurant.name} on ${this.date.toDateString()}: ${nonNormal.open.hours}:${nonNormal.open.minutes} - ${nonNormal.close.hours}:${nonNormal.close.minutes}`);
@@ -138,7 +139,7 @@ export default defineNuxtComponent({
       return this.restaurant.openingHours.find(oh => oh.day === today);
     },
     nonNormalOpeningHours(): NonNormalOpeningHours | undefined {
-      const today = this.date.getDay();
+      const today = this.date.current.value.getDay();
       return this.restaurant.nonNormalOpeningHours?.find(oh => (new Date(oh.day)).getDay() === today);
     }
   },

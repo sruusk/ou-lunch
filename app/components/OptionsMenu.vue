@@ -5,7 +5,7 @@
                :ui="{ base: 'rounded-full' }"
                color="primary"
                icon="fluent:textbox-settings-20-filled"
-               size="md"
+               size="lg"
                variant="outline"
       />
     </UChip>

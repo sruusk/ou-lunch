@@ -6,35 +6,34 @@
 export default defineNuxtComponent({
   name: 'DateSelect',
   props: {
-    date: {
-      type: Date,
-      required: true
-    },
     dates: {
       type: Array as () => Date[],
       required: true
     }
   },
-  emits: ['update:date'],
+  setup() {
+    const date = useSelectedDate();
+    return {
+      date,
+    };
+  },
   computed: {
     items() {
       return this.dates.map(date => ({
-        label: this.formatDate(date)
+        label: this.formatDate(date),
+        value: date.toDateString(),
       }));
     },
     selected: {
       get() {
-        return this.dates.findIndex((date: Date) => date.toISOString() === this.date.toISOString());
+        return this.date.current.value.toDateString();
       },
-      set(index: number) {
-        this.setDate(index);
+      set(date: string) {
+        this.date.setSelectedDate(new Date(date));
       }
     }
   },
   methods: {
-    setDate(index: number) {
-      this.$emit('update:date', this.dates[index]);
-    },
     formatDate(date: Date) {
       const lang = this.$i18n.locale === 'en' ? 'en' : 'fi';
       return date.toLocaleDateString(lang, {

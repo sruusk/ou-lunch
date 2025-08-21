@@ -1,6 +1,6 @@
 <template>
-  <NuxtRouteAnnouncer/>
   <UApp>
+    <NuxtRouteAnnouncer/>
     <NuxtPage />
   </UApp>
 </template>
@@ -24,9 +24,3 @@ export default defineNuxtComponent({
   }
 });
 </script>
-
-<style>
-* {
-  transition: background-color 0.5s ease-out, border-color 0.5s ease-out, box-shadow 0.5s ease-out;
-}
-</style>

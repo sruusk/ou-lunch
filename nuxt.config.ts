@@ -64,4 +64,15 @@ export default defineNuxtConfig({
   ogImage: {
     enabled: false,
   },
+  vite: {
+    $server: {
+      build: {
+        rollupOptions: {
+          output: {
+            preserveModules: true
+          }
+        }
+      }
+    }
+  },
 });

@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "node .output/server/index.mjs",
     "build": "nuxt build",
@@ -26,9 +27,7 @@
     "nuxt": "^4.0.3",
     "nuxt-umami": "^3.2.0",
     "openai": "^4.104.0",
-    "vue": "latest",
     "vue-draggable-next": "^2.3.0",
-    "vue-router": "^4.5.1",
     "zod": "^3.25.76"
   },
   "engines": {
