@@ -3,6 +3,10 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
   debug: false,
   devtools: { enabled: true },
+  sourcemap: {
+    client: false,
+    server: false,
+  },
   modules: [
     '@nuxtjs/sitemap',
     '@nuxt/ui',

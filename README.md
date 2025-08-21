@@ -1,5 +1,5 @@
 <p style="text-align: center; padding: 20px;">
-  <img src="assets/ouf-high-resolution-logo-transparent.webp" height="200">
+  <img src="app/assets/ouf-high-resolution-logo-transparent.webp" height="200">
 </p>
 
 ![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white)
