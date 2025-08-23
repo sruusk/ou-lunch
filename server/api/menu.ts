@@ -7,14 +7,13 @@ const querySchema = z
   })
   .strict()
   .refine(
-    (data) =>
-      (data.city === null || data.city === undefined) &&
-      (data.campus === null || data.campus === undefined) ||
-      (typeof data.city === 'string' && typeof data.campus === 'string'),
+    data =>
+      (!data.city && !data.campus)
+      || (typeof data.city === 'string' && typeof data.campus === 'string'),
     {
       message:
         'Either both city and campus should be null/undefined or both must have a value',
-    }
+    },
   );
 
 export default defineEventHandler(async (event) => {

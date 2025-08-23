@@ -1,19 +1,22 @@
 <template>
-  <h1 class="hidden">{{ $t('pageDescription') }}</h1>
+  <h1 class="hidden">
+    {{ $t('pageDescription') }}
+  </h1>
   <UCard :ui="{ body: 'grow' }" class="flex flex-col min-h-dvh">
     <template #header>
-      <PageHeader class="h-10"/>
+      <PageHeader class="h-10" />
     </template>
     <div v-if="!noRestaurants" class="flex justify-center items-center flex-wrap mb-4 gap-5">
-      <DateSelect :dates="dates"/>
-      <OptionsMenu v-model:config="filterConfig"/>
+      <DateSelect :dates="dates" />
+      <OptionsMenu v-model:config="filterConfig" />
     </div>
     <UContainer class="flex flex-wrap justify-center max-w-7xl" role="main">
-      <UAlert v-if="noRestaurants"
-              class="max-w-sm mt-36"
-              :title="$t('noRestaurants')"
-              :description="$t('noRestaurantsDescription')"
-              icon="ion:information-circle-outline"
+      <UAlert
+        v-if="noRestaurants"
+        class="max-w-sm mt-36"
+        :title="$t('noRestaurants')"
+        :description="$t('noRestaurantsDescription')"
+        icon="ion:information-circle-outline"
       />
       <RestaurantMenu
         v-for="restaurant in restaurants"
@@ -22,29 +25,14 @@
       />
     </UContainer>
     <template #footer>
-      <PageFooter class="h-10"/>
+      <PageFooter class="h-10" />
     </template>
   </UCard>
 </template>
 
 <script lang="ts">
 export default defineNuxtComponent({
-  name: "index",
-  data() {
-    return {
-      filterConfig: {
-        filters: {
-          vegan: false,
-          eggFree: false,
-          milkFree: false,
-          glutenFree: false,
-          lactoseFree: false,
-          recommended: false,
-        },
-        method: 'highlight',
-      },
-    };
-  },
+  name: 'Index',
   async setup() {
     useSeoMeta({
       title: 'OUF',
@@ -58,15 +46,15 @@ export default defineNuxtComponent({
     }) as unknown as { value: string[] }; // value is only used in setup function
 
     const campus = CAMPUSES.OULU.LINNANMAA;
-    const response = await useFetch(`/api/menu?city=${ campus.city }&campus=${ campus.campus }`, {
+    const response = await useFetch(`/api/menu?city=${campus.city}&campus=${campus.campus}`, {
       key: 'restaurants',
       server: true,
       transform: (data: Restaurant[]) => {
         if (!order.value) {
           order.value = data.map(r => r.name);
         }
-        return data.map(r => {
-          r.menu = r.menu.map(m => {
+        return data.map((r) => {
+          r.menu = r.menu.map((m) => {
             m.date = new Date(m.date);
             return m;
           });
@@ -74,7 +62,7 @@ export default defineNuxtComponent({
         }).sort((a, b) => {
           return order.value.indexOf(a.name) - order.value.indexOf(b.name);
         });
-      }
+      },
     });
 
     // Check for removed or added restaurants and add new ones to the end of the list
@@ -92,20 +80,20 @@ export default defineNuxtComponent({
       selectedDate: useSelectedDate(),
     };
   },
-  created() {
-    useHead({
-      titleTemplate: (titleChunk) => {
-        return titleChunk ? `${ titleChunk } - ${ this.$t('title') }` : this.$t('title');
+  data() {
+    return {
+      filterConfig: {
+        filters: {
+          vegan: false,
+          eggFree: false,
+          milkFree: false,
+          glutenFree: false,
+          lactoseFree: false,
+          recommended: false,
+        },
+        method: 'highlight',
       },
-    });
-  },
-  beforeMount() {
-    if (!this.restaurants?.length) {
-      alert('Could not fetch data from the server. Please try again later.');
-    }
-  },
-  mounted() {
-    umTrackView();
+    };
   },
   computed: {
     restaurants(): Restaurant[] {
@@ -118,27 +106,43 @@ export default defineNuxtComponent({
     dates(): Date[] {
       if (!this.restaurants?.length) return [];
       const dates: Set<string> = new Set();
-      this.restaurants.forEach(r => {
-        r.menu.forEach(m => {
+      this.restaurants.forEach((r) => {
+        r.menu.forEach((m) => {
           if (m.fi?.length)
             dates.add(m.date.toISOString());
         });
       });
-      const dateArray: Date[] = Array.from(dates)
+      return Array.from(dates)
         .map(d => new Date(d))
         .sort((a: Date, b: Date) => a.getTime() - b.getTime())
         .slice(0, 6);
-
-      const selectedDate = this.selectedDate.current.value.toDateString();
-      if(!dateArray.map(d => d.toDateString()).includes(selectedDate)) {
-        this.selectedDate.current.value = dateArray[0]!;
-      }
-
-      return dateArray;
     },
     noRestaurants(): boolean {
       return !this.restaurants?.filter(r => r.menu.filter(m => m.fi.length).length)?.length;
+    },
+  },
+  watch: {
+    dates(dateArray: Date[]) {
+      const selectedDate = this.selectedDate.current.value.toDateString();
+      if (!dateArray.map(d => d.toDateString()).includes(selectedDate)) {
+        this.selectedDate.current.value = dateArray[0]!;
+      }
+    },
+  },
+  created() {
+    useHead({
+      titleTemplate: (titleChunk) => {
+        return titleChunk ? `${titleChunk} - ${this.$t('title')}` : this.$t('title');
+      },
+    });
+  },
+  beforeMount() {
+    if (!this.restaurants?.length) {
+      alert('Could not fetch data from the server. Please try again later.');
     }
-  }
+  },
+  mounted() {
+    umTrackView();
+  },
 });
 </script>

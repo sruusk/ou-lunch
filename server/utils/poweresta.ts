@@ -1,5 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // noinspection SpellCheckingInspection
-
 
 interface PowerestaRestaurant {
   name: string;
@@ -7,7 +7,6 @@ interface PowerestaRestaurant {
   meta: RestaurantMeta;
   map?: (menu: Menu) => Menu; // Optional function to apply a mapping to the menu
 }
-
 
 const restaurants: PowerestaRestaurant[] = [
   {
@@ -21,10 +20,10 @@ const restaurants: PowerestaRestaurant[] = [
       openingHours: [1, 2, 3, 4, 5].map(day => ({
         day: day,
         open: { hours: 10, minutes: 30 },
-        close: { hours: 14, minutes: 0 }
-      }))
-    }
-  }
+        close: { hours: 14, minutes: 0 },
+      })),
+    },
+  },
 ];
 
 const getRestaurant = async (restaurant: PowerestaRestaurant): Promise<RestaurantMeta & { menu: Menu[] }> => {
@@ -36,19 +35,20 @@ const getRestaurant = async (restaurant: PowerestaRestaurant): Promise<Restauran
   }
 
   try {
-    const res = await fetch(`https://api.fi.poweresta.com/publicmenu/dates/uniresta/${ restaurant.name }/?menu=${ restaurant.menu }&dates=${ dates.join(',') }`).then(res => res.json());
+    const res = await fetch(`https://api.fi.poweresta.com/publicmenu/dates/uniresta/${restaurant.name}/?menu=${restaurant.menu}&dates=${dates.join(',')}`).then(res => res.json());
     const menu = restaurant.map ? formatMenu(res).map(restaurant.map) : formatMenu(res);
     return { ...restaurant.meta, menu };
-  } catch (err) {
+  }
+  catch (err) {
     console.error('Error getting menu for', restaurant.meta.name, err);
     return { ...restaurant.meta, menu: [] };
   }
 };
 
 const formatMenu = (menu: any[]): Menu[] => {
-  return menu.map(day => {
+  return menu.map((day) => {
     const out: any = { en: [], fi: [] };
-    ['en', 'fi'].forEach(lang => {
+    ['en', 'fi'].forEach((lang) => {
       out[lang] = day.data.mealOptions.map((option: any) => {
         return {
           name: option.names.find((name: any) => name.language === lang).name || '',
@@ -56,20 +56,21 @@ const formatMenu = (menu: any[]): Menu[] => {
             const item: MenuItem = {
               name: row.names.find((name: any) => name.language === lang).name || '',
               diets: row.diets.find((diet: any) => diet.language === lang).dietShorts?.join(', ').replaceAll('KELA', '*') || undefined,
-              ingredients: row.ingredients.find((ingredient: any) => ingredient.language === lang).ingredients || undefined
+              ingredients: row.ingredients.find((ingredient: any) => ingredient.language === lang).ingredients || undefined,
             };
             // Remove empty properties
-            Object.keys(item).forEach(key => {
+            Object.keys(item).forEach((key) => {
+              // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
               if (item[key as keyof MenuItem] === undefined) delete item[key as keyof MenuItem];
             });
             return item;
-          })
+          }),
         };
       });
     });
     return {
       date: new Date(day.date),
-      ...out
+      ...out,
     };
   });
 };
@@ -90,8 +91,8 @@ const updatePowerestaRestaurants = async (): Promise<void> => {
     await upsertRestaurant(m);
   }
   // Update the menu for each restaurant
-  menus.forEach(menu => {
-    menu.menu.forEach(day => {
+  menus.forEach((menu) => {
+    menu.menu.forEach((day) => {
       updateMenu(menu.name, day.date, { en: day.en, fi: day.fi });
     });
   });

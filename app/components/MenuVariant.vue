@@ -3,33 +3,35 @@
     <USeparator size="sm">
       <h3>{{ menu.name }}</h3>
     </USeparator>
-    <MenuItem v-for="(item, itemIndex) in menuItems"
-              :key="itemIndex"
-              :isFiltered="item.isFiltered"
-              :item="item.item"
-              :showFilter="hasFilters && !filterHide"
+    <MenuItem
+      v-for="(item, itemIndex) in menuItems"
+      :key="itemIndex"
+      :is-filtered="item.isFiltered"
+      :item="item.item"
+      :show-filter="hasFilters && !filterHide"
     />
   </div>
 </template>
+
 <script lang="ts">
 export default defineNuxtComponent({
   name: 'MenuVariant',
   props: {
     menu: {
       type: Object as () => MenuCategory,
-      required: true
-    }
+      required: true,
+    },
   },
   setup() {
     const filters = useState<FilterConfig>('config');
     return { filters };
   },
   computed: {
-    menuItems(): { item: MenuItem, isFiltered: boolean }[] {
-      return this.menu.items.map(item => {
+    menuItems(): { item: MenuItem; isFiltered: boolean }[] {
+      return this.menu.items.map((item) => {
         return {
           item,
-          isFiltered: this.isFiltered(item.diets)
+          isFiltered: this.isFiltered(item.diets),
         };
       }).filter(i => !this.filterHide || !this.hasFilters || i.isFiltered);
     },
@@ -42,7 +44,7 @@ export default defineNuxtComponent({
   },
   methods: {
     isFiltered(diets: string | undefined): boolean {
-      let d = diets?.split(', ').map(i => i.trim());
+      const d = diets?.split(', ').map(i => i.trim());
       if (!d?.length) return false;
 
       // Should return true if all enabled filters are present in the diets
@@ -59,9 +61,10 @@ export default defineNuxtComponent({
         if (!v) return true;
         return d.some(i => r.test(i));
       });
-    }
-  }
+    },
+  },
 });
 </script>
+
 <style scoped>
 </style>

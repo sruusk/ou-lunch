@@ -12,12 +12,14 @@
           {{ restaurant.name }}
         </ULink>
         <UDropdownMenu :items="items">
-          <UButton :aria-label="$t('aria.restaurantInfo')"
-                   color="neutral"
-                   trailing-icon="material-symbols:menu-rounded"
-                   variant="ghost"/>
+          <UButton
+            :aria-label="$t('aria.restaurantInfo')"
+            color="neutral"
+            trailing-icon="material-symbols:menu-rounded"
+            variant="ghost"
+          />
         </UDropdownMenu>
-        <PricesOverlay :menu="restaurant" v-model:open="showPrices"/>
+        <PricesOverlay v-model:open="showPrices" :menu="restaurant" />
       </div>
       <div class="h-0 w-full flex justify-center">
         <div
@@ -58,15 +60,19 @@
         </UPopover>
       </div>
     </template>
-    <div v-for="(menu, index) in menus"
-         v-if="menus?.length"
-         :key="index"
-         class="first:-mt-2 mt-3"
-    >
-      <MenuVariant :menu="menu"/>
-    </div>
+    <template v-if="menus?.length">
+      <div
+        v-for="(menu, index) in menus"
+        :key="index"
+        class="first:-mt-2 mt-3"
+      >
+        <MenuVariant :menu="menu" />
+      </div>
+    </template>
     <div v-else>
-      <p class="text-cool-600 dark:text-cool-400">{{ $t('noMenu') }}</p>
+      <p class="text-cool-600 dark:text-cool-400">
+        {{ $t('noMenu') }}
+      </p>
     </div>
   </UCard>
   <DevOnly v-if="!menus?.length">
@@ -75,8 +81,12 @@
       <br>
       {{ $t('noMenu') }}
       <br>
-      <UAlert class="mt-5" description="This restaurant is hidden in production mode" icon="ion:information-circle-outline"
-              type="info"/>
+      <UAlert
+        class="mt-5"
+        description="This restaurant is hidden in production mode"
+        icon="ion:information-circle-outline"
+        type="info"
+      />
     </UCard>
   </DevOnly>
 </template>
@@ -87,18 +97,18 @@ export default defineNuxtComponent({
   props: {
     restaurant: {
       type: Object as () => Restaurant,
-      required: true
+      required: true,
     },
-  },
-  data() {
-    return {
-      showPrices: false
-    };
   },
   setup() {
     return {
       date: useSelectedDate(),
-    }
+    };
+  },
+  data() {
+    return {
+      showPrices: false,
+    };
   },
   computed: {
     menus(): MenuCategory[] | undefined {
@@ -113,7 +123,7 @@ export default defineNuxtComponent({
         [{
           label: this.restaurant.provider,
           icon: 'ion:restaurant-outline',
-          type: 'label'
+          type: 'label',
         }], [{
           label: this.$t('restaurant.openPage'),
           icon: 'material-symbols:arrow-circle-right-outline-rounded',
@@ -124,8 +134,8 @@ export default defineNuxtComponent({
           icon: 'material-symbols:euro',
           disabled: !this.restaurant.prices,
           type: 'link',
-          onSelect: () => this.showPrices = !this.showPrices
-        }]
+          onSelect: () => this.showPrices = !this.showPrices,
+        }],
       ];
     },
     openingHours(): LunchWindow | NonNormalOpeningHours | undefined {
@@ -141,8 +151,7 @@ export default defineNuxtComponent({
     nonNormalOpeningHours(): NonNormalOpeningHours | undefined {
       const today = this.date.current.value.getDay();
       return this.restaurant.nonNormalOpeningHours?.find(oh => (new Date(oh.day)).getDay() === today);
-    }
+    },
   },
 });
 </script>
-

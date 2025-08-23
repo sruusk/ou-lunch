@@ -9,8 +9,8 @@ const OpeningHours = z.object({
   times: z.array(z.object({
     day: z.string(),
     open: z.object({ hours: z.number(), minutes: z.number() }),
-    close: z.object({ hours: z.number(), minutes: z.number() })
-  }))
+    close: z.object({ hours: z.number(), minutes: z.number() }),
+  })),
 });
 
 export const updateOpeningHours = async (restaurant: Restaurant) => {
@@ -40,33 +40,34 @@ export const updateOpeningHours = async (restaurant: Restaurant) => {
     messages: [
       {
         role: 'system',
-        content: 'You are an expert at structured data extraction. ' +
-          'You will be given unstructured text from a restaurants webpage and should convert the lunchtimes to the given format.' +
-          'Extract the lunchtimes that are valid for the given time period. ' +
-          'The date is a ISO 8601 type date string without the time. ' +
-          'If the restaurants opening times differ from the lunchtimes, use the lunchtimes.' +
-          `The time period is ${ now.toISOString() } to ${ end.toISOString() }.`
+        content: 'You are an expert at structured data extraction. '
+          + 'You will be given unstructured text from a restaurants webpage and should convert the lunchtimes to the given format.'
+          + 'Extract the lunchtimes that are valid for the given time period. '
+          + 'The date is a ISO 8601 type date string without the time. '
+          + 'If the restaurants opening times differ from the lunchtimes, use the lunchtimes.'
+          + `The time period is ${now.toISOString()} to ${end.toISOString()}.`,
       },
-      { role: 'user', content: text }
+      { role: 'user', content: text },
     ],
-    response_format: zodResponseFormat(OpeningHours, 'opening_hours_extraction')
+    response_format: zodResponseFormat(OpeningHours, 'opening_hours_extraction'),
   });
 
   let openingHours = completions.choices[0].message.parsed?.times;
   if (!openingHours) return;
 
-  openingHours = openingHours.map(time => {
+  openingHours = openingHours.map((time) => {
     const day = new Date(time.day).getDay();
     const current = restaurant.openingHours?.find(o => o.day === day);
     if (!current) return;
     // If the opening hours are the same, don't update
-    if (time.open.hours === current.open.hours && time.open.minutes === current.open.minutes &&
-      time.close.hours === current.close.hours && time.close.minutes === current.close.minutes) {
+    if (time.open.hours === current.open.hours && time.open.minutes === current.open.minutes
+      && time.close.hours === current.close.hours && time.close.minutes === current.close.minutes) {
       return;
-    } else return time;
+    }
+    else return time;
   }).filter(o => o !== undefined) as NonNormalOpeningHours[];
 
-  console.log(`Found ${ openingHours.length } non-normal opening hours for ${ restaurant.name }`, openingHours);
+  console.log(`Found ${openingHours.length} non-normal opening hours for ${restaurant.name}`, openingHours);
 
   await updateNonNormalOpeningHours(restaurant.name, openingHours);
 };
@@ -93,8 +94,9 @@ const scrapeTextContent = async (url: string, selectors: string[]) => {
         text += await element.innerText;
       }
     }
-  } catch (err) {
-    console.error(`Failed to scrape text content from ${ url }`, err);
+  }
+  catch (err) {
+    console.error(`Failed to scrape text content from ${url}`, err);
   }
 
   await hero.close();

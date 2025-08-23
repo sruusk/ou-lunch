@@ -1,5 +1,5 @@
 <template>
-  <UTabs v-model="selected" :content="false" :items="items"/>
+  <UTabs v-model="selected" :content="false" :items="items" />
 </template>
 
 <script lang="ts">
@@ -8,8 +8,8 @@ export default defineNuxtComponent({
   props: {
     dates: {
       type: Array as () => Date[],
-      required: true
-    }
+      required: true,
+    },
   },
   setup() {
     const date = useSelectedDate();
@@ -30,17 +30,17 @@ export default defineNuxtComponent({
       },
       set(date: string) {
         this.date.setSelectedDate(new Date(date));
-      }
-    }
+      },
+    },
   },
   methods: {
     formatDate(date: Date) {
       const lang = this.$i18n.locale === 'en' ? 'en' : 'fi';
       return date.toLocaleDateString(lang, {
         weekday: 'short',
-        timeZone: 'Europe/Helsinki'
+        timeZone: 'Europe/Helsinki',
       });
-    }
+    },
   },
 });
 </script>

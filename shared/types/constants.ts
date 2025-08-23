@@ -2,21 +2,21 @@ export const CAMPUSES = {
   OULU: {
     LINNANMAA: {
       city: 'Oulu',
-      campus: 'Linnanmaa'
-    }
+      campus: 'Linnanmaa',
+    },
   },
   TAMPERE: {
     HERVANTA: {
       city: 'Tampere',
-      campus: 'Hervanta'
-    }
+      campus: 'Hervanta',
+    },
   },
   PORI: {
     SAMK: {
       city: 'Pori',
-      campus: 'SAMK'
-    }
-  }
+      campus: 'SAMK',
+    },
+  },
 };
 
 export interface Campus {
@@ -25,4 +25,3 @@ export interface Campus {
     campus: string;
   };
 }
-

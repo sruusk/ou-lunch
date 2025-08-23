@@ -52,7 +52,7 @@ export const db_validators = {
                 description: 'Other price',
               },
             },
-          }
+          },
         },
         menu: {
           bsonType: 'array',
@@ -94,10 +94,10 @@ export const db_validators = {
                           ingredients: {
                             bsonType: 'string',
                             description: 'Ingredients',
-                          }
+                          },
                         },
                       },
-                    }
+                    },
                   },
                 },
               },
@@ -130,10 +130,10 @@ export const db_validators = {
                           ingredients: {
                             bsonType: 'string',
                             description: 'Ingredients',
-                          }
+                          },
                         },
                       },
-                    }
+                    },
                   },
                 },
               },
@@ -142,5 +142,5 @@ export const db_validators = {
         },
       },
     },
-  }
+  },
 };

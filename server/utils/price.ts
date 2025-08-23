@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape,no-irregular-whitespace */
 // noinspection SpellCheckingInspection
 
 export const updateRestaurantPrices = async (): Promise<void> => {
@@ -23,7 +24,7 @@ const getJuvenesPrices = async (url: string): Promise<Price[]> => {
   ];
   const res = await fetch(url).then(res => res.text());
   const resEng = await fetch(url.replace('juvenes.fi/', 'juvenes.fi/en/')).then(res => res.text());
-  let prices: Price[] = [];
+  const prices: Price[] = [];
 
   for (const r of pricesRegexes) {
     const matches = res.matchAll(r);
@@ -39,7 +40,7 @@ const getJuvenesPrices = async (url: string): Promise<Price[]> => {
         title_en: nameEng || name,
         student: student,
         staff: staff,
-        other: other
+        other: other,
       });
     }
     if (prices.length > 0) break;
@@ -55,18 +56,18 @@ const getUnirestaPrices = (): Price[] => {
     title_en: 'Lunch',
     student: '2,95 €',
     staff: '5,89 €',
-    other: '12,10 €'
+    other: '12,10 €',
   }, {
     title_fi: 'Herkkulounas',
     title_en: 'Herkku lunch',
     student: '5,25 €',
     staff: '9,60 €',
-    other: '12,10 €'
+    other: '12,10 €',
   }, {
     title_fi: 'Erikoislounas',
     title_en: 'Special lunch',
     student: '5,60 €',
     staff: '11,10 €',
-    other: '13,60 €'
+    other: '13,60 €',
   }];
 };

@@ -1,45 +1,54 @@
 <template>
   <UPopover overlay>
     <UChip :show="isFiltered" inset size="md">
-      <UButton :aria-label="$t('aria.filterOptions')"
-               :ui="{ base: 'rounded-full' }"
-               color="primary"
-               icon="fluent:textbox-settings-20-filled"
-               size="lg"
-               variant="outline"
+      <UButton
+        :aria-label="$t('aria.filterOptions')"
+        :ui="{ base: 'rounded-full' }"
+        color="primary"
+        icon="fluent:textbox-settings-20-filled"
+        size="lg"
+        variant="outline"
       />
     </UChip>
     <template #content>
       <div class="p-4 max-w-[90dvw]">
         <div class="mb-4 flex flex-wrap gap-4">
           <div class="flex flex-wrap gap-2 flex-col">
-            <h3 class="text-lg" tabindex="1">{{ $t('filters.filter') }}</h3>
-            <UCheckbox v-for="(filter, index) in Object.keys(conf.filters)"
-                       :key="filter"
-                       v-model="conf.filters[filter]"
-                       :label="$t(`filters.${filter}`)"
-                       :tabindex="index ? undefined : 0"
-                       @keydown.enter="conf.filters[filter] = !conf.filters[filter]"
+            <h3 class="text-lg" tabindex="1">
+              {{ $t('filters.filter') }}
+            </h3>
+            <UCheckbox
+              v-for="(filter, index) in Object.keys(conf.filters)"
+              :key="filter"
+              v-model="conf.filters[filter]"
+              :label="$t(`filters.${filter}`)"
+              :tabindex="index ? undefined : 0"
+              @keydown.enter="conf.filters[filter] = !conf.filters[filter]"
             />
           </div>
           <div class="flex flex-col gap-2">
-            <h3 class="text-lg">{{ $t('filters.method') }}</h3>
-            <URadioGroup v-model="conf.method" :items="availableMethods" class="fieldset"/>
+            <h3 class="text-lg">
+              {{ $t('filters.method') }}
+            </h3>
+            <URadioGroup v-model="conf.method" :items="availableMethods" class="fieldset" />
           </div>
           <div class="flex flex-col gap-2">
-            <h3 class="text-lg">{{ $t('filters.order') }}</h3>
+            <h3 class="text-lg">
+              {{ $t('filters.order') }}
+            </h3>
             <Draggable v-if="order?.length" v-model="order">
               <transition-group name="flip-list" type="transition">
-                <li v-for="r in order"
-                    :key="r"
-                    class="list-group-item"
-                    tabindex="0"
-                    @keydown.up.prevent="orderUp(r)"
-                    @keydown.down.prevent="orderDown(r)"
+                <li
+                  v-for="r in order"
+                  :key="r"
+                  class="list-group-item"
+                  tabindex="0"
+                  @keydown.up.prevent="orderUp(r)"
+                  @keydown.down.prevent="orderDown(r)"
                 >
                   <i
                     aria-hidden="true"
-                  ></i>
+                  />
                   {{ r }}
                 </li>
               </transition-group>
@@ -97,14 +106,14 @@ export default defineNuxtComponent({
       deep: true,
       handler() {
         this.cookie = this.conf;
-      }
+      },
     },
     order: {
       deep: true,
       handler() {
         this.orderCookie = this.order;
-      }
-    }
+      },
+    },
   },
   methods: {
     orderUp(r: string) {

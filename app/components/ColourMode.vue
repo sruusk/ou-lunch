@@ -9,19 +9,18 @@
         @click="isDark = !isDark"
       />
       <template #fallback>
-        <div class="size-8"/>
+        <div class="size-8" />
       </template>
     </ClientOnly>
   </div>
 </template>
 
 <script lang="ts">
-
 export default defineNuxtComponent({
   name: 'ColourMode',
   setup() {
     return {
-      colorMode: useColorMode()
+      colorMode: useColorMode(),
     };
   },
   computed: {
@@ -31,8 +30,8 @@ export default defineNuxtComponent({
       },
       set() {
         this.colorMode.preference = this.colorMode.value === 'dark' ? 'light' : 'dark';
-      }
-    }
+      },
+    },
   },
 });
 </script>
