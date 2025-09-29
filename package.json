@@ -28,9 +28,9 @@
     "eslint": "^9.34.0",
     "moment-timezone": "^0.6.0",
     "mongodb": "^6.18.0",
-    "nuxt": "^4.0.3",
+    "nuxt": "^4.1.0",
     "nuxt-umami": "^3.2.0",
-    "openai": "^4.104.0",
+    "openai": "^5.23.1",
     "vue-draggable-next": "^2.3.0",
     "zod": "^3.25.76"
   },
