@@ -1,7 +1,12 @@
 <template>
   <div v-show="menuItems.length">
     <USeparator size="sm">
-      <h3>{{ menu.name }}</h3>
+      <h3>
+        <template v-for="(part, index) in menuNameParts" :key="index">
+          {{ part }}
+          <br v-if="index < menuNameParts.length - 1">
+        </template>
+      </h3>
     </USeparator>
     <MenuItem
       v-for="(item, itemIndex) in menuItems"
@@ -40,6 +45,25 @@ export default defineNuxtComponent({
     },
     filterHide() {
       return this.filters.method === 'hide';
+    },
+    /// Returns the menu name split into appropriate length parts
+    menuNameParts(): string[] {
+      const parts: string[] = [];
+      const maxLength = 25;
+      let currentPart = '';
+
+      this.menu.name.split(' ').forEach((word) => {
+        if ((currentPart + word).length <= maxLength) {
+          currentPart += (currentPart ? ' ' : '') + word;
+        }
+        else {
+          if (currentPart) parts.push(currentPart);
+          currentPart = word;
+        }
+      });
+
+      if (currentPart) parts.push(currentPart);
+      return parts;
     },
   },
   methods: {
