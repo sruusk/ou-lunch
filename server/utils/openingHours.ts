@@ -2,7 +2,7 @@
 
 import OpenAI from 'openai';
 import { z } from 'zod';
-import { zodResponseFormat } from 'openai/helpers/zod';
+import {zodResponseFormat, zodTextFormat} from 'openai/helpers/zod';
 import Hero, { ConnectionToHeroCore } from '@ulixee/hero';
 
 const OpeningHours = z.object({
@@ -19,9 +19,7 @@ export const updateOpeningHours = async (restaurant: Restaurant) => {
   switch (restaurant.provider) {
     case Provider.juvenes:
       text = await scrapeTextContent(restaurant.url, [
-        'div.grve-bookmark > div > div > div.grve-with-bg-color',
-        'div.grve-bookmark > div > div > div.grve-element.grve-text',
-        'div.grve-bookmark.grve-column-1-3 div.grve-text',
+        'div.elementor-element:has(> div.elementor-element > div.elementor-element > div > div > div.aukiolot)',
       ]);
       break;
     case Provider.uniresta:
@@ -30,14 +28,17 @@ export const updateOpeningHours = async (restaurant: Restaurant) => {
       break;
   }
 
-  if (!text?.length) return;
+  if (!text?.length) {
+    console.warn(`No text found for ${restaurant.name}`);
+    return;
+  }
 
   const now = new Date();
   const end = new Date(now.getTime() + 10 * 24 * 60 * 60 * 1000);
 
-  const completions = await client.beta.chat.completions.parse({
-    model: 'gpt-4o',
-    messages: [
+  const response = await client.responses.parse({
+    model: 'gpt-5-mini',
+    input: [
       {
         role: 'system',
         content: 'You are an expert at structured data extraction. '
@@ -49,10 +50,12 @@ export const updateOpeningHours = async (restaurant: Restaurant) => {
       },
       { role: 'user', content: text },
     ],
-    response_format: zodResponseFormat(OpeningHours, 'opening_hours_extraction'),
+    text: {
+      format: zodTextFormat(OpeningHours, 'opening_hours_extraction'),
+    },
   });
 
-  let openingHours = completions.choices[0].message.parsed?.times;
+  let openingHours = (response.output_parsed as z.infer<typeof OpeningHours> | null)?.times;
   if (!openingHours) return;
 
   openingHours = openingHours.map((time) => {
