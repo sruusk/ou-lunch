@@ -18,7 +18,7 @@ export const updateRestaurantPrices = async (): Promise<void> => {
 
 const getJuvenesPrices = async (url: string): Promise<Price[]> => {
   const pricesRegexes = [
-    /(\b[ A-ZÖÄÅ\-]+):[  <>\/A-ZÖÄÅ\n\r\t]*(\d+,\d+ ?€)[  <>\/A-ZÖÄÅ\n\r\t*]*(\d+,\d+ ?€)[  <>\/A-ZÖÄÅ\n\r\t]*(\d+,\d+ ?€)/gi, // Oulu Uni Restaurants
+    /(?:<div class="hinnasto-rivi"><strong>|<div class="kuvaus"><p>)(\b[ A-ZÖÄÅ\-&;]+)(?:: |<\/strong><br><div class="kuvaus"><p>)(\d+,\d+ ?€).+?(\d+,\d+ ?€).+?(\d+,\d+ ?€)/gi, // Oulu Uni Restaurants
     /<strong>.+?>([a-zöäå\- ]+)(?:.|\n)+?(?:Opiskelijat|Students).+?(\d+,\d+ ?€)(?:.|\n)+?(?:Henkilökunta|Staff).+?(\d+,\d+ ?€)(?:.|\n)+?(?:(?=<strong>)|(?:Vierailijat|Visitors).+?(\d+,\d+ ?€))/gi, // Konehuone
     /<strong>(LOUNAS|LUNCH)(?:.|\n)+?(\d+,\d+ ?€(?:\/\d+,\d+ ?€)?)(?:.|\n)+?(\d+,\d+ ?€(?:\/\d+,\d+ ?€)?)(?:.|\n)+?(?:Muut|Others)(?:.|\n)+?(\d+,\d+ ?€(?:\/\d+,\d+ ?€)?)/gi, // Newton
   ];
