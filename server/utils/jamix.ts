@@ -34,7 +34,7 @@ const resolvers: { restaurant: number; id: string; meta: RestaurantMeta }[] = [
         {
           day: 5,
           open: { hours: 10, minutes: 0 },
-          close: { hours: 16, minutes: 0 },
+          close: { hours: 15, minutes: 30 },
         },
       ],
     },
