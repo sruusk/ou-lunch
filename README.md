@@ -55,7 +55,7 @@ Retrieves a list of restaurants with their menus for today and future dates.
 #### Response
 
 Returns a JSON array of restaurant objects. For the detailed type definition, 
-see [server/utils/types.ts](shared/types/types.ts).
+see [types.ts](shared/types/types.ts).
 
 #### Error Responses
 
