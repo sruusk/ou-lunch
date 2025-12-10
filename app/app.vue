@@ -1,5 +1,6 @@
 <template>
   <UApp :locale="locales[locale]">
+    <NuxtPwaManifest />
     <NuxtRouteAnnouncer />
     <NuxtPage />
   </UApp>
