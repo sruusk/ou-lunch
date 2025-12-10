@@ -8,5 +8,5 @@ export interface FilterConfig {
     recommended: boolean;
     [key: string]: boolean;
   };
-  method: 'highlight' | 'hide';
+  method: 'highlight' | 'hide' | 'hideLunch';
 }
