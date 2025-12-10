@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 const restaurants = [6, 49, 69, 70];
 
 const resolvers: { restaurant: number; id: string; meta: RestaurantMeta }[] = [
@@ -12,9 +13,9 @@ const resolvers: { restaurant: number; id: string; meta: RestaurantMeta }[] = [
       openingHours: [1, 2, 3, 4, 5].map(day => ({
         day,
         open: { hours: 10, minutes: 0 },
-        close: { hours: 14, minutes: 0 }
-      }))
-    }
+        close: { hours: 14, minutes: 0 },
+      })),
+    },
   },
   {
     restaurant: 69,
@@ -28,15 +29,15 @@ const resolvers: { restaurant: number; id: string; meta: RestaurantMeta }[] = [
         ...[1, 2, 3, 4].map(day => ({
           day,
           open: { hours: 10, minutes: 0 },
-          close: { hours: 17, minutes: 30 }
+          close: { hours: 17, minutes: 30 },
         })),
         {
           day: 5,
           open: { hours: 10, minutes: 0 },
-          close: { hours: 16, minutes: 0 }
-        }
-      ]
-    }
+          close: { hours: 15, minutes: 30 },
+        },
+      ],
+    },
   },
   {
     restaurant: 70,
@@ -49,9 +50,9 @@ const resolvers: { restaurant: number; id: string; meta: RestaurantMeta }[] = [
       openingHours: [1, 2, 3, 4, 5].map(day => ({
         day,
         open: { hours: 10, minutes: 30 },
-        close: { hours: 14, minutes: 0 }
-      }))
-    }
+        close: { hours: 14, minutes: 0 },
+      })),
+    },
   },
   {
     restaurant: 70,
@@ -64,9 +65,9 @@ const resolvers: { restaurant: number; id: string; meta: RestaurantMeta }[] = [
       openingHours: [1, 2, 3, 4, 5].map(day => ({
         day,
         open: { hours: 10, minutes: 30 },
-        close: { hours: 14, minutes: 0 }
-      }))
-    }
+        close: { hours: 14, minutes: 0 },
+      })),
+    },
   },
   {
     restaurant: 6,
@@ -75,8 +76,8 @@ const resolvers: { restaurant: number; id: string; meta: RestaurantMeta }[] = [
       name: 'Konehuone',
       url: 'https://juvenes.fi/konehuone/',
       provider: Provider.juvenes,
-      ...CAMPUSES.TAMPERE.HERVANTA
-    }
+      ...CAMPUSES.TAMPERE.HERVANTA,
+    },
   },
   {
     restaurant: 6,
@@ -85,9 +86,9 @@ const resolvers: { restaurant: number; id: string; meta: RestaurantMeta }[] = [
       name: 'Newton',
       url: 'https://juvenes.fi/newton/',
       provider: Provider.juvenes,
-      ...CAMPUSES.TAMPERE.HERVANTA
-    }
-  }
+      ...CAMPUSES.TAMPERE.HERVANTA,
+    },
+  },
 ];
 
 interface MenuDay {
@@ -98,12 +99,12 @@ interface MenuDay {
 const getMenu = async (restaurant: number): Promise<(RestaurantMeta & {
   menuTypeId: string;
   fin: MenuDay[];
-  eng?: MenuDay[]
+  eng?: MenuDay[];
 })[]> => {
   try {
     const fin = await getRestaurant(restaurant, 'fi');
     const eng = await getRestaurant(restaurant, 'en');
-    const menus = formatMenu(fin).map(menu => {
+    const menus = formatMenu(fin).map((menu) => {
       const meta = resolvers.find(r => r.restaurant === restaurant && r.id === menu.menuTypeId.toString())?.meta;
       if (!meta) return;
       return {
@@ -117,23 +118,24 @@ const getMenu = async (restaurant: number): Promise<(RestaurantMeta & {
       if (a) a.eng = menu.days;
     });
     return menus.flat();
-  } catch (err) {
+  }
+  catch (err) {
     console.error('Error getting menu for', restaurant, err);
     return [];
   }
 };
 
 const getRestaurant = (restaurant: number, lang: string): Promise<any> => {
-  return fetch(`https://fi.jamix.cloud/apps/menuservice/rest/haku/menu/93077/${ restaurant }?lang=${ lang }`)
+  return fetch(`https://fi.jamix.cloud/apps/menuservice/rest/haku/menu/93077/${restaurant}?lang=${lang}`)
     .then(res => res.json());
 };
 
 const formatMenu = (menu: any): { menuTypeId: string; days: MenuDay[] }[] => {
-  return menu[0].menuTypes.map((type: { menuTypeId: any; menus: any[]; }) => {
+  return menu[0].menuTypes.map((type: { menuTypeId: any; menus: any[] }) => {
     return {
       menuTypeId: type.menuTypeId,
       days: type.menus.map((m: any) => m.days.map((day: any) => {
-        let d = day.date.toString();
+        const d = day.date.toString();
         const date = new Date();
         date.setUTCFullYear(parseInt(d.slice(0, 4)), parseInt(d.slice(4, 6)) - 1, parseInt(d.slice(6, 8)));
         date.setUTCHours(0, 0, 0, 0);
@@ -147,13 +149,13 @@ const formatMenu = (menu: any): { menuTypeId: string; days: MenuDay[] }[] => {
                 return {
                   name: menuItem.name,
                   diets: menuItem.diets,
-                  ingredients: menuItem.ingredients
+                  ingredients: menuItem.ingredients,
                 };
-              })
+              }),
             };
-          })
+          }),
         };
-      })).flat()
+      })).flat(),
     };
   });
 };
@@ -171,11 +173,11 @@ const updateJamixRestaurants = async (): Promise<void> => {
   for (const m of menus) {
     await upsertRestaurant(m);
   }
-  menus.forEach(menu => {
-    menu.fin.forEach(day => {
-      const out: { en: MenuCategory[], fi: MenuCategory[] } = {
+  menus.forEach((menu) => {
+    menu.fin.forEach((day) => {
+      const out: { en: MenuCategory[]; fi: MenuCategory[] } = {
         fi: day.options,
-        en: menu.eng?.find(m => m.date.getTime() === day.date.getTime())?.options || []
+        en: menu.eng?.find(m => m.date.getTime() === day.date.getTime())?.options || [],
       };
       updateMenu(menu.name, day.date, out);
     });

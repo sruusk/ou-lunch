@@ -23,19 +23,19 @@ export default defineNuxtComponent({
       return this.locales.map((locale: LocaleObject<'en' | 'fi'>) => ({
         id: locale.language,
         code: locale.code,
-        icon: `circle-flags:${ locale.language?.split('-')?.[1]!.toLowerCase() }`,
+        icon: `circle-flags:${locale.language?.split('-')?.[1]!.toLowerCase()}`,
         label: locale.code === 'en' ? 'English' : 'Suomi',
       }));
     },
     selected: {
       get() {
-        return this.languageOptions.find((option) => option.code === this.locale) || this.languageOptions[0];
+        return this.languageOptions.find(option => option.code === this.locale) || this.languageOptions[0];
       },
       set(value: LanguageOption) {
         this.setLocale(value.code);
       },
     },
-  }
+  },
 });
 
 interface LanguageOption {

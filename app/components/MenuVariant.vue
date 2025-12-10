@@ -1,35 +1,42 @@
 <template>
   <div v-show="menuItems.length">
     <USeparator size="sm">
-      <h3>{{ menu.name }}</h3>
+      <h3>
+        <template v-for="(part, index) in menuNameParts" :key="index">
+          {{ part }}
+          <br v-if="index < menuNameParts.length - 1">
+        </template>
+      </h3>
     </USeparator>
-    <MenuItem v-for="(item, itemIndex) in menuItems"
-              :key="itemIndex"
-              :isFiltered="item.isFiltered"
-              :item="item.item"
-              :showFilter="hasFilters && !filterHide"
+    <MenuItem
+      v-for="(item, itemIndex) in menuItems"
+      :key="itemIndex"
+      :is-filtered="item.isFiltered"
+      :item="item.item"
+      :show-filter="hasFilters && !filterHide"
     />
   </div>
 </template>
+
 <script lang="ts">
 export default defineNuxtComponent({
   name: 'MenuVariant',
   props: {
     menu: {
       type: Object as () => MenuCategory,
-      required: true
-    }
+      required: true,
+    },
   },
   setup() {
     const filters = useState<FilterConfig>('config');
     return { filters };
   },
   computed: {
-    menuItems(): { item: MenuItem, isFiltered: boolean }[] {
-      return this.menu.items.map(item => {
+    menuItems(): { item: MenuItem; isFiltered: boolean }[] {
+      return this.menu.items.map((item) => {
         return {
           item,
-          isFiltered: this.isFiltered(item.diets)
+          isFiltered: this.isFiltered(item.diets),
         };
       }).filter(i => !this.filterHide || !this.hasFilters || i.isFiltered);
     },
@@ -39,10 +46,29 @@ export default defineNuxtComponent({
     filterHide() {
       return this.filters.method === 'hide';
     },
+    /// Returns the menu name split into appropriate length parts
+    menuNameParts(): string[] {
+      const parts: string[] = [];
+      const maxLength = 25;
+      let currentPart = '';
+
+      this.menu.name.split(' ').forEach((word) => {
+        if ((currentPart + word).length <= maxLength) {
+          currentPart += (currentPart ? ' ' : '') + word;
+        }
+        else {
+          if (currentPart) parts.push(currentPart);
+          currentPart = word;
+        }
+      });
+
+      if (currentPart) parts.push(currentPart);
+      return parts;
+    },
   },
   methods: {
     isFiltered(diets: string | undefined): boolean {
-      let d = diets?.split(', ').map(i => i.trim());
+      const d = diets?.split(', ').map(i => i.trim());
       if (!d?.length) return false;
 
       // Should return true if all enabled filters are present in the diets
@@ -59,9 +85,10 @@ export default defineNuxtComponent({
         if (!v) return true;
         return d.some(i => r.test(i));
       });
-    }
-  }
+    },
+  },
 });
 </script>
+
 <style scoped>
 </style>

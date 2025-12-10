@@ -47,3 +47,4 @@ jspm_packages/
 *.code-workspace
 Thumbs.db
 out
+!/eslint.config.mjs

@@ -7,6 +7,6 @@ export interface FilterConfig {
     lactoseFree: boolean;
     recommended: boolean;
     [key: string]: boolean;
-  },
+  };
   method: 'highlight' | 'hide';
 }

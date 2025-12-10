@@ -1,4 +1,4 @@
-
+/* eslint-disable @typescript-eslint/no-explicit-any */
 interface CompassRestaurant {
   costCenter: string;
   meta: RestaurantMeta;
@@ -11,8 +11,8 @@ const restaurants: CompassRestaurant[] = [
       name: 'Reaktori',
       url: 'https://www.compass-group.fi/ravintolat-ja-ruokalistat/foodco/kaupungit/tampere/reaktori/',
       provider: Provider.foodandco,
-      ...CAMPUSES.TAMPERE.HERVANTA
-    }
+      ...CAMPUSES.TAMPERE.HERVANTA,
+    },
   },
   {
     costCenter: '0351',
@@ -20,9 +20,9 @@ const restaurants: CompassRestaurant[] = [
       name: 'Silvia',
       url: 'https://www.compass-group.fi/ravintolat-ja-ruokalistat/foodco/kaupungit/pori/silvia/',
       provider: Provider.foodandco,
-      ...CAMPUSES.PORI.SAMK
-    }
-  }
+      ...CAMPUSES.PORI.SAMK,
+    },
+  },
 ];
 
 const getRestaurant = async (restaurant: CompassRestaurant): Promise<Restaurant> => {
@@ -42,30 +42,32 @@ const getRestaurant = async (restaurant: CompassRestaurant): Promise<Restaurant>
         ...thisWeekFi.map(day => ({
           date: day.date,
           fi: day.fi,
-          en: thisWeekEn.find(d => d.date.getTime() === day.date.getTime())?.en || []
+          en: thisWeekEn.find(d => d.date.getTime() === day.date.getTime())?.en || [],
         })),
         ...nextWeekFi.map(day => ({
           date: day.date,
           fi: day.fi,
-          en: nextWeekEn.find(d => d.date.getTime() === day.date.getTime())?.en || []
-        }))
-      ]
+          en: nextWeekEn.find(d => d.date.getTime() === day.date.getTime())?.en || [],
+        })),
+      ],
     };
-  } catch (err) {
+  }
+  catch (err) {
     console.error('Error getting weekly menu for', restaurant.meta.name, err);
     return { ...restaurant.meta, menu: [] };
   }
 };
 
 const getWeeklyMenu = async (restaurant: CompassRestaurant, date: string, lang: string): Promise<Menu[]> => {
-  const res = await fetch(`https://www.compass-group.fi/menuapi/week-menus?costCenter=${ restaurant.costCenter }&date=${ date }&language=${ lang }`).then(res => res.json());
+  const res = await fetch(`https://www.compass-group.fi/menuapi/week-menus?costCenter=${restaurant.costCenter}&date=${date}&language=${lang}`).then(res => res.json());
   const menu = formatMenu(res, lang);
   for (const day of menu) {
     for (const meal of day[lang]) {
       for (const item of meal.items) {
         if (item.ingredients) {
           item.ingredients = await getIngredients(item.ingredients, lang);
-        } else delete item.ingredients;
+        }
+        else delete item.ingredients;
       }
     }
   }
@@ -81,15 +83,15 @@ const formatMenu = (menu: any, lang: string) => {
       items: menu.meals.map((item: any) => ({
         name: item.name.trim(),
         diets: item.diets.join(', '),
-        ingredients: item.recipeId || 0
-      }))
+        ingredients: item.recipeId || 0,
+      })),
     })).filter((menu: MenuCategory) => menu.items.length > 0);
     return o;
   });
 };
 
 const getIngredients = (recipeId: number, lang: string): Promise<string> => {
-  return fetch(`https://www.compass-group.fi/menuapi/recipes/${ recipeId }?language=${ lang }`)
+  return fetch(`https://www.compass-group.fi/menuapi/recipes/${recipeId}?language=${lang}`)
     .then(res => res.json())
     .then(res => res.ingredientsCleaned);
 };
@@ -104,8 +106,8 @@ const updateCompassRestaurants = async (): Promise<void> => {
   for (const r of restaurants) {
     await upsertRestaurant(r);
   }
-  restaurants.forEach(r => {
-    r.menu.forEach(day => {
+  restaurants.forEach((r) => {
+    r.menu.forEach((day) => {
       updateMenu(r.name, day.date, { en: day.en, fi: day.fi });
     });
   });

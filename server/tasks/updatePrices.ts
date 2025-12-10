@@ -7,5 +7,5 @@ export default defineTask({
     console.log('Updating prices');
     await updateRestaurantPrices();
     return { result: 'Successfully updated prices' };
-  }
+  },
 });

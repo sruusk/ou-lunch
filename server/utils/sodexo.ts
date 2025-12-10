@@ -1,4 +1,4 @@
-import menu from '../api/menu';
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 interface SodexoRestaurant {
   map?: (menus: Menu[]) => Menu[];
@@ -13,8 +13,8 @@ const restaurants: SodexoRestaurant[] = [
       name: 'Hertsi',
       url: 'https://www.sodexo.fi/ravintolat/ravintola-hertsi',
       provider: Provider.sodexo,
-      ...CAMPUSES.TAMPERE.HERVANTA
-    }
+      ...CAMPUSES.TAMPERE.HERVANTA,
+    },
   },
   {
     id: '3305493',
@@ -22,38 +22,39 @@ const restaurants: SodexoRestaurant[] = [
       name: 'Hilla ja Mustikka',
       url: 'https://www.sodexo.fi/ravintolat/ravintolat-hilla-ja-mustikka',
       provider: Provider.sodexo,
-      ...CAMPUSES.OULU.LINNANMAA
+      ...CAMPUSES.OULU.LINNANMAA,
     },
     map: (menus: Menu[]): Menu[] => {
       // Map the menu items to the desired format
       const titlerx = /(.*)(?:\(|^)/;
       return menus.map(menu => ({
         ...menu,
-        en: menu.en.map(category => {
+        en: menu.en.map((category) => {
           const name = category.name.match(titlerx)?.[1] || category.name;
           return { ...category, name };
         }),
-        fi: menu.fi.map(category => {
+        fi: menu.fi.map((category) => {
           const name = category.name.match(titlerx)?.[1] || category.name;
           return { ...category, name };
-        })
+        }),
       }));
-    }
-  }
+    },
+  },
 ];
 
 const getRestaurant = async (restaurant: SodexoRestaurant): Promise<RestaurantMeta & { menu: Menu[] }> => {
   try {
     const menu = formatMenu(await getRestaurantMenu(restaurant.id));
     return { ...restaurant.meta, menu: restaurant.map ? restaurant.map(menu) : menu };
-  } catch (err) {
+  }
+  catch (err) {
     console.error('Error getting menu for', restaurant.meta.name, err);
     throw new Error('Failed to get restaurant menu');
   }
 };
 
 const getRestaurantMenu = async (restaurantId: string): Promise<any> => {
-  const response = await fetch(`https://www.sodexo.fi/ruokalistat/output/weekly_json/${ restaurantId }`);
+  const response = await fetch(`https://www.sodexo.fi/ruokalistat/output/weekly_json/${restaurantId}`);
   return response.json();
 };
 
@@ -65,23 +66,23 @@ const formatMenu = (menu: any): Menu[] => {
   monday = new Date(Date.UTC(parseInt(monday[0]), parseInt(monday[1]) - 1, parseInt(monday[2])));
 
   return menu.mealdates.map((day: any) => {
-    const [en, fi] = ['en', 'fi'].map(lang => {
+    const [en, fi] = ['en', 'fi'].map((lang) => {
       return Object.values(day.courses).map((course: any) => {
         return {
           name: course.category,
           items: [
             {
-              name: course[`title_${ lang }`],
+              name: course[`title_${lang}`],
               diets: course.dietcodes,
               ingredients: Object.values(course.recipes)
                 .map((recipe: any) => {
-                  if (recipe.ingredients) return `${ recipe.name } (${ recipe.ingredients })\n`;
+                  if (recipe.ingredients) return `${recipe.name} (${recipe.ingredients})\n`;
                 })
                 .filter((i: any) => i)
                 .join('')
-                .trim()
-            }
-          ]
+                .trim(),
+            },
+          ],
         };
       });
     });
@@ -93,7 +94,7 @@ const formatMenu = (menu: any): Menu[] => {
       Torstai: 3,
       Perjantai: 4,
       Lauantai: 5,
-      Sunnuntai: 6
+      Sunnuntai: 6,
     };
 
     const date = new Date(monday);
@@ -102,7 +103,7 @@ const formatMenu = (menu: any): Menu[] => {
     return {
       date,
       en,
-      fi
+      fi,
     };
   });
 };
@@ -121,8 +122,8 @@ const updateSodexoRestaurants = async (): Promise<void> => {
       await upsertRestaurant(r);
     }
   }
-  rest.forEach(r => {
-    r.menu.forEach(day => {
+  rest.forEach((r) => {
+    r.menu.forEach((day) => {
       updateMenu(r.name, day.date, { en: day.en, fi: day.fi });
     });
   });

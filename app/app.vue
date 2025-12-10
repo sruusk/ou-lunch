@@ -1,31 +1,32 @@
 <template>
   <UApp :locale="locales[locale]">
-    <NuxtRouteAnnouncer/>
+    <NuxtRouteAnnouncer />
     <NuxtPage />
   </UApp>
 </template>
+
 <script lang="ts">
-import * as locales from '@nuxt/ui/locale'
+import * as locales from '@nuxt/ui/locale';
 
 export default defineNuxtComponent({
-  name: 'app',
+  name: 'App',
   setup() {
-    const { locale } = useI18n()
+    const { locale } = useI18n();
 
-    const lang = computed(() => locales[locale.value].code)
-    const dir = computed(() => locales[locale.value].dir)
+    const lang = computed(() => locales[locale.value].code);
+    const dir = computed(() => locales[locale.value].dir);
 
     useHead({
       htmlAttrs: {
         lang,
-        dir
-      }
-    })
+        dir,
+      },
+    });
 
     return {
       locales,
-      locale
-    }
-  }
+      locale,
+    };
+  },
 });
 </script>

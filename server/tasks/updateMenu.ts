@@ -9,8 +9,8 @@ export default defineTask({
       updateJamixRestaurants(),
       updatePowerestaRestaurants(),
       updateCompassRestaurants(),
-      updateSodexoRestaurants()
+      updateSodexoRestaurants(),
     ]);
     return { result: 'Successfully updated menus' };
-  }
+  },
 });
