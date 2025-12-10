@@ -95,6 +95,7 @@ export default defineNuxtComponent({
       return [
         { value: 'highlight', label: this.$t('filters.highlight') },
         { value: 'hide', label: this.$t('filters.hide') },
+        { value: 'hideLunch', label: this.$t('filters.hideLunch') },
       ];
     },
     isFiltered() {

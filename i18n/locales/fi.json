@@ -36,6 +36,7 @@
     "method": "Valitse suodatustapa",
     "highlight": "Korosta",
     "hide": "Piilota muut",
+    "hideLunch": "Piilota sopimattomat lounaat",
     "order": "Järjestys (vedä ja pudota)"
   },
   "restaurant": {

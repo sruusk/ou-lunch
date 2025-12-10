@@ -36,6 +36,7 @@
     "method": "Select filter method",
     "highlight": "Highlight",
     "hide": "Hide others",
+    "hideLunch": "Hide unsafe lunches",
     "order": "Order (drag and drop)"
   },
   "restaurant": {

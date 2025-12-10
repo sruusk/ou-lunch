@@ -38,13 +38,31 @@ export default defineNuxtComponent({
           item,
           isFiltered: this.isFiltered(item.diets),
         };
-      }).filter(i => !this.filterHide || !this.hasFilters || i.isFiltered);
+      }).filter((i) => {
+        // hideLunch: show all items if ALL match, show none if ANY doesn't match
+        if (this.filterHideLunch && this.hasFilters) {
+          return this.allItemsMatch;
+        }
+        // hide: show only matching items
+        if (this.filterHide && this.hasFilters) {
+          return i.isFiltered;
+        }
+        // highlight (or no filters): show all items
+        return true;
+      });
     },
     hasFilters() {
       return Object.values(this.filters.filters).some(v => v);
     },
     filterHide() {
       return this.filters.method === 'hide';
+    },
+    filterHideLunch() {
+      return this.filters.method === 'hideLunch';
+    },
+    allItemsMatch() {
+      if (!this.hasFilters) return true;
+      return this.menu.items.every(item => this.isFiltered(item.diets));
     },
     /// Returns the menu name split into appropriate length parts
     menuNameParts(): string[] {
