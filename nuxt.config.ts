@@ -45,17 +45,6 @@ export default defineNuxtConfig({
       '0 10 */2 * *': ['updateHours'],
     },
   },
-  vite: {
-    $server: {
-      build: {
-        rollupOptions: {
-          output: {
-            preserveModules: true,
-          },
-        },
-      },
-    },
-  },
   debug: false,
   eslint: {
     config: {
