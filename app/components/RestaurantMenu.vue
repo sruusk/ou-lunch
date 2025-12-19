@@ -37,12 +37,11 @@
         <UPopover
           v-if="nonNormalOpeningHours"
           :label="$t('aria.nonNormalOpeningHours')"
-          :ui="{ content: 'w-0' }"
           mode="click"
         >
           <UButton
             :aria-label="$t('aria.nonNormalOpeningHours')"
-            class="translate-y-1"
+            class="translate-y-[150%]"
             color="warning"
             icon="iconoir:warning-circle-solid"
             size="xs"

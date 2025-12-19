@@ -38,7 +38,7 @@
             </h3>
             <Draggable v-if="order?.length" v-model="order">
               <transition-group name="flip-list" type="transition">
-                <li
+                <ul
                   v-for="r in order"
                   :key="r"
                   class="list-group-item"
@@ -50,7 +50,7 @@
                     aria-hidden="true"
                   />
                   {{ r }}
-                </li>
+                </ul>
               </transition-group>
             </Draggable>
           </div>
