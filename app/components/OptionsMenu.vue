@@ -46,9 +46,6 @@
                   @keydown.up.prevent="orderUp(r)"
                   @keydown.down.prevent="orderDown(r)"
                 >
-                  <i
-                    aria-hidden="true"
-                  />
                   {{ r }}
                 </ul>
               </transition-group>
