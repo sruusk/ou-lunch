@@ -2,7 +2,7 @@
 
 import OpenAI from 'openai';
 import { z } from 'zod';
-import {zodResponseFormat, zodTextFormat} from 'openai/helpers/zod';
+import { zodResponseFormat, zodTextFormat } from 'openai/helpers/zod';
 import Hero, { ConnectionToHeroCore } from '@ulixee/hero';
 
 const OpeningHours = z.object({
@@ -46,6 +46,7 @@ export const updateOpeningHours = async (restaurant: Restaurant) => {
           + 'Extract the lunchtimes that are valid for the given time period. '
           + 'The date is a ISO 8601 type date string without the time. '
           + 'If the restaurants opening times differ from the lunchtimes, use the lunchtimes.'
+          + 'If there are special lunch times for lukio (`Lounas lukiolaisille` etc.), ignore them.'
           + `The time period is ${now.toISOString()} to ${end.toISOString()}.`,
       },
       { role: 'user', content: text },
