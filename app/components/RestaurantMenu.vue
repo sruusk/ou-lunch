@@ -26,7 +26,7 @@
           v-if="openingHours"
           :class="{ 'border-yellow-600!': nonNormalOpeningHours }"
           class="h-fit w-fit bottom-0 right-0 translate-y-1/2 flex
-          border rounded px-1 -mt-0.5 border-[var(--ui-border-muted)] backdrop-blur-3xl"
+          border rounded px-1 -mt-0.5 border-muted bg-default"
         >
           <p class="text-cool-600 dark:text-cool-400 text-xs whitespace-nowrap flex">
             {{ openingHours.open.hours }}:{{ openingHours.open.minutes.toString().padStart(2, '0') }}
