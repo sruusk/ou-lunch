@@ -1,4 +1,3 @@
-/* eslint-disable no-useless-escape,no-irregular-whitespace */
 // noinspection SpellCheckingInspection
 
 export const updateRestaurantPrices = async (): Promise<void> => {
