@@ -125,9 +125,7 @@ const updateSodexoRestaurants = async (): Promise<void> => {
     console.log('Sodexo restaurant count mismatch');
   }
   for (const r of rest) {
-    if (!await restaurantExists(r.name)) {
-      await upsertRestaurant(r);
-    }
+    await upsertRestaurant(r);
   }
   rest.forEach((r) => {
     r.menu.forEach((day) => {
