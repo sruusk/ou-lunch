@@ -23,6 +23,13 @@ const restaurants: SodexoRestaurant[] = [
       url: 'https://www.sodexo.fi/ravintolat/ravintolat-hilla-ja-mustikka',
       provider: Provider.sodexo,
       ...CAMPUSES.OULU.LINNANMAA,
+      openingHours: [
+        ...[1, 2, 3, 4, 5].map(day => ({
+          day,
+          open: { hours: 10, minutes: 30 },
+          close: { hours: 14, minutes: 0 },
+        })),
+      ] satisfies LunchWindow[],
     },
     map: (menus: Menu[]): Menu[] => {
       // Map the menu items to the desired format

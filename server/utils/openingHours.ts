@@ -2,7 +2,8 @@
 
 import OpenAI from 'openai';
 import { z } from 'zod';
-import { zodResponseFormat, zodTextFormat } from 'openai/helpers/zod';
+import { zodTextFormat } from 'openai/helpers/zod';
+import type { ISuperElement } from '@ulixee/hero';
 import Hero, { ConnectionToHeroCore } from '@ulixee/hero';
 
 const OpeningHours = z.object({
@@ -19,12 +20,19 @@ export const updateOpeningHours = async (restaurant: Restaurant) => {
   switch (restaurant.provider) {
     case Provider.juvenes:
       text = await scrapeTextContent(restaurant.url, [
-        'div.elementor-element:has(> div.elementor-element > div.elementor-element > div > div > div.aukiolot)',
+        'div.elementor-element:has(> div.elementor-element > div.elementor-element > div > div > div.aukiolot',
+        'div.elementor-element:has(> div.elementor-element > div.elementor-element > div > div > div.aukiolot.poikkeus',
       ]);
       break;
     case Provider.uniresta:
       if (restaurant.url.includes('uniresta.fi'))
         text = await scrapeTextContent(restaurant.url, ['div.rivi.two-columns']);
+      else if (restaurant.name === 'H2O Campus')
+        text = await scrapeTextContent(restaurant.url, ['#wrapper-footer > div > div > div:nth-child(4)']);
+      break;
+    case Provider.sodexo:
+      if (restaurant.campus === CAMPUSES.OULU.LINNANMAA.campus)
+        text = await scrapeTextContent(restaurant.url, ['#block-entityviewcontent-restaurant-recent-text > article']);
       break;
   }
 
@@ -42,12 +50,14 @@ export const updateOpeningHours = async (restaurant: Restaurant) => {
       {
         role: 'system',
         content: 'You are an expert at structured data extraction. '
-          + 'You will be given unstructured text from a restaurants webpage and should convert the lunchtimes to the given format.'
+          + 'You will be given unstructured text from a restaurants webpage and should convert the lunchtimes to the given format. '
           + 'Extract the lunchtimes that are valid for the given time period. '
           + 'The date is a ISO 8601 type date string without the time. '
           + 'If the restaurants opening times differ from the lunchtimes, use the lunchtimes.'
-          + 'If there are special lunch times for lukio (`Lounas lukiolaisille` etc.), ignore them.'
-          + `The time period is ${now.toISOString()} to ${end.toISOString()}.`,
+          + 'If there are special lunch times for lukio (`Lounas lukiolaisille` etc.), ignore them and use the normal lunch times or opening times instead. '
+          + `\nThe time period is ${now.toISOString().split('T')[0]} to ${end.toISOString().split('T')[0]}.`
+          + `\nThe current day is ${now.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}, `
+          + `Week number ${getWeekNumber(now)}.`,
       },
       { role: 'user', content: text },
     ],
@@ -92,7 +102,7 @@ const scrapeTextContent = async (url: string, selectors: string[]) => {
 
     // text = await hero.document.querySelector(selector).innerText;
     for (const selector of selectors) {
-      const element = await hero.document.querySelector(selector);
+      const element: ISuperElement = hero.document.querySelector(selector);
       if (element) {
         if (text?.length) text += '\n\n';
         text += await element.innerText;
