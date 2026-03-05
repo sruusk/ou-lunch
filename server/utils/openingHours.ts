@@ -8,7 +8,7 @@ import Hero, { ConnectionToHeroCore } from '@ulixee/hero';
 
 const OpeningHours = z.object({
   times: z.array(z.object({
-    day: z.string(),
+    day: z.string().date().describe('ISO 8601 date string without time'),
     open: z.object({ hours: z.number(), minutes: z.number() }),
     close: z.object({ hours: z.number(), minutes: z.number() }),
   })),
@@ -52,7 +52,7 @@ export const updateOpeningHours = async (restaurant: Restaurant) => {
         content: 'You are an expert at structured data extraction. '
           + 'You will be given unstructured text from a restaurants webpage and should convert the lunchtimes to the given format. '
           + 'Extract the lunchtimes that are valid for the given time period. '
-          + 'The date is a ISO 8601 type date string without the time. '
+          + 'The output date is a ISO 8601 type date string without the time. '
           + 'If the restaurants opening times differ from the lunchtimes, use the lunchtimes.'
           + 'If there are special lunch times for lukio (`Lounas lukiolaisille` etc.), ignore them and use the normal lunch times or opening times instead. '
           + `\nThe time period is ${now.toISOString().split('T')[0]} to ${end.toISOString().split('T')[0]}.`
