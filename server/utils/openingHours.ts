@@ -32,7 +32,7 @@ export const updateOpeningHours = async (restaurant: Restaurant) => {
       break;
     case Provider.sodexo:
       if (restaurant.campus === CAMPUSES.OULU.LINNANMAA.campus)
-        text = await scrapeTextContent(restaurant.url, ['#block-entityviewcontent-restaurant-recent-text > article']);
+        text = await scrapeTextContent(restaurant.url, ['#block-entityviewcontent-restaurant-recent-text > article > div > div > ul > li']);
       break;
   }
 
