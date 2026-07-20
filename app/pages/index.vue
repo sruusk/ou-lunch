@@ -57,6 +57,11 @@ export default defineNuxtComponent({
           r.menu = r.menu.map((m) => {
             m.date = new Date(m.date);
             return m;
+          }).filter((m) => {
+            // Filter out closed restaurants
+            if (!m.en.length) return false;
+            if (!m.en[0]) return false;
+            return !/closed/i.test(m.en[0].name);
           });
           return r;
         }).sort((a, b) => {
